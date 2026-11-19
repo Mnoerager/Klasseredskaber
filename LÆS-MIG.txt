@@ -1,0 +1,19 @@
+Klasseredskaber
+===============
+Adresse: https://mnoerager.github.io/Klasseredskaber/
+
+Programmet indeholder ingen data. Klasser, elever, noter, tavler og lektier
+gemmes kun i en datamappe på din egen computer (filen klasseredskaber-data.json
+og mappen "billeder"). Browseren husker kun, hvilken mappe du har valgt.
+
+Sådan kommer du i gang
+1. Åbn adressen i Chrome eller Edge på en computer.
+   (Brave: slå brave://flags/#file-system-access-api til først.)
+2. Tryk "Vælg datamappe", og vælg en mappe, fx i Dokumenter eller OneDrive.
+3. Næste gang trykker du "Forbind". Vælg "Tillad ved hvert besøg", hvis
+   browseren spørger, så slipper du for det fremover.
+
+Bruger du programmet på flere computere, så vælg den samme mappe i OneDrive
+på dem alle.
+
+VIGTIGT: Glemmer du PIN-koden til Notater, kan notaterne ikke åbnes igen.
