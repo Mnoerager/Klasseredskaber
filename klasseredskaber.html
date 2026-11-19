@@ -352,6 +352,7 @@ body{font-variant-numeric:tabular-nums}
 .kr-gdl .kr-gtip{font-size:.9rem;background:#eef4fb;border:1px solid #d3dfee;border-radius:10px;padding:8px 12px}
 .kr-glink{display:block;margin:16px auto 0;border:0;background:none;color:#4b5f7a;font:inherit;font-size:.88rem;text-decoration:underline;cursor:pointer}
 .kr-glink:hover{color:#2563eb}
+.kr-gver{display:block;text-align:center;margin-top:8px;font-size:.72rem;color:#8395ad}
 </style></head><body>
 <div id="home"><div class="kr-h"><div class="kr-top"><h1>Klasse<span>redskaber</span></h1><div class="kr-topb"><button class="kr-btn kr-inst kr-hide" id="krInst" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>Installér som app</button><button class="kr-btn kr-set" id="krSet" type="button" aria-haspopup="dialog"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Data og backup</button></div></div><p>Vælg det værktøj, du vil arbejde med</p>
 <div class="kr-cards">
@@ -1785,7 +1786,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-19-6';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
@@ -1860,22 +1861,23 @@ async function rmImg(id){if(!live())return;try{const d=await dir.getDirectoryHan
 async function clearImgs(){if(!live())return;try{await dir.removeEntry('billeder',{recursive:true})}catch(e){}}
 /* status i "Data og backup" og på forsiden */
 function show(){const s=$k('kdmS'),b=$k('kdmB'),g=$k('krSet'),h=$k('hcs');if(g)g.classList.toggle('kr-attn',mode!=='live'||!!err);
- if(h)h.textContent=mode==='live'?'Alt gemmes i datamappen “'+dir.name+'”':'Ingen datamappe – intet bliver gemt';
+ if(h)h.textContent=(mode==='live'?'Alt gemmes i datamappen “'+dir.name+'”':'Ingen datamappe – intet bliver gemt')+' · version '+KR_VER;
  if(!s||!b)return;s.className='';b.classList.remove('kr-gold');b.classList.toggle('kr-hide',!ok);
  if(!ok){s.textContent='Datamappe kræver Chrome eller Edge på en computer. Intet bliver gemt.';s.className='kr-warn';return}
+ let b2=$k('kdmB2');if(!b2){b2=document.createElement('button');b2.id='kdmB2';b2.className=b.className.replace(/\bkr-gold\b/,'');b2.textContent='Vælg en anden mappe';b.after(b2)}b2.classList.toggle('kr-hide',!(dir&&mode!=='live'));
  if(mode!=='live'){s.textContent=dir?'Mappen “'+dir.name+'” er ikke forbundet. Intet bliver gemt.':'Ingen datamappe. Intet bliver gemt.';s.className='kr-warn';b.textContent=dir?'Forbind datamappe':'Vælg datamappe';b.classList.add('kr-gold');return}
  b.textContent='Skift datamappe';if(err){s.textContent=err;s.className='kr-warn';return}
  s.textContent='Gemmes i mappen “'+dir.name+'”'+(savedAt?' · '+new Date(savedAt).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}):'')}
 /* startskærm: vælg eller forbind datamappen */
-function gate(kind){let o=$k('krGate');if(!kind){if(o)o.remove();return}
+function gate(kind){let o=$k('krGate');if(!kind){if(o)o.remove();return}{const dd=$k('krData');if(dd)dd.classList.add('kr-hide')}
  if(!o){o=document.createElement('div');o.id='krGate';o.className='kr-ov kr-gate';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o)}
  const ico='<svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M4 12a3 3 0 0 1 3-3h10l4 4h16a3 3 0 0 1 3 3v19a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><rect x="13" y="19" width="18" height="3" rx="1.5" fill="#2563eb"/><rect x="13" y="26" width="12" height="3" rx="1.5" fill="#0d9488"/></svg>';
- const uden='<button class="kr-glink" data-g="uden">Prøv programmet uden at gemme</button>';
+ const uden='<button class="kr-glink" data-g="uden">Prøv programmet uden at gemme</button><small class="kr-gver">Version '+KR_VER+'</small>';
  let h='';
  if(kind==='ok')h='<h3>Datamappe kræves</h3><p>Klasseredskaber gemmer klasser, elever og noter i en mappe på din computer – aldrig i browseren eller online. Det kræver <b>Chrome</b> eller <b>Edge</b> på en computer. I Brave skal du først slå <b>brave://flags/#file-system-access-api</b> til.</p><div class="kr-ac"><button data-g="uden" class="gold">Fortsæt uden at gemme</button></div>';
  else if(kind==='vaelg')h='<h3>Vælg din datamappe</h3><p>Klasser, elever, noter og alt andet gemmes kun i en mappe på din computer, fx i Dokumenter eller OneDrive – ikke i browseren og ikke online.</p><p>Har du brugt Klasseredskaber før, så vælg den samme mappe igen.</p><div class="kr-ac"><button data-g="vaelg" class="gold">Vælg datamappe</button></div>'+uden;
  else if(kind==='forbind')h='<h3>Forbind din datamappe</h3><p>Giv Klasseredskaber adgang til mappen <b>“'+esc(dir.name)+'”</b> for at åbne dine data.</p><p class="kr-gtip">Spørger browseren, så vælg <b>“Tillad ved hvert besøg”</b>. Så slipper du for det næste gang.</p><div class="kr-ac"><button data-g="vaelg">Vælg en anden mappe</button><button data-g="forbind" class="gold">Forbind “'+esc(dir.name)+'”</button></div>'+uden;
- else h='<h3>Datamappen kunne ikke åbnes</h3><p>'+esc(err||'Prøv igen, eller vælg en anden mappe.')+'</p><div class="kr-ac"><button data-g="vaelg"'+(dir?'':' class="gold"')+'>'+(dir?'Vælg en anden mappe':'Prøv igen')+'</button>'+(dir?'<button data-g="forbind" class="gold">Prøv igen</button>':'')+'</div>'+uden;
+ else h='<h3>Datamappen kunne ikke åbnes</h3><p>'+esc(err||'Prøv igen, eller vælg en anden mappe.')+'</p><div class="kr-ac">'+(dir?'<button data-g="forbind">Prøv at forbinde igen</button>':'')+'<button data-g="vaelg" class="gold">'+(dir?'Vælg mappen igen':'Prøv igen')+'</button></div>'+uden;
  o.innerHTML='<div class="kr-dl kr-gdl">'+ico+h+'</div>';const f=o.querySelector('.gold');if(f)f.focus()}
 document.addEventListener('click',async e=>{const g=e.target.closest&&e.target.closest('#krGate [data-g]');if(!g)return;const a=g.dataset.g;
  if(a==='uden'){mode='nosave';gate(null);show();return}
@@ -1890,11 +1892,12 @@ async function choose(){try{const d=await pickDir();
   if(mode==='live'&&dir&&(await d.isSameEntry(dir)))return;
   if(timer){clearTimeout(timer);await write()}
   dir=d;perm='granted';prevDone=false;savedAt=0;stamp0=null;await hset(d);await open()}catch(e){if(e&&e.name!=='AbortError')fejl(e,'åbner mappevælgeren eller bruger den valgte mappe')}}
-async function connect(){try{perm=await dir.requestPermission({mode:'readwrite'})}catch(e){perm='denied';fejl(e,'får adgang til mappen “'+dir.name+'”');return}if(perm==='granted')await open();else{err='Adgang til mappen blev ikke givet. Tryk “Forbind” igen, og vælg “Tillad” i browserens spørgsmål.';if(mode!=='live')gate('fejl');show()}}
+async function connect(){try{perm=await Promise.race([dir.requestPermission({mode:'readwrite'}),new Promise(r=>setTimeout(()=>r('timeout'),6000))])}catch(e){perm='denied';fejl(e,'får adgang til mappen “'+dir.name+'”');return}
+ if(perm==='timeout'){perm='';err='Browseren svarede ikke, da Klasseredskaber bad om adgang til mappen “'+dir.name+'”. Tryk “Vælg mappen igen”, og vælg den samme mappe.';gate('fejl');show();return}if(perm==='granted')await open();else{err='Adgang til mappen blev ikke givet. Tryk “Forbind” igen, og vælg “Tillad” i browserens spørgsmål.';if(mode!=='live')gate('fejl');show()}}
 async function init(){if(!ok){gate('ok');show();return}dir=await hget();if(!dir){gate('vaelg');show();return}
  try{perm=await dir.queryPermission({mode:'readwrite'})}catch(e){perm='denied'}
  if(perm==='granted')await open();else{gate('forbind');show()}}
-document.addEventListener('click',e=>{if(e.target.closest('#kdmB')){if(dir&&mode!=='live')connect();else choose()}});
+document.addEventListener('click',e=>{if(e.target.closest('#kdmB')){if(dir&&mode!=='live')connect();else choose()}if(e.target.closest('#kdmB2'))choose()});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){if(timer){clearTimeout(timer);write()}}else if(live()&&!timer)check()});
 let lastF=0;window.addEventListener('focus',()=>{if(live()&&!timer&&Date.now()-lastF>5000){lastF=Date.now();check()}});
 window.addEventListener('beforeunload',e=>{if(timer){clearTimeout(timer);write()}if(mode==='nosave'&&hasData(DB)){e.preventDefault();e.returnValue=''}});
