@@ -1875,17 +1875,22 @@ function gate(kind){let o=$k('krGate');if(!kind){if(o)o.remove();return}
  if(kind==='ok')h='<h3>Datamappe kræves</h3><p>Klasseredskaber gemmer klasser, elever og noter i en mappe på din computer – aldrig i browseren eller online. Det kræver <b>Chrome</b> eller <b>Edge</b> på en computer. I Brave skal du først slå <b>brave://flags/#file-system-access-api</b> til.</p><div class="kr-ac"><button data-g="uden" class="gold">Fortsæt uden at gemme</button></div>';
  else if(kind==='vaelg')h='<h3>Vælg din datamappe</h3><p>Klasser, elever, noter og alt andet gemmes kun i en mappe på din computer, fx i Dokumenter eller OneDrive – ikke i browseren og ikke online.</p><p>Har du brugt Klasseredskaber før, så vælg den samme mappe igen.</p><div class="kr-ac"><button data-g="vaelg" class="gold">Vælg datamappe</button></div>'+uden;
  else if(kind==='forbind')h='<h3>Forbind din datamappe</h3><p>Giv Klasseredskaber adgang til mappen <b>“'+esc(dir.name)+'”</b> for at åbne dine data.</p><p class="kr-gtip">Spørger browseren, så vælg <b>“Tillad ved hvert besøg”</b>. Så slipper du for det næste gang.</p><div class="kr-ac"><button data-g="vaelg">Vælg en anden mappe</button><button data-g="forbind" class="gold">Forbind “'+esc(dir.name)+'”</button></div>'+uden;
- else h='<h3>Mappen kunne ikke åbnes</h3><p>'+esc(err||'Prøv igen, eller vælg en anden mappe.')+'</p><div class="kr-ac"><button data-g="vaelg">Vælg en anden mappe</button>'+(dir?'<button data-g="forbind" class="gold">Prøv igen</button>':'')+'</div>'+uden;
+ else h='<h3>Datamappen kunne ikke åbnes</h3><p>'+esc(err||'Prøv igen, eller vælg en anden mappe.')+'</p><div class="kr-ac"><button data-g="vaelg"'+(dir?'':' class="gold"')+'>'+(dir?'Vælg en anden mappe':'Prøv igen')+'</button>'+(dir?'<button data-g="forbind" class="gold">Prøv igen</button>':'')+'</div>'+uden;
  o.innerHTML='<div class="kr-dl kr-gdl">'+ico+h+'</div>';const f=o.querySelector('.gold');if(f)f.focus()}
 document.addEventListener('click',async e=>{const g=e.target.closest&&e.target.closest('#krGate [data-g]');if(!g)return;const a=g.dataset.g;
  if(a==='uden'){mode='nosave';gate(null);show();return}
  if(a==='vaelg')await choose();
  if(a==='forbind')await connect()});
-async function choose(){try{const d=await window.showDirectoryPicker({id:'klasseredskaber',mode:'readwrite',startIn:'documents'});
+function fejl(e,hvad){const n=e&&e.name||'Fejl',m=e&&e.message?String(e.message).slice(0,160):'';
+ err=(n==='NotAllowedError'||n==='SecurityError')?'Browseren tillader ikke, at Klasseredskaber '+hvad+'. Det skyldes typisk skolens IT-indstillinger for filadgang, at siden er åbnet i en ramme eller et privat vindue, eller Brave uden flaget brave://flags/#file-system-access-api. Prøv i Chrome eller Edge i et almindeligt vindue, eller spørg IT, om “File System Access” er blokeret.':'Det lykkedes ikke at '+hvad+'.';
+ err+=' (Teknisk: '+n+(m?' – '+m:'')+')';console.warn('Klasseredskaber datamappe:',e);
+ if(mode!=='live')gate('fejl');show()}
+async function pickDir(){try{return await window.showDirectoryPicker({id:'klasseredskaber',mode:'readwrite',startIn:'documents'})}catch(e){if(e&&(e.name==='TypeError'||e.name==='NotFoundError'))return await window.showDirectoryPicker({mode:'readwrite'});throw e}}
+async function choose(){try{const d=await pickDir();
   if(mode==='live'&&dir&&(await d.isSameEntry(dir)))return;
   if(timer){clearTimeout(timer);await write()}
-  dir=d;perm='granted';prevDone=false;savedAt=0;stamp0=null;await hset(d);await open()}catch(e){if(e&&e.name!=='AbortError'){err='Mappen kunne ikke vælges.';show()}}}
-async function connect(){try{perm=await dir.requestPermission({mode:'readwrite'})}catch(e){perm='denied'}if(perm==='granted')await open();else{err='Adgang til mappen blev ikke givet.';show()}}
+  dir=d;perm='granted';prevDone=false;savedAt=0;stamp0=null;await hset(d);await open()}catch(e){if(e&&e.name!=='AbortError')fejl(e,'åbner mappevælgeren eller bruger den valgte mappe')}}
+async function connect(){try{perm=await dir.requestPermission({mode:'readwrite'})}catch(e){perm='denied';fejl(e,'får adgang til mappen “'+dir.name+'”');return}if(perm==='granted')await open();else{err='Adgang til mappen blev ikke givet. Tryk “Forbind” igen, og vælg “Tillad” i browserens spørgsmål.';if(mode!=='live')gate('fejl');show()}}
 async function init(){if(!ok){gate('ok');show();return}dir=await hget();if(!dir){gate('vaelg');show();return}
  try{perm=await dir.queryPermission({mode:'readwrite'})}catch(e){perm='denied'}
  if(perm==='granted')await open();else{gate('forbind');show()}}
