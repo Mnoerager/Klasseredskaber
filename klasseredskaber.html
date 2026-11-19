@@ -258,14 +258,24 @@ body{font-variant-numeric:tabular-nums}
 #timer .tm-clock svg text,#tavle .wm-d svg text{font-family:'Inter',system-ui,sans-serif;font-weight:500}
 
 /* ===== lektier ===== */
+#lektier .lk-h.kar button{max-width:130px}
+#lektier .lk-h.kar b{font-family:inherit;font-weight:600;color:#0d9488;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+#lektier .lk-h.kar{box-shadow:inset 0 3px 0 #0d9488}
+#lektier .lk-c.kar,#lektier tfoot .kar{background:#f4fbfa}
+#lektier tbody tr:hover>.lk-c.kar{background:#eaf7f5}
+#lektier .lk-g{font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;color:#0f1f38;background:#ffffff;border:2px solid #c5d4e8;border-radius:9px;height:32px;padding:0 4px;min-width:56px;cursor:pointer}
+#lektier .lk-g:hover,#lektier .lk-g:focus{border-color:#0d9488;outline:none}
+#lektier .lk-c.kar.on .lk-g{border-color:#0d9488;background:#e6f6f4;color:#0f766e}
+#lektier .lk-t.has-g .lk-s:not(.lk-a){right:var(--ga,68px)}
+#lektier .lk-t .lk-a{right:0;min-width:52px;color:#0f766e}
 #lektier .lk-bar{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;flex:1 1 auto;justify-content:flex-end;min-width:0}
 #lektier .app{padding-bottom:14px}
-#lektier .top{margin-bottom:12px;flex-wrap:nowrap}
+#lektier .top{margin-bottom:12px;flex-wrap:wrap;row-gap:10px}
 #lektier .brand{flex:none}
 #lektier .lk-grp{display:flex;align-items:center;gap:10px;min-width:0}
 #lektier .lk-bar .pill{padding:6px 12px}
 #lektier .lk-bar .btn{white-space:nowrap}
-@media(min-width:761px){#lektier .lk-bar{flex-wrap:nowrap}#lektier .lk-bar .lk-grp{flex:0 1 auto;min-width:0}#lektier .lk-right{flex:none}#lektier .lk-bar .lk-row{flex-wrap:nowrap}#lektier .lk-bar .pills{flex-wrap:wrap}}
+@media(min-width:761px){#lektier .lk-bar{flex-wrap:nowrap;gap:10px 12px;flex:0 1 auto;margin-left:auto}#lektier .lk-bar .lk-grp{flex:none}#lektier .lk-bar select{flex:none;max-width:150px}#lektier .lk-bar .lk-grp,#lektier .lk-bar .lk-grp .lk-row{display:contents}#lektier .lk-bar .lk-row select{max-width:150px}#lektier .lk-bar .lk-lab{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}#lektier .lk-right{flex:none}#lektier .lk-bar .lk-row{flex-wrap:nowrap}#lektier .lk-bar .pills{flex-wrap:wrap}}
 #lektier .foot{display:none}
 #lektier .lk-lab{font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#0f1f38}
 #lektier .lk-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -348,7 +358,7 @@ body{font-variant-numeric:tabular-nums}
 <a class="kr-card kr-notes" href="#noter"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="6" y="4" width="26" height="34" rx="3" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><rect x="11" y="11" width="16" height="3" rx="1.5" fill="#0d9488"/><rect x="11" y="18" width="12" height="3" rx="1.5" fill="#0d9488"/><rect x="24" y="26" width="15" height="13" rx="3" fill="#2563eb"/><path d="M27.5 26v-3a4 4 0 0 1 8 0v3" fill="none" stroke="#2563eb" stroke-width="2.5"/></svg><h2>Notater</h2><p>Private notater, låst med en PIN-kode. Giv notaterne overskrifter, og vælg mellem dine gemte notater.</p><small id="hc5"></small></a>
 <a class="kr-card" href="#timer"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="24" r="16" fill="none" stroke="#4b5f7a" stroke-width="3"/><path d="M22 24 L22 12 A12 12 0 0 1 32.4 18 Z" fill="#2563eb"/><rect x="17" y="3" width="10" height="4" rx="2" fill="#0d9488"/></svg><h2>Timer</h2><p>Visuelt nedtællingsur til tavlen. Sæt tiden på urskiven, og vis uret i fuldskærm.</p><small id="hc3">0 til 60 minutter</small></a>
 <a class="kr-card" href="#tavle"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="3" y="6" width="38" height="26" rx="3" fill="#fff" stroke="#4b5f7a" stroke-width="2.5"/><rect x="8" y="11" width="11" height="10" rx="1.5" fill="#2563eb"/><circle cx="30" cy="17" r="5" fill="none" stroke="#0d9488" stroke-width="2.5"/><path d="M14 38h16" stroke="#4b5f7a" stroke-width="3" stroke-linecap="round"/></svg><h2>Tavle</h2><p>Lav en tavle med ur, timer, post-it, tilfældigt navn og mere. Tavlerne gemmes.</p><small id="hc4"></small></a>
-<a class="kr-card kr-lekt" href="#lektier"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="4" width="30" height="36" rx="3" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><path d="M12 15l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="13" width="9" height="3" rx="1.5" fill="#2563eb"/><path d="M12 28l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="26" width="9" height="3" rx="1.5" fill="#2563eb"/></svg><h2>Lektier</h2><p>Kryds af, hvem der har lavet lektier, og skriv en note til hver elev ved hver lektie.</p><small id="hc6"></small></a>
+<a class="kr-card kr-lekt" href="#lektier"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="4" width="30" height="36" rx="3" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><path d="M12 15l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="13" width="9" height="3" rx="1.5" fill="#2563eb"/><path d="M12 28l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="26" width="9" height="3" rx="1.5" fill="#2563eb"/></svg><h2>Lektier og karakterer</h2><p>Kryds af, hvem der har lavet lektier, giv karakterer, og skriv noter til hver elev.</p><small id="hc6"></small></a>
 </div>
 <p class="kr-foot"><span id="hcl"></span> · <span id="hcs"></span></p></div></div>
 <div class="kr-ov kr-hide" id="krData" role="dialog" aria-modal="true" aria-labelledby="krDataH"><div class="kr-dl"><h3 id="krDataH">Data og backup</h3><small id="kdmS"></small><small id="kbn"></small><div class="kr-bkb"><button class="kr-btn" id="kb1">↓ Gem backup af alt</button><button class="kr-btn" id="kb3">↑ Indlæs backup</button><button class="kr-btn" id="kdmB" title="Vælg en mappe, fx i OneDrive. Så gemmes alle data automatisk i en fil dér.">Vælg datamappe</button><button class="kr-btn kr-danger" id="kb4">Nulstil alt</button></div><input type="file" id="kb2" accept=".json,application/json" hidden><p>Backup gemmer klasser, elevlister, pladsplaner, gemte grupper, tavler (uden billeder) og notater (stadig låst med PIN-koden) i én fil. Med en datamappe gemmes alt også automatisk i en fil i en mappe, du selv vælger.</p><div class="kr-ac"><button type="button" class="gold" id="krDataX">Luk</button></div></div></div>
@@ -435,7 +445,7 @@ body{font-variant-numeric:tabular-nums}
 </div>
 <div id="lektier" class="kr-hide">
 <div class="app">
-  <header class="top"><div class="brand"><div class="logo" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="4" width="30" height="36" rx="3" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><path d="M12 15l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="13" width="9" height="3" rx="1.5" fill="#2563eb"/><path d="M12 28l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="26" width="9" height="3" rx="1.5" fill="#2563eb"/></svg></div><div><h1>Lektier</h1><small>Hvem har lavet lektier?</small></div></div><div class="lk-bar" id="lkBar"></div></header>
+  <header class="top"><div class="brand"><div class="logo" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 44 44" aria-hidden="true"><rect x="7" y="4" width="30" height="36" rx="3" fill="none" stroke="#4b5f7a" stroke-width="2.5"/><path d="M12 15l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="13" width="9" height="3" rx="1.5" fill="#2563eb"/><path d="M12 28l3 3 5-6" fill="none" stroke="#0d9488" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="23" y="26" width="9" height="3" rx="1.5" fill="#2563eb"/></svg></div><div><h1>Lektier og karakterer</h1><small>Flueben, karakterer og noter</small></div></div><div class="lk-bar" id="lkBar"></div></header>
   <main id="lkView"></main>
   <p class="foot">Alt gemmes automatisk i denne browser på din computer. Tag en backup fra forsiden for en ekstra kopi.</p>
 </div>
@@ -1153,7 +1163,7 @@ root.addEventListener('click',async e=>{const b=e.target.closest('[data-ka]');if
  case 'ny':{const nm=await krPrompt('Ny klasse','Skriv klassens navn.','','Opret');if(!nm||!nm.trim())break;const c={id:uid(),navn:nm.trim(),elever:[],koen:{}};DB.klasser.push(c);DB.kaktiv=c.id;sv();render();break}
  case 'omdoeb':{const nm=await krPrompt('Omdøb klassen','Klassens nye navn.',k.navn,'Gem');if(!nm||!nm.trim())break;k.navn=nm.trim();sv();render();break}
  case 'slet':{if(DB.klasser.length<2){toast('Du skal have mindst én klasse');break}
-  if(!await krConfirm('Slet klassen?','“'+esc(k.navn)+'” og alle dens elever slettes, også i gruppe- og pladsgeneratoren og i Lektier. Det kan ikke fortrydes.','Slet klassen'))break;
+  if(!await krConfirm('Slet klassen?','“'+esc(k.navn)+'” og alle dens elever slettes, også i gruppe- og pladsgeneratoren og i Lektier og karakterer. Det kan ikke fortrydes.','Slet klassen'))break;
   DB.klasser=DB.klasser.filter(c=>c.id!==k.id);if(window.LKT)LKT.dropKlasse(k.id);delete DB.plads.data[k.id];delete DB.gruppe.absent[k.id];if(DB.gruppe.design)delete DB.gruppe.design[k.id];
   DB.kaktiv=DB.klasser[0].id;if(!kl(DB.plads.active))DB.plads.active=DB.klasser[0].id;if(!kl(DB.gruppe.aktivKlasse))DB.gruppe.aktivKlasse=DB.klasser[0].id;sv();render();break}
  case 'add':add();break;
@@ -1541,11 +1551,13 @@ const fmtL=s=>pd(s).toLocaleDateString('da-DK',{weekday:'long',day:'numeric',mon
 const wday=s=>pd(s).toLocaleDateString('da-DK',{weekday:'short'}).replace('.','');
 const sorted=c=>c.lektier.slice().sort((a,b)=>a.dato<b.dato?-1:a.dato>b.dato?1:0);
 const V=(c,l,n)=>(c.data[l]||{})[n]||null;
-const tael=(l,t)=>!l.ud&&l.dato<=t;
+const tael=(l,t)=>!l.ud&&l.t!=='k'&&l.dato<=t;
+const KAR=['12','10','7','4','02','00','-3'],kv=g=>KAR.includes(g)?parseInt(g,10):null;
+const gns=a=>a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1).replace('.',','):'';
 const sv=()=>dbSave();
 let pop=null,lastList='',tt=null,dirtyN=false;
 function toast(m){let t=document.getElementById('lkToast');if(!t){t=document.createElement('div');t.id='lkToast';t.className='lk-toast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2400)}
-function setV(c,l,n,f){c.data[l]=c.data[l]||{};const o=c.data[l][n]||{};f(o);if(!o.l&&!o.n)delete c.data[l][n];else c.data[l][n]=o;if(!Object.keys(c.data[l]).length)delete c.data[l]}
+function setV(c,l,n,f){c.data[l]=c.data[l]||{};const o=c.data[l][n]||{};f(o);if(!o.l&&!o.n&&!o.g)delete c.data[l][n];else c.data[l][n]=o;if(!Object.keys(c.data[l]).length)delete c.data[l]}
 const pen='<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2.5l3 3L6 13H3v-3z"/></svg>';
 const nIco='<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6a1.5 1.5 0 0 1-1.5 1.5H7l-3 3v-3h-.5A1.5 1.5 0 0 1 2 9.5z"/></svg>';
 const CHK='<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>';
@@ -1555,23 +1567,29 @@ function render(keep){if(KR.tool!=='lektier')return;closePop();dirtyN=false;cons
  const sel=ls.length?`<select id="lkSel" aria-label="Vælg liste">${ls.map(x=>`<option value="${x.id}"${c&&x.id===c.id?' selected':''}>${esc(x.navn)}</option>`).join('')}</select>`:'';
  const bar=`<div class="lk-grp"><span class="lk-lab">Klasse</span><div class="lk-row">${ksel}</div></div>
   <div class="lk-grp"><span class="lk-lab">Liste</span><div class="lk-row">${sel}<button class="btn sm" data-lk="nyliste">+ Ny liste</button>${c?'<button class="btn sm" data-lk="omdoeb">Omdøb</button><button class="btn sm ghost" data-lk="slet">Slet</button>':''}</div></div>
-  ${c?`<div class="lk-right"><button class="btn sm lk-tog" data-lk="visnoter" aria-pressed="${L.visNoter}" title="Vis teksten i noterne i skemaet">Vis noter: ${L.visNoter?'til':'fra'}</button><button class="btn sm primary" data-lk="nylektie">+ Ny lektie</button></div>`:''}`;root.querySelector('#lkBar').innerHTML=bar;let h='';
- if(!c){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen lektielister endnu</h3><p>Lav fx én liste til matematik og én til fysik/kemi.</p><button class="btn primary" data-lk="nyliste">+ Opret liste</button></section>`;view.innerHTML=h;lastList='';return}
+  ${c?`<div class="lk-right"><button class="btn sm lk-tog" data-lk="visnoter" aria-pressed="${L.visNoter}" title="Vis teksten i noterne i skemaet">Noter: ${L.visNoter?'til':'fra'}</button><button class="btn sm" data-lk="nykarakter">+ Ny karakter</button><button class="btn sm primary" data-lk="nylektie">+ Ny lektie</button></div>`:''}`;root.querySelector('#lkBar').innerHTML=bar;let h='';
+ if(!c){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen lektielister endnu</h3><p>Lav fx én liste til matematik og én til fysik/kemi. Hver liste kan have både lektier og karakterer.</p><button class="btn primary" data-lk="nyliste">+ Opret liste</button></section>`;view.innerHTML=h;lastList='';return}
  if(!k.elever.length){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen elever endnu</h3><p>Tilføj eleverne under Klasser og elever.</p><a class="btn primary" href="#klasser">Gå til Klasser og elever</a></section>`;view.innerHTML=h;return}
  const cols=sorted(c);
- if(!cols.length){h+=`<section class="panel lk-empty"><h3>Ingen lektier endnu</h3><p>Tryk på “+ Ny lektie” for at tilføje den første lektiedato.</p><button class="btn primary" data-lk="nylektie">+ Ny lektie</button></section>`;view.innerHTML=h;lastList=c.id;return}
- const last=cols.filter(l=>l.dato<=t).pop(),nC=cols.filter(l=>tael(l,t)).length;
- const head=cols.map(l=>`<th class="lk-h${l.ud?' ud':''}${l.dato>t?' fut':''}${last&&l.id===last.id?' now':''}" scope="col" data-col="${l.id}"><button data-lk="lektie" data-id="${l.id}" title="${esc(fmtL(l.dato))}${l.ud?' (udgået)':''}. Klik for at redigere"><b>${esc(fmt(l.dato))}</b><small>${l.ud?'Udgået':esc(wday(l.dato))}</small></button></th>`).join('');
- const rows=k.elever.map(n=>{let a=0;const tds=cols.map(l=>{if(l.ud)return `<td class="lk-c ud" title="Udgået"></td>`;const v=V(c,l.id,n)||{};if(v.l&&tael(l,t))a++;
-   const nb=v.n?(L.visNoter?`<button class="lk-nb has txt" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}"><span>${esc(v.n)}</span></button>`:`<button class="lk-nb has" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}" aria-label="Note: ${esc(v.n)}">${nIco}</button>`):`<button class="lk-nb" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="Skriv note" aria-label="Skriv note til ${esc(n)}">${pen}</button>`;
-   return `<td class="lk-c${v.l?' on':''}"><div class="lk-ci"><button class="lk-x" data-lk="x" data-l="${l.id}" data-n="${esc(n)}" aria-pressed="${!!v.l}" aria-label="${esc(n)} har lavet lektien til ${esc(fmt(l.dato))}">${CHK}</button>${nb}</div></td>`}).join('');
+ if(!cols.length){h+=`<section class="panel lk-empty"><h3>Ingen lektier eller karakterer endnu</h3><p>Tryk på “+ Ny lektie” for at tilføje en lektiedato, eller på “+ Ny karakter” for at give karakterer, fx for en prøve.</p><button class="btn" data-lk="nykarakter">+ Ny karakter</button> <button class="btn primary" data-lk="nylektie">+ Ny lektie</button></section>`;view.innerHTML=h;lastList=c.id;return}
+ const last=cols.filter(l=>l.dato<=t&&l.t!=='k').pop(),nC=cols.filter(l=>tael(l,t)).length,harK=cols.some(l=>l.t==='k'&&!l.ud);
+ const head=cols.map(l=>{const k2=l.t==='k';return `<th class="lk-h${k2?' kar':''}${l.ud?' ud':''}${l.dato>t&&!k2?' fut':''}${last&&l.id===last.id?' now':''}" scope="col" data-col="${l.id}"><button data-lk="lektie" data-id="${l.id}" title="${k2?'Karakter'+(l.navn?': '+esc(l.navn):'')+', ':''}${esc(fmtL(l.dato))}${l.ud?' (udgået)':''}. Klik for at redigere">${k2?`<b>${esc(l.navn||'Karakter')}</b><small>${l.ud?'Udgået':esc(fmt(l.dato))}</small>`:`<b>${esc(fmt(l.dato))}</b><small>${l.ud?'Udgået':esc(wday(l.dato))}</small>`}</button></th>`}).join('');
+ const nbF=(v,l,n)=>v.n?(L.visNoter?`<button class="lk-nb has txt" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}"><span>${esc(v.n)}</span></button>`:`<button class="lk-nb has" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}" aria-label="Note: ${esc(v.n)}">${nIco}</button>`):`<button class="lk-nb" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="Skriv note" aria-label="Skriv note til ${esc(n)}">${pen}</button>`;
+ const rows=k.elever.map(n=>{let a=0;const gs=[];const tds=cols.map(l=>{if(l.ud)return `<td class="lk-c ud${l.t==='k'?' kar':''}" title="Udgået"></td>`;const v=V(c,l.id,n)||{};
+   if(l.t==='k'){const g=KAR.includes(v.g)?v.g:'';if(g)gs.push(kv(g));
+    return `<td class="lk-c kar${g?' on':''}"><div class="lk-ci"><select class="lk-g" data-l="${l.id}" data-n="${esc(n)}" aria-label="Karakter til ${esc(n)}${l.navn?', '+esc(l.navn):''}"><option value=""${g?'':' selected'}>–</option>${KAR.map(x=>`<option${x===g?' selected':''}>${x}</option>`).join('')}</select>${nbF(v,l,n)}</div></td>`}
+   if(v.l&&tael(l,t))a++;
+   return `<td class="lk-c${v.l?' on':''}"><div class="lk-ci"><button class="lk-x" data-lk="x" data-l="${l.id}" data-n="${esc(n)}" aria-pressed="${!!v.l}" aria-label="${esc(n)} har lavet lektien til ${esc(fmt(l.dato))}">${CHK}</button>${nbF(v,l,n)}</div></td>`}).join('');
   const pct=nC?Math.round(a/nC*100):0;
-  return `<tr><th class="lk-n" scope="row" title="${esc(n)}">${esc(n)}</th>${tds}<td class="lk-s">${nC?a+'/'+nC+'<span class="lk-pct">'+pct+' %</span>':'–'}</td></tr>`}).join('');
- const foot=cols.map(l=>{if(l.ud)return '<td class="lk-c ud"></td>';const m=k.elever.filter(n=>(V(c,l.id,n)||{}).l).length;return `<td>${m}/${k.elever.length}</td>`}).join('');
- h+=`<div class="lk-wrap"><table class="lk-t"><thead><tr><th class="lk-n" scope="col">Elev</th>${head}<th class="lk-s" scope="col" title="Lavede lektier ud af lektier til og med i dag (udgåede tæller ikke med)">Lavet</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><th class="lk-n" scope="row">I alt</th>${foot}<td class="lk-s"></td></tr></tfoot></table></div>
+  return `<tr><th class="lk-n" scope="row" title="${esc(n)}">${esc(n)}</th>${tds}<td class="lk-s">${nC?a+'/'+nC+'<span class="lk-pct">'+pct+' %</span>':'–'}</td>${harK?`<td class="lk-s lk-a">${gns(gs)||'–'}</td>`:''}</tr>`}).join('');
+ const foot=cols.map(l=>{if(l.ud)return `<td class="lk-c ud${l.t==='k'?' kar':''}"></td>`;
+  if(l.t==='k'){const gs=k.elever.map(n=>kv((V(c,l.id,n)||{}).g)).filter(x=>x!==null);return `<td class="kar" title="Klassens gennemsnit">${gs.length?'Gns. '+gns(gs):'–'}</td>`}
+  const m=k.elever.filter(n=>(V(c,l.id,n)||{}).l).length;return `<td>${m}/${k.elever.length}</td>`}).join('');
+ const allG=harK?k.elever.flatMap(n=>cols.filter(l=>l.t==='k'&&!l.ud).map(l=>kv((V(c,l.id,n)||{}).g))).filter(x=>x!==null):[];
+ h+=`<div class="lk-wrap"><table class="lk-t${harK?' has-g':''}"><thead><tr><th class="lk-n" scope="col">Elev</th>${head}<th class="lk-s" scope="col" title="Lavede lektier ud af lektier til og med i dag (udgåede tæller ikke med)">Lavet</th>${harK?'<th class="lk-s lk-a" scope="col" title="Gennemsnit af elevens karakterer i listen">Gns.</th>':''}</tr></thead><tbody>${rows}</tbody><tfoot><tr><th class="lk-n" scope="row">I alt</th>${foot}<td class="lk-s"></td>${harK?`<td class="lk-s lk-a" title="Gennemsnit af alle karakterer i listen">${gns(allG)||''}</td>`:''}</tr></tfoot></table></div>
 `;
- view.innerHTML=h;const w=view.querySelector('.lk-wrap');
- if(keep){w.scrollLeft=sx;w.scrollTop=sy}else if(lastList!==c.id&&last){const th=w.querySelector('[data-col="'+last.id+'"]'),s=w.querySelector('thead .lk-s');if(th)w.scrollLeft=Math.max(0,th.offsetLeft+th.offsetWidth-w.clientWidth+(s?s.offsetWidth:0)+24)}
+ view.innerHTML=h;const w=view.querySelector('.lk-wrap');{const ga=w.querySelector('thead .lk-a');if(ga)w.style.setProperty('--ga',ga.getBoundingClientRect().width+'px')}
+ if(keep){w.scrollLeft=sx;w.scrollTop=sy}else if(lastList!==c.id&&(last||cols.length)){if(!last){lastList=c.id;fit();return}const th=w.querySelector('[data-col="'+last.id+'"]'),sw=[...w.querySelectorAll('thead .lk-s')].reduce((x,e)=>x+e.offsetWidth,0);if(th)w.scrollLeft=Math.max(0,th.offsetLeft+th.offsetWidth-w.clientWidth+sw+24)}
  lastList=c.id;fit()}
 function fit(){const w=view.querySelector('.lk-wrap');if(!w||KR.tool!=='lektier')return;const nav=document.getElementById('krNav'),nb=nav&&getComputedStyle(nav).display!=='none'?nav.offsetHeight:0;
  const h=innerHeight-(w.getBoundingClientRect().top+scrollY)-nb-18;w.style.maxHeight=Math.max(innerWidth<=760?340:220,h)+'px'}
@@ -1591,37 +1609,41 @@ function openNote(btn){const k=K(),c=cur(k);if(!c)return;const l=c.lektier.find(
 document.addEventListener('mousedown',e=>{if(pop&&!pop.contains(e.target)&&!e.target.closest('.lk-nb')){closePop();dirtyN=true}},true);
 document.addEventListener('click',()=>{if(dirtyN&&!pop){if(KR.tool==='lektier')render(true);else dirtyN=false}});
 /* lektie-dialog */
-function lektieDlg(c,l){return new Promise(res=>{const ny=!l,t=today();let d=t;if(ny){const s=sorted(c),lst=s[s.length-1];if(lst){const x=pd(lst.dato);x.setDate(x.getDate()+7);d=iso(x)}}else d=l.dato;
+function lektieDlg(c,l,typ){return new Promise(res=>{const ny=!l,t=today(),kar=(l?l.t:typ)==='k';let d=t;if(ny&&!kar){const s=sorted(c).filter(x=>x.t!=='k'),lst=s[s.length-1];if(lst){const x=pd(lst.dato);x.setDate(x.getDate()+7);d=iso(x)}}else if(l)d=l.dato;
  const o=document.createElement('div');o.className='kr-ov';
- o.innerHTML=`<div class="kr-dl" role="dialog" aria-modal="true"><h3>${ny?'Ny lektie':'Redigér lektie'}</h3><label class="lk-dl" for="lkD">Dato</label><input type="date" id="lkD" value="${d}">
+ o.innerHTML=`<div class="kr-dl" role="dialog" aria-modal="true"><h3>${kar?(ny?'Ny karakter':'Redigér karakter'):(ny?'Ny lektie':'Redigér lektie')}</h3>
+  ${kar?`<label class="lk-dl" for="lkN">Navn</label><input type="text" id="lkN" maxlength="40" placeholder="Fx Prøve i brøker" value="${l&&l.navn?esc(l.navn):''}">`:''}
+  <label class="lk-dl" for="lkD">Dato</label><input type="date" id="lkD" value="${d}">
   <label class="lk-chk"><input type="checkbox" id="lkU"${l&&l.ud?' checked':''}> Udgået (tæller ikke med)</label>
-  ${ny?'':'<div class="lk-dlb"><button data-v="alle">Flueben ved alle</button><button data-v="ingen">Fjern alle flueben</button><button data-v="slet" class="d">Slet lektie</button></div>'}
+  ${ny?'':(kar?'<div class="lk-dlb"><button data-v="ingen">Fjern alle karakterer</button><button data-v="slet" class="d">Slet karakterkolonne</button></div>':'<div class="lk-dlb"><button data-v="alle">Flueben ved alle</button><button data-v="ingen">Fjern alle flueben</button><button data-v="slet" class="d">Slet lektie</button></div>')}
   <div class="kr-ac"><button data-v="">Annuller</button><button data-v="ok" class="gold">${ny?'Tilføj':'Gem'}</button></div></div>`;
- const di=o.querySelector('#lkD'),done=v=>{o.remove();res(v)};
- o.onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;const v=b.dataset.v;if(!v)return done(null);done({a:v,dato:di.value,ud:o.querySelector('#lkU').checked})};
- o.onkeydown=e=>{if(e.key==='Escape')done(null);if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox'){e.preventDefault();done({a:'ok',dato:di.value,ud:o.querySelector('#lkU').checked})}};
- document.body.appendChild(o);di.focus()})}
+ const di=o.querySelector('#lkD'),ni=o.querySelector('#lkN'),done=v=>{o.remove();res(v)},val=a=>({a,dato:di.value,ud:o.querySelector('#lkU').checked,navn:ni?ni.value.trim():''});
+ o.onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;const v=b.dataset.v;if(!v)return done(null);done(val(v))};
+ o.onkeydown=e=>{if(e.key==='Escape')done(null);if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.type!=='checkbox'){e.preventDefault();done(val('ok'))}};
+ document.body.appendChild(o);(ni||di).focus()})}
 root.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]');if(!b)return;const L=LK(),k=K(),c=cur(k),a=b.dataset.lk;
  switch(a){
  case 'klasse':L.klasse=b.dataset.id;sv();render();break;
  case 'nyliste':{const nm=await krPrompt('Ny lektieliste','Skriv et navn til listen for '+esc(k.navn)+', fx Matematik.',lister(k).length?'':'Lektier','Opret');if(!nm||!nm.trim())break;
   const x={id:uid(),klasse:k.id,navn:nm.trim(),lektier:[],data:{}};L.lister.push(x);L.aktiv[k.id]=x.id;sv();render();break}
  case 'omdoeb':{if(!c)break;const nm=await krPrompt('Omdøb listen','Listens nye navn.',c.navn,'Gem');if(!nm||!nm.trim())break;c.navn=nm.trim();sv();render(true);break}
- case 'slet':{if(!c)break;if(!await krConfirm('Slet listen?','“'+esc(c.navn)+'” med alle lektier, flueben og noter slettes. Det kan ikke fortrydes.','Slet listen'))break;
+ case 'slet':{if(!c)break;if(!await krConfirm('Slet listen?','“'+esc(c.navn)+'” med alle lektier, flueben, karakterer og noter slettes. Det kan ikke fortrydes.','Slet listen'))break;
   L.lister=L.lister.filter(x=>x.id!==c.id);delete L.aktiv[k.id];sv();render();break}
  case 'visnoter':L.visNoter=!L.visNoter;sv();render(true);break;
- case 'nylektie':{if(!c)break;const r=await lektieDlg(c,null);if(!r||!r.dato)break;const l={id:uid(),dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();lastList='';render();break}
+ case 'nylektie':{if(!c)break;const r=await lektieDlg(c,null,'l');if(!r||!r.dato)break;const l={id:uid(),dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();lastList='';render();break}
+ case 'nykarakter':{if(!c)break;const r=await lektieDlg(c,null,'k');if(!r||!r.dato)break;const l={id:uid(),t:'k',navn:r.navn,dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();render(true);const th=view.querySelector('[data-col="'+l.id+'"]'),w=view.querySelector('.lk-wrap');if(th&&w)w.scrollLeft=Math.max(0,th.offsetLeft-w.clientWidth/2);break}
  case 'lektie':{if(!c)break;const l=c.lektier.find(x=>x.id===b.dataset.id);if(!l)break;const r=await lektieDlg(c,l);if(!r)break;
-  if(r.a==='slet'){const m=Object.keys(c.data[l.id]||{}).length;if(!await krConfirm('Slet lektien?','Lektien '+esc(fmtL(l.dato))+(m?' med alle flueben og noter':'')+' slettes. Det kan ikke fortrydes.','Slet lektien'))break;c.lektier=c.lektier.filter(x=>x.id!==l.id);delete c.data[l.id];sv();render(true);break}
-  if(r.dato)l.dato=r.dato;l.ud=!!r.ud;
+  if(r.a==='slet'){const m=Object.keys(c.data[l.id]||{}).length,K2=l.t==='k';if(!await krConfirm(K2?'Slet karakterkolonnen?':'Slet lektien?',(K2?'Karakterkolonnen “'+esc(l.navn||'Karakter')+'” fra '+esc(fmtL(l.dato))+(m?' med alle karakterer og noter':''):'Lektien '+esc(fmtL(l.dato))+(m?' med alle flueben og noter':''))+' slettes. Det kan ikke fortrydes.',K2?'Slet kolonnen':'Slet lektien'))break;c.lektier=c.lektier.filter(x=>x.id!==l.id);delete c.data[l.id];sv();render(true);break}
+  if(r.dato)l.dato=r.dato;l.ud=!!r.ud;if(l.t==='k')l.navn=r.navn;
   if(r.a==='alle')k.elever.forEach(n=>setV(c,l.id,n,o=>{o.l=1}));
-  if(r.a==='ingen')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.l}));
+  if(r.a==='ingen')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.l;delete o.g}));
   sv();render(true);break}
  case 'x':{if(!c)break;setV(c,b.dataset.l,b.dataset.n,o=>{if(o.l)delete o.l;else o.l=1});sv();render(true);
   const nb=view.querySelector('.lk-x[data-l="'+b.dataset.l+'"][data-n="'+CSS.escape(b.dataset.n)+'"]');if(nb)nb.focus({preventScroll:true});break}
  case 'note':openNote(b);break;
  }});
-root.addEventListener('change',e=>{if(e.target.id==='lkKl'){LK().klasse=e.target.value;sv();render();return}if(e.target.id==='lkSel'){const k=K();LK().aktiv[k.id]=e.target.value;sv();render()}});
+root.addEventListener('change',e=>{if(e.target.classList.contains('lk-g')){const c=cur(K());if(!c)return;const v=e.target.value,l=e.target.dataset.l,n=e.target.dataset.n;setV(c,l,n,o=>{if(KAR.includes(v))o.g=v;else delete o.g});sv();render(true);const x=view.querySelector('.lk-g[data-l="'+l+'"][data-n="'+CSS.escape(n)+'"]');if(x)x.focus({preventScroll:true});return}
+ if(e.target.id==='lkKl'){LK().klasse=e.target.value;sv();render();return}if(e.target.id==='lkSel'){const k=K();LK().aktiv[k.id]=e.target.value;sv();render()}});
 window.LKT={render,leave:closePop,home(){const n=(DB.lektier&&DB.lektier.lister||[]).length;const e=document.getElementById('hc6');if(e)e.textContent=n+(n===1?' liste':' lister')},
  rename(kid,o,w){(DB.lektier&&DB.lektier.lister||[]).forEach(x=>{if(x.klasse!==kid)return;for(const l in x.data||{}){const d=x.data[l];if(d[o]&&!d[w]){d[w]=d[o];delete d[o]}}})},
  dropKlasse(kid){if(!DB.lektier)return;DB.lektier.lister=(DB.lektier.lister||[]).filter(x=>x.klasse!==kid);if(DB.lektier.aktiv)delete DB.lektier.aktiv[kid]}};
@@ -1735,7 +1757,7 @@ function homeInfo(){if(window.NT)NT.home();if(window.LKT)LKT.home();const nt=(DB
 KR.route=function(){const h=location.hash.slice(1),t=(h==='plads'||h==='gruppe'||h==='klasser'||h==='timer'||h==='tavle'||h==='noter'||h==='lektier')?h:'home';
  if(KR.tool==='plads'&&t!=='plads'){$('#pg').textContent='';PL.resetRules()}if(KR.tool==='gruppe'&&t!=='gruppe')GR.resetRules();if(KR.tool==='tavle'&&t!=='tavle')TV.leave();if(KR.tool==='noter'&&t!=='noter')NT.lock();if(KR.tool==='lektier'&&t!=='lektier')LKT.leave();
  KR.tool=t;['home','plads','gruppe','klasser','timer','tavle','noter','lektier'].forEach(x=>$('#'+x).classList.toggle('kr-hide',x!==t));$('#bar').classList.toggle('kr-hide',t==='home');document.querySelectorAll('#krNav a').forEach(a=>{const on=a.dataset.t===t;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- document.title={home:'Klasseredskaber',plads:'Pladsgenerator',gruppe:'Gruppegenerator',klasser:'Klasser og elever',timer:'Timer',tavle:'Tavle',noter:'Notater',lektier:'Lektier'}[t];
+ document.title={home:'Klasseredskaber',plads:'Pladsgenerator',gruppe:'Gruppegenerator',klasser:'Klasser og elever',timer:'Timer',tavle:'Tavle',noter:'Notater',lektier:'Lektier og karakterer'}[t];
  if(t==='home')homeInfo();if(t==='plads')PL.render();if(t==='gruppe')GR.render();if(t==='klasser')KL.render();if(t==='timer')TM.render();if(t==='tavle')TV.render();if(t==='noter')NT.render();if(t==='lektier')LKT.render();TM.ind();window.scrollTo(0,0);requestAnimationFrame(()=>window.scrollTo(0,0))};
 function readBackup(d){if(!d||typeof d!=='object')return null;const pd=o=>{const r={};for(const k in o||{})r[k]=normPlads(o[k]);return r};
  if(Array.isArray(d.classes)&&d.classes.length)return{p:oldPlads(d)};
