@@ -682,7 +682,7 @@ $('#room').onpointerdown=e=>{if(!edit||e.target.closest('.x'))return;const el=e.
 $('#bank').onclick=e=>{const n=e.target.dataset.n;
  if(n!==undefined){sel=sel&&sel.bank===n?null:{bank:n};return render()}
  if(sel&&sel.seat){const c=cur(),id=sel.seat;sel=null;mut(()=>{delete A(c)[id];delete c.locked[id]})}};
-document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable||(window.KR&&KR.tool!=='plads'))return;
+document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)||e.target.isContentEditable||(typeof KR!=='undefined'&&KR.tool!=='plads'))return;
  const z=e.key=='z'||e.key=='Z',y=e.key=='y'||e.key=='Y';if(z&&!e.shiftKey){e.preventDefault();$('#un').click()}else if(y||(z&&e.shiftKey)){e.preventDefault();$('#re').click()}});
 window.addEventListener('beforeprint',()=>{if(KR.tool!=='plads')return;const c=cur(),p=c.orient=='portrait',k=Math.min(90,Math.floor(Math.min((p?700:1030)/c.cols,(p?960:540)/c.rows)));document.documentElement.style.setProperty('--c',k+'px');fitSeats()});
 window.addEventListener('afterprint',render);
@@ -1786,7 +1786,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-19-6';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-19-7';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
@@ -1814,7 +1814,7 @@ function changed(){if(!live()||busy)return;if((DB.gemt||0)===stamp0)return;clear
 /* læg data ind i programmet uden at genindlæse siden */
 function apply(o){const d=JSON.parse(JSON.stringify(o));delete d.app;DB=d;KR_LS=JSON.stringify(Object.assign({},d,{gemt:0}));stamp0=d.gemt||0;
  try{if(window.TV)TV.clear();if(window.GR)GR.reset();if(window.PL)PL.reset();if(window.NT)NT.lock()}catch(e){}
- if(window.KR&&KR.route)KR.route()}
+ if(typeof KR!=='undefined'&&KR.route)KR.route()}
 const fmt=t=>t?new Date(t).toLocaleString('da-DK',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'ukendt tidspunkt';
 const desc=o=>{const e=o.klasser.reduce((a,k)=>a+k.elever.length,0);return o.klasser.length+(o.klasser.length===1?' klasse':' klasser')+', '+e+' elever, sidst ændret '+fmt(o.gemt)};
 function pick(f,b,bLab){return new Promise(res=>{const o=document.createElement('div');o.className='kr-ov';o.style.zIndex=400;
