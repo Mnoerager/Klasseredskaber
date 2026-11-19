@@ -263,7 +263,10 @@ body{font-variant-numeric:tabular-nums}
 #lektier .lk-h.kar{box-shadow:inset 0 3px 0 #0d9488}
 #lektier .lk-c.kar,#lektier tfoot .kar{background:#f4fbfa}
 #lektier tbody tr:hover>.lk-c.kar{background:#eaf7f5}
-#lektier .lk-g{font-family:Inter,sans-serif;font-weight:600;font-size:.92rem;color:#0f1f38;background:#ffffff;border:2px solid #c5d4e8;border-radius:9px;height:32px;padding:0 4px;min-width:56px;cursor:pointer}
+#lektier .lk-g{flex:none;-webkit-appearance:none;appearance:none;font-family:Inter,sans-serif;font-weight:600;font-size:.85rem;color:#4b5f7a;background:#ffffff;border:2px solid #c5d4e8;border-radius:9px;height:30px;width:40px;padding:0;text-align:center;text-align-last:center;cursor:pointer;margin-left:2px}
+#lektier .lk-t .lk-fill{width:100%;padding:0;border-right:0}
+#lektier .lk-g.has{border-color:#0d9488;background:#e6f6f4;color:#0f766e}
+#lektier .lk-fg{display:block;font-size:.72rem;color:#0f766e}
 #lektier .lk-g:hover,#lektier .lk-g:focus{border-color:#0d9488;outline:none}
 #lektier .lk-c.kar.on .lk-g{border-color:#0d9488;background:#e6f6f4;color:#0f766e}
 #lektier .lk-t.has-g .lk-s:not(.lk-a){right:var(--ga,68px)}
@@ -1539,10 +1542,10 @@ window.TV={render(){renderBoard();placeTools();fit();},leave(){if(tools.parentNo
 (()=>{
 const root=document.getElementById('lektier'),view=document.getElementById('lkView');
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const LK=()=>{let L=DB.lektier;if(!L||!Array.isArray(L.lister))L=DB.lektier={klasse:'',aktiv:{},visNoter:true,lister:[]};if(!L.aktiv||typeof L.aktiv!=='object')L.aktiv={};if(L.visNoter===undefined)L.visNoter=true;return L};
+const LK=()=>{let L=DB.lektier;if(!L||!Array.isArray(L.lister))L=DB.lektier={klasse:'',aktiv:{},visNoter:true,lister:[]};if(!L.aktiv||typeof L.aktiv!=='object')L.aktiv={};if(L.visNoter===undefined)L.visNoter=true;if(L.visKar===undefined)L.visKar=false;return L};
 const K=()=>{const L=LK();let k=kl(L.klasse);if(!k){k=DB.klasser.find(x=>x.elever.length)||DB.klasser[0];L.klasse=k.id}return k};
 const lister=k=>LK().lister.filter(x=>x.klasse===k.id);
-const cur=k=>{const L=LK(),ls=lister(k);let c=ls.find(x=>x.id===L.aktiv[k.id]);if(!c&&ls.length){c=ls[0];L.aktiv[k.id]=c.id}if(c){c.lektier=c.lektier||[];c.data=c.data||{}}return c||null};
+const cur=k=>{const L=LK(),ls=lister(k);let c=ls.find(x=>x.id===L.aktiv[k.id]);if(!c&&ls.length){c=ls[0];L.aktiv[k.id]=c.id}if(c){c.lektier=c.lektier||[];c.data=c.data||{};c.lektier.forEach(l=>{if(l.t==='k'){delete l.t;delete l.navn}})}return c||null};
 const p2=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
 const pd=s=>{const a=String(s).split('-').map(Number);return new Date(a[0],a[1]-1,a[2])};
 const today=()=>iso(new Date());
@@ -1567,26 +1570,27 @@ function render(keep){if(KR.tool!=='lektier')return;closePop();dirtyN=false;cons
  const sel=ls.length?`<select id="lkSel" aria-label="Vælg liste">${ls.map(x=>`<option value="${x.id}"${c&&x.id===c.id?' selected':''}>${esc(x.navn)}</option>`).join('')}</select>`:'';
  const bar=`<div class="lk-grp"><span class="lk-lab">Klasse</span><div class="lk-row">${ksel}</div></div>
   <div class="lk-grp"><span class="lk-lab">Liste</span><div class="lk-row">${sel}<button class="btn sm" data-lk="nyliste">+ Ny liste</button>${c?'<button class="btn sm" data-lk="omdoeb">Omdøb</button><button class="btn sm ghost" data-lk="slet">Slet</button>':''}</div></div>
-  ${c?`<div class="lk-right"><button class="btn sm lk-tog" data-lk="visnoter" aria-pressed="${L.visNoter}" title="Vis teksten i noterne i skemaet">Noter: ${L.visNoter?'til':'fra'}</button><button class="btn sm" data-lk="nykarakter">+ Ny karakter</button><button class="btn sm primary" data-lk="nylektie">+ Ny lektie</button></div>`:''}`;root.querySelector('#lkBar').innerHTML=bar;let h='';
- if(!c){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen lektielister endnu</h3><p>Lav fx én liste til matematik og én til fysik/kemi. Hver liste kan have både lektier og karakterer.</p><button class="btn primary" data-lk="nyliste">+ Opret liste</button></section>`;view.innerHTML=h;lastList='';return}
+  ${c?`<div class="lk-right"><button class="btn sm lk-tog" data-lk="visnoter" aria-pressed="${L.visNoter}" title="Vis teksten i noterne i skemaet">Noter: ${L.visNoter?'til':'fra'}</button><button class="btn sm lk-tog" data-lk="viskar" aria-pressed="${L.visKar}" title="Vis en karakter-rullemenu i hvert felt">Karakterer: ${L.visKar?'til':'fra'}</button><button class="btn sm primary" data-lk="nylektie">+ Ny lektie</button></div>`:''}`;root.querySelector('#lkBar').innerHTML=bar;let h='';
+ if(!c){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen lektielister endnu</h3><p>Lav fx én liste til matematik og én til fysik/kemi.</p><button class="btn primary" data-lk="nyliste">+ Opret liste</button></section>`;view.innerHTML=h;lastList='';return}
  if(!k.elever.length){h+=`<section class="panel lk-empty"><h3>${esc(k.navn)} har ingen elever endnu</h3><p>Tilføj eleverne under Klasser og elever.</p><a class="btn primary" href="#klasser">Gå til Klasser og elever</a></section>`;view.innerHTML=h;return}
  const cols=sorted(c);
- if(!cols.length){h+=`<section class="panel lk-empty"><h3>Ingen lektier eller karakterer endnu</h3><p>Tryk på “+ Ny lektie” for at tilføje en lektiedato, eller på “+ Ny karakter” for at give karakterer, fx for en prøve.</p><button class="btn" data-lk="nykarakter">+ Ny karakter</button> <button class="btn primary" data-lk="nylektie">+ Ny lektie</button></section>`;view.innerHTML=h;lastList=c.id;return}
- const last=cols.filter(l=>l.dato<=t&&l.t!=='k').pop(),nC=cols.filter(l=>tael(l,t)).length,harK=cols.some(l=>l.t==='k'&&!l.ud);
+ if(!cols.length){h+=`<section class="panel lk-empty"><h3>Ingen lektier endnu</h3><p>Tryk på “+ Ny lektie” for at tilføje den første lektiedato. Slå “Karakterer” til for at give karakterer i felterne.</p><button class="btn primary" data-lk="nylektie">+ Ny lektie</button></section>`;view.innerHTML=h;lastList=c.id;return}
+ const last=cols.filter(l=>l.dato<=t&&l.t!=='k').pop(),nC=cols.filter(l=>tael(l,t)).length,harK=L.visKar;
  const head=cols.map(l=>{const k2=l.t==='k';return `<th class="lk-h${k2?' kar':''}${l.ud?' ud':''}${l.dato>t&&!k2?' fut':''}${last&&l.id===last.id?' now':''}" scope="col" data-col="${l.id}"><button data-lk="lektie" data-id="${l.id}" title="${k2?'Karakter'+(l.navn?': '+esc(l.navn):'')+', ':''}${esc(fmtL(l.dato))}${l.ud?' (udgået)':''}. Klik for at redigere">${k2?`<b>${esc(l.navn||'Karakter')}</b><small>${l.ud?'Udgået':esc(fmt(l.dato))}</small>`:`<b>${esc(fmt(l.dato))}</b><small>${l.ud?'Udgået':esc(wday(l.dato))}</small>`}</button></th>`}).join('');
  const nbF=(v,l,n)=>v.n?(L.visNoter?`<button class="lk-nb has txt" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}"><span>${esc(v.n)}</span></button>`:`<button class="lk-nb has" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}" aria-label="Note: ${esc(v.n)}">${nIco}</button>`):`<button class="lk-nb" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="Skriv note" aria-label="Skriv note til ${esc(n)}">${pen}</button>`;
  const rows=k.elever.map(n=>{let a=0;const gs=[];const tds=cols.map(l=>{if(l.ud)return `<td class="lk-c ud${l.t==='k'?' kar':''}" title="Udgået"></td>`;const v=V(c,l.id,n)||{};
    if(l.t==='k'){const g=KAR.includes(v.g)?v.g:'';if(g)gs.push(kv(g));
     return `<td class="lk-c kar${g?' on':''}"><div class="lk-ci"><select class="lk-g" data-l="${l.id}" data-n="${esc(n)}" aria-label="Karakter til ${esc(n)}${l.navn?', '+esc(l.navn):''}"><option value=""${g?'':' selected'}>–</option>${KAR.map(x=>`<option${x===g?' selected':''}>${x}</option>`).join('')}</select>${nbF(v,l,n)}</div></td>`}
-   if(v.l&&tael(l,t))a++;
-   return `<td class="lk-c${v.l?' on':''}"><div class="lk-ci"><button class="lk-x" data-lk="x" data-l="${l.id}" data-n="${esc(n)}" aria-pressed="${!!v.l}" aria-label="${esc(n)} har lavet lektien til ${esc(fmt(l.dato))}">${CHK}</button>${nbF(v,l,n)}</div></td>`}).join('');
+   if(v.l&&tael(l,t))a++;const g=KAR.includes(v.g)?v.g:'';if(g)gs.push(kv(g));
+   const gsel=L.visKar?`<select class="lk-g${g?' has':''}" data-l="${l.id}" data-n="${esc(n)}" aria-label="Karakter til ${esc(n)} for lektien ${esc(fmt(l.dato))}" title="Karakter"><option value=""${g?'':' selected'}>–</option>${KAR.map(x=>`<option${x===g?' selected':''}>${x}</option>`).join('')}</select>`:'';
+   return `<td class="lk-c${v.l?' on':''}"><div class="lk-ci"><button class="lk-x" data-lk="x" data-l="${l.id}" data-n="${esc(n)}" aria-pressed="${!!v.l}" aria-label="${esc(n)} har lavet lektien til ${esc(fmt(l.dato))}">${CHK}</button>${gsel}${nbF(v,l,n)}</div></td>`}).join('');
   const pct=nC?Math.round(a/nC*100):0;
-  return `<tr><th class="lk-n" scope="row" title="${esc(n)}">${esc(n)}</th>${tds}<td class="lk-s">${nC?a+'/'+nC+'<span class="lk-pct">'+pct+' %</span>':'–'}</td>${harK?`<td class="lk-s lk-a">${gns(gs)||'–'}</td>`:''}</tr>`}).join('');
+  return `<tr><th class="lk-n" scope="row" title="${esc(n)}">${esc(n)}</th>${tds}<td class="lk-fill"></td><td class="lk-s">${nC?a+'/'+nC+'<span class="lk-pct">'+pct+' %</span>':'–'}</td>${harK?`<td class="lk-s lk-a">${gns(gs)||'–'}</td>`:''}</tr>`}).join('');
  const foot=cols.map(l=>{if(l.ud)return `<td class="lk-c ud${l.t==='k'?' kar':''}"></td>`;
   if(l.t==='k'){const gs=k.elever.map(n=>kv((V(c,l.id,n)||{}).g)).filter(x=>x!==null);return `<td class="kar" title="Klassens gennemsnit">${gs.length?'Gns. '+gns(gs):'–'}</td>`}
-  const m=k.elever.filter(n=>(V(c,l.id,n)||{}).l).length;return `<td>${m}/${k.elever.length}</td>`}).join('');
- const allG=harK?k.elever.flatMap(n=>cols.filter(l=>l.t==='k'&&!l.ud).map(l=>kv((V(c,l.id,n)||{}).g))).filter(x=>x!==null):[];
- h+=`<div class="lk-wrap"><table class="lk-t${harK?' has-g':''}"><thead><tr><th class="lk-n" scope="col">Elev</th>${head}<th class="lk-s" scope="col" title="Lavede lektier ud af lektier til og med i dag (udgåede tæller ikke med)">Lavet</th>${harK?'<th class="lk-s lk-a" scope="col" title="Gennemsnit af elevens karakterer i listen">Gns.</th>':''}</tr></thead><tbody>${rows}</tbody><tfoot><tr><th class="lk-n" scope="row">I alt</th>${foot}<td class="lk-s"></td>${harK?`<td class="lk-s lk-a" title="Gennemsnit af alle karakterer i listen">${gns(allG)||''}</td>`:''}</tr></tfoot></table></div>
+  const m=k.elever.filter(n=>(V(c,l.id,n)||{}).l).length;let gx='';if(L.visKar){const gs=k.elever.map(n=>kv((V(c,l.id,n)||{}).g)).filter(x=>x!==null);if(gs.length)gx=`<span class="lk-fg" title="Klassens gennemsnit">Gns. ${gns(gs)}</span>`}return `<td>${m}/${k.elever.length}${gx}</td>`}).join('');
+ const allG=harK?k.elever.flatMap(n=>cols.filter(l=>!l.ud).map(l=>kv((V(c,l.id,n)||{}).g))).filter(x=>x!==null):[];
+ h+=`<div class="lk-wrap"><table class="lk-t${harK?' has-g':''}"><thead><tr><th class="lk-n" scope="col">Elev</th>${head}<th class="lk-fill" aria-hidden="true"></th><th class="lk-s" scope="col" title="Lavede lektier ud af lektier til og med i dag (udgåede tæller ikke med)">Lavet</th>${harK?'<th class="lk-s lk-a" scope="col" title="Gennemsnit af elevens karakterer i listen">Gns.</th>':''}</tr></thead><tbody>${rows}</tbody><tfoot><tr><th class="lk-n" scope="row">I alt</th>${foot}<td class="lk-fill"></td><td class="lk-s"></td>${harK?`<td class="lk-s lk-a" title="Gennemsnit af alle karakterer i listen">${gns(allG)||''}</td>`:''}</tr></tfoot></table></div>
 `;
  view.innerHTML=h;const w=view.querySelector('.lk-wrap');{const ga=w.querySelector('thead .lk-a');if(ga)w.style.setProperty('--ga',ga.getBoundingClientRect().width+'px')}
  if(keep){w.scrollLeft=sx;w.scrollTop=sy}else if(lastList!==c.id&&(last||cols.length)){if(!last){lastList=c.id;fit();return}const th=w.querySelector('[data-col="'+last.id+'"]'),sw=[...w.querySelectorAll('thead .lk-s')].reduce((x,e)=>x+e.offsetWidth,0);if(th)w.scrollLeft=Math.max(0,th.offsetLeft+th.offsetWidth-w.clientWidth+sw+24)}
@@ -1615,7 +1619,7 @@ function lektieDlg(c,l,typ){return new Promise(res=>{const ny=!l,t=today(),kar=(
   ${kar?`<label class="lk-dl" for="lkN">Navn</label><input type="text" id="lkN" maxlength="40" placeholder="Fx Prøve i brøker" value="${l&&l.navn?esc(l.navn):''}">`:''}
   <label class="lk-dl" for="lkD">Dato</label><input type="date" id="lkD" value="${d}">
   <label class="lk-chk"><input type="checkbox" id="lkU"${l&&l.ud?' checked':''}> Udgået (tæller ikke med)</label>
-  ${ny?'':(kar?'<div class="lk-dlb"><button data-v="ingen">Fjern alle karakterer</button><button data-v="slet" class="d">Slet karakterkolonne</button></div>':'<div class="lk-dlb"><button data-v="alle">Flueben ved alle</button><button data-v="ingen">Fjern alle flueben</button><button data-v="slet" class="d">Slet lektie</button></div>')}
+  ${ny?'':(kar?'<div class="lk-dlb"><button data-v="ingen">Fjern alle karakterer</button><button data-v="slet" class="d">Slet karakterkolonne</button></div>':'<div class="lk-dlb"><button data-v="alle">Flueben ved alle</button><button data-v="ingen">Fjern alle flueben</button>'+(LK().visKar?'<button data-v="ingenk">Fjern alle karakterer</button>':'')+'<button data-v="slet" class="d">Slet lektie</button></div>')}
   <div class="kr-ac"><button data-v="">Annuller</button><button data-v="ok" class="gold">${ny?'Tilføj':'Gem'}</button></div></div>`;
  const di=o.querySelector('#lkD'),ni=o.querySelector('#lkN'),done=v=>{o.remove();res(v)},val=a=>({a,dato:di.value,ud:o.querySelector('#lkU').checked,navn:ni?ni.value.trim():''});
  o.onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;const v=b.dataset.v;if(!v)return done(null);done(val(v))};
@@ -1630,13 +1634,15 @@ root.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]');if
  case 'slet':{if(!c)break;if(!await krConfirm('Slet listen?','“'+esc(c.navn)+'” med alle lektier, flueben, karakterer og noter slettes. Det kan ikke fortrydes.','Slet listen'))break;
   L.lister=L.lister.filter(x=>x.id!==c.id);delete L.aktiv[k.id];sv();render();break}
  case 'visnoter':L.visNoter=!L.visNoter;sv();render(true);break;
+ case 'viskar':L.visKar=!L.visKar;sv();render(true);break;
  case 'nylektie':{if(!c)break;const r=await lektieDlg(c,null,'l');if(!r||!r.dato)break;const l={id:uid(),dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();lastList='';render();break}
  case 'nykarakter':{if(!c)break;const r=await lektieDlg(c,null,'k');if(!r||!r.dato)break;const l={id:uid(),t:'k',navn:r.navn,dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();render(true);const th=view.querySelector('[data-col="'+l.id+'"]'),w=view.querySelector('.lk-wrap');if(th&&w)w.scrollLeft=Math.max(0,th.offsetLeft-w.clientWidth/2);break}
  case 'lektie':{if(!c)break;const l=c.lektier.find(x=>x.id===b.dataset.id);if(!l)break;const r=await lektieDlg(c,l);if(!r)break;
   if(r.a==='slet'){const m=Object.keys(c.data[l.id]||{}).length,K2=l.t==='k';if(!await krConfirm(K2?'Slet karakterkolonnen?':'Slet lektien?',(K2?'Karakterkolonnen “'+esc(l.navn||'Karakter')+'” fra '+esc(fmtL(l.dato))+(m?' med alle karakterer og noter':''):'Lektien '+esc(fmtL(l.dato))+(m?' med alle flueben og noter':''))+' slettes. Det kan ikke fortrydes.',K2?'Slet kolonnen':'Slet lektien'))break;c.lektier=c.lektier.filter(x=>x.id!==l.id);delete c.data[l.id];sv();render(true);break}
   if(r.dato)l.dato=r.dato;l.ud=!!r.ud;if(l.t==='k')l.navn=r.navn;
   if(r.a==='alle')k.elever.forEach(n=>setV(c,l.id,n,o=>{o.l=1}));
-  if(r.a==='ingen')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.l;delete o.g}));
+  if(r.a==='ingen')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.l}));
+  if(r.a==='ingenk')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.g}));
   sv();render(true);break}
  case 'x':{if(!c)break;setV(c,b.dataset.l,b.dataset.n,o=>{if(o.l)delete o.l;else o.l=1});sv();render(true);
   const nb=view.querySelector('.lk-x[data-l="'+b.dataset.l+'"][data-n="'+CSS.escape(b.dataset.n)+'"]');if(nb)nb.focus({preventScroll:true});break}
