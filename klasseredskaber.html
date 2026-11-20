@@ -1787,7 +1787,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-20-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-20-2';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
@@ -1795,11 +1795,20 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const db=()=>new Promise((res,rej)=>{const r=indexedDB.open(IDBN,1);r.onupgradeneeded=()=>r.result.createObjectStore('h');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
 const hget=()=>db().then(d=>new Promise(res=>{const q=d.transaction('h').objectStore('h').get('dir');q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})).catch(()=>null);
 const hset=v=>db().then(d=>new Promise(res=>{const t=d.transaction('h','readwrite');t.objectStore('h').put(v,'dir');t.oncomplete=res;t.onerror=res})).catch(()=>{});
-async function readText(name){try{const fh=await dir.getFileHandle(name);return await (await fh.getFile()).text()}catch(e){return null}}
-async function writeFile(name,data,sub){let d=dir;if(sub)d=await dir.getDirectoryHandle(sub,{create:true});const fh=await d.getFileHandle(name,{create:true});const w=await fh.createWritable();await w.write(data);await w.close()}
+/* LAGER: alt, der rører selve lagringen, går gennem dette objekt. En OneDrive-udgave (Microsoft 365) kan senere sættes ind med de samme funktioner. */
+const mappe={kind:'mappe',
+ name:()=>dir?dir.name:'',
+ ready:()=>!!dir&&perm==='granted',
+ async read(name){try{const fh=await dir.getFileHandle(name);return await (await fh.getFile()).text()}catch(e){return null}},
+ async write(name,data,sub){let d=dir;if(sub)d=await dir.getDirectoryHandle(sub,{create:true});const fh=await d.getFileHandle(name,{create:true});const w=await fh.createWritable();await w.write(data);await w.close()},
+ async readUrl(name,sub){try{const d=sub?await dir.getDirectoryHandle(sub):dir,f=await (await d.getFileHandle(name)).getFile();return await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>res(null);r.readAsDataURL(f)})}catch(e){return null}},
+ async remove(name,sub){try{const d=sub?await dir.getDirectoryHandle(sub):dir;await d.removeEntry(name)}catch(e){}},
+ async removeSub(sub){try{await dir.removeEntry(sub,{recursive:true})}catch(e){}}};
+let lager=mappe;
+const readText=name=>lager.read(name),writeFile=(name,data,sub)=>lager.write(name,data,sub);
 const valid=o=>o&&Array.isArray(o.klasser)&&o.klasser.length&&o.plads&&o.gruppe;
 async function readData(){const t=await readText(FILE);if(!t)return null;try{const o=JSON.parse(t);return valid(o)?o:null}catch(e){return null}}
-const live=()=>mode==='live'&&dir&&perm==='granted';
+const live=()=>mode==='live'&&lager.ready();
 const same=(a,b)=>{const x=Object.assign({},a),y=Object.assign({},b);delete x.app;delete x.gemt;delete y.app;delete y.gemt;return JSON.stringify(x)===JSON.stringify(y)};
 const hasData=o=>!!o&&(o.klasser.some(k=>k.elever.length)||o.klasser.length>1||(o.tavler&&o.tavler.liste&&o.tavler.liste.length>0)||!!(o.noter&&o.noter.salt)||!!(o.lektier&&o.lektier.lister&&o.lektier.lister.length));
 const json=o=>JSON.stringify(Object.assign({app:'klasseredskaber-data'},o));
@@ -1856,19 +1865,18 @@ async function migrate(){
  window.KR_LEGACY=null}
 /* tavlebilleder ligger i mappen/billeder */
 async function img(id,u){if(!live())return;try{await writeFile(id+'.jpg',await (await fetch(u)).blob(),'billeder')}catch(e){}}
-async function readImg(id){await ready;if(!live())return null;try{const d=await dir.getDirectoryHandle('billeder'),f=await (await d.getFileHandle(id+'.jpg')).getFile();
- return await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>res(null);r.readAsDataURL(f)})}catch(e){return null}}
-async function rmImg(id){if(!live())return;try{const d=await dir.getDirectoryHandle('billeder');await d.removeEntry(id+'.jpg')}catch(e){}}
-async function clearImgs(){if(!live())return;try{await dir.removeEntry('billeder',{recursive:true})}catch(e){}}
+async function readImg(id){await ready;if(!live())return null;return await lager.readUrl(id+'.jpg','billeder')}
+async function rmImg(id){if(!live())return;await lager.remove(id+'.jpg','billeder')}
+async function clearImgs(){if(!live())return;await lager.removeSub('billeder')}
 /* status i "Data og backup" og på forsiden */
 function show(){const s=$k('kdmS'),b=$k('kdmB'),g=$k('krSet'),h=$k('hcs');if(g)g.classList.toggle('kr-attn',mode!=='live'||!!err);
- if(h)h.textContent=(mode==='live'?'Alt gemmes i datamappen “'+dir.name+'”':'Ingen datamappe – intet bliver gemt')+' · version '+KR_VER;
+ if(h)h.textContent=(mode==='live'?'Alt gemmes i datamappen “'+lager.name()+'”':'Ingen datamappe – intet bliver gemt')+' · version '+KR_VER;
  if(!s||!b)return;s.className='';b.classList.remove('kr-gold');b.classList.toggle('kr-hide',!ok);
  if(!ok){s.textContent='Datamappe kræver Chrome eller Edge på en computer. Intet bliver gemt.';s.className='kr-warn';return}
  let b2=$k('kdmB2');if(!b2){b2=document.createElement('button');b2.id='kdmB2';b2.className=b.className.replace(/\bkr-gold\b/,'');b2.textContent='Vælg en anden mappe';b.after(b2)}b2.classList.toggle('kr-hide',!(dir&&mode!=='live'));
  if(mode!=='live'){s.textContent=dir?'Mappen “'+dir.name+'” er ikke forbundet. Intet bliver gemt.':'Ingen datamappe. Intet bliver gemt.';s.className='kr-warn';b.textContent=dir?'Forbind datamappe':'Vælg datamappe';b.classList.add('kr-gold');return}
  b.textContent='Skift datamappe';if(err){s.textContent=err;s.className='kr-warn';return}
- s.textContent='Gemmes i mappen “'+dir.name+'”'+(savedAt?' · '+new Date(savedAt).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}):'')}
+ s.textContent='Gemmes i mappen “'+lager.name()+'”'+(savedAt?' · '+new Date(savedAt).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}):'')}
 /* startskærm: vælg eller forbind datamappen */
 function gate(kind){let o=$k('krGate');if(!kind){if(o)o.remove();return}{const dd=$k('krData');if(dd)dd.classList.add('kr-hide')}
  if(!o){o=document.createElement('div');o.id='krGate';o.className='kr-ov kr-gate';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');document.body.appendChild(o)}
