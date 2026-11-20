@@ -259,6 +259,7 @@ body{font-variant-numeric:tabular-nums}
 
 /* ===== lektier ===== */
 #lektier .lk-h.kar button{max-width:130px}
+#lektier .lk-h b.lk-hn{font-family:inherit;font-weight:600;max-width:120px;overflow:hidden;text-overflow:ellipsis}
 #lektier .lk-h.kar b{font-family:inherit;font-weight:600;color:#0d9488;max-width:120px;overflow:hidden;text-overflow:ellipsis}
 #lektier .lk-h.kar{box-shadow:inset 0 3px 0 #0d9488}
 #lektier .lk-c.kar,#lektier tfoot .kar{background:#f4fbfa}
@@ -1577,7 +1578,7 @@ function render(keep){if(KR.tool!=='lektier')return;closePop();dirtyN=false;cons
  const cols=sorted(c);
  if(!cols.length){h+=`<section class="panel lk-empty"><h3>Ingen lektier endnu</h3><p>Tryk på “+ Ny lektie” for at tilføje den første lektiedato. Slå “Karakterer” til for at give karakterer i felterne.</p><button class="btn primary" data-lk="nylektie">+ Ny lektie</button></section>`;view.innerHTML=h;lastList=c.id;return}
  const last=cols.filter(l=>l.dato<=t&&l.t!=='k').pop(),nC=cols.filter(l=>tael(l,t)).length,harK=L.visKar;
- const head=cols.map(l=>{const k2=l.t==='k';return `<th class="lk-h${k2?' kar':''}${l.ud?' ud':''}${l.dato>t&&!k2?' fut':''}${last&&l.id===last.id?' now':''}" scope="col" data-col="${l.id}"><button data-lk="lektie" data-id="${l.id}" title="${k2?'Karakter'+(l.navn?': '+esc(l.navn):'')+', ':''}${esc(fmtL(l.dato))}${l.ud?' (udgået)':''}. Klik for at redigere">${k2?`<b>${esc(l.navn||'Karakter')}</b><small>${l.ud?'Udgået':esc(fmt(l.dato))}</small>`:`<b>${esc(fmt(l.dato))}</b><small>${l.ud?'Udgået':esc(wday(l.dato))}</small>`}</button></th>`}).join('');
+ const head=cols.map(l=>{const k2=l.t==='k';return `<th class="lk-h${k2?' kar':''}${l.ud?' ud':''}${l.dato>t&&!k2?' fut':''}${last&&l.id===last.id?' now':''}" scope="col" data-col="${l.id}"><button data-lk="lektie" data-id="${l.id}" title="${k2?'Karakter'+(l.navn?': '+esc(l.navn):'')+', ':(l.navn?esc(l.navn)+', ':'')}${esc(fmtL(l.dato))}${l.ud?' (udgået)':''}. Klik for at redigere">${k2?`<b>${esc(l.navn||'Karakter')}</b><small>${l.ud?'Udgået':esc(fmt(l.dato))}</small>`:(l.navn?`<b class="lk-hn">${esc(l.navn)}</b><small>${l.ud?'Udgået':esc(fmt(l.dato))}</small>`:`<b>${esc(fmt(l.dato))}</b><small>${l.ud?'Udgået':esc(wday(l.dato))}</small>`)}</button></th>`}).join('');
  const nbF=(v,l,n)=>v.n?(L.visNoter?`<button class="lk-nb has txt" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}"><span>${esc(v.n)}</span></button>`:`<button class="lk-nb has" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="${esc(v.n)}" aria-label="Note: ${esc(v.n)}">${nIco}</button>`):`<button class="lk-nb" data-lk="note" data-l="${l.id}" data-n="${esc(n)}" title="Skriv note" aria-label="Skriv note til ${esc(n)}">${pen}</button>`;
  const rows=k.elever.map(n=>{let a=0;const gs=[];const tds=cols.map(l=>{if(l.ud)return `<td class="lk-c ud${l.t==='k'?' kar':''}" title="Udgået"></td>`;const v=V(c,l.id,n)||{};
    if(l.t==='k'){const g=KAR.includes(v.g)?v.g:'';if(g)gs.push(kv(g));
@@ -1617,7 +1618,7 @@ document.addEventListener('click',()=>{if(dirtyN&&!pop){if(KR.tool==='lektier')r
 function lektieDlg(c,l,typ){return new Promise(res=>{const ny=!l,t=today(),kar=(l?l.t:typ)==='k';let d=t;if(ny&&!kar){const s=sorted(c).filter(x=>x.t!=='k'),lst=s[s.length-1];if(lst){const x=pd(lst.dato);x.setDate(x.getDate()+7);d=iso(x)}}else if(l)d=l.dato;
  const o=document.createElement('div');o.className='kr-ov';
  o.innerHTML=`<div class="kr-dl" role="dialog" aria-modal="true"><h3>${kar?(ny?'Ny karakter':'Redigér karakter'):(ny?'Ny lektie':'Redigér lektie')}</h3>
-  ${kar?`<label class="lk-dl" for="lkN">Navn</label><input type="text" id="lkN" maxlength="40" placeholder="Fx Prøve i brøker" value="${l&&l.navn?esc(l.navn):''}">`:''}
+  <label class="lk-dl" for="lkN">Navn${kar?'':' (valgfrit)'}</label><input type="text" id="lkN" maxlength="40" placeholder="${kar?'Fx Prøve i brøker':'Fx Terminsprøve – lad stå tomt for en almindelig lektie'}" value="${l&&l.navn?esc(l.navn):''}">
   <label class="lk-dl" for="lkD">Dato</label><input type="date" id="lkD" value="${d}">
   <label class="lk-chk"><input type="checkbox" id="lkU"${l&&l.ud?' checked':''}> Udgået (tæller ikke med)</label>
   ${ny?'':(kar?'<div class="lk-dlb"><button data-v="ingen">Fjern alle karakterer</button><button data-v="slet" class="d">Slet karakterkolonne</button></div>':'<div class="lk-dlb"><button data-v="alle">Flueben ved alle</button><button data-v="ingen">Fjern alle flueben</button>'+(LK().visKar?'<button data-v="ingenk">Fjern alle karakterer</button>':'')+'<button data-v="slet" class="d">Slet lektie</button></div>')}
@@ -1636,11 +1637,11 @@ root.addEventListener('click',async e=>{const b=e.target.closest('[data-lk]');if
   L.lister=L.lister.filter(x=>x.id!==c.id);delete L.aktiv[k.id];sv();render();break}
  case 'visnoter':L.visNoter=!L.visNoter;sv();render(true);break;
  case 'viskar':L.visKar=!L.visKar;sv();render(true);break;
- case 'nylektie':{if(!c)break;const r=await lektieDlg(c,null,'l');if(!r||!r.dato)break;const l={id:uid(),dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();lastList='';render();break}
+ case 'nylektie':{if(!c)break;const r=await lektieDlg(c,null,'l');if(!r||!r.dato)break;const l={id:uid(),dato:r.dato,ud:!!r.ud};if(r.navn)l.navn=r.navn;c.lektier.push(l);sv();lastList='';render();break}
  case 'nykarakter':{if(!c)break;const r=await lektieDlg(c,null,'k');if(!r||!r.dato)break;const l={id:uid(),t:'k',navn:r.navn,dato:r.dato,ud:!!r.ud};c.lektier.push(l);sv();render(true);const th=view.querySelector('[data-col="'+l.id+'"]'),w=view.querySelector('.lk-wrap');if(th&&w)w.scrollLeft=Math.max(0,th.offsetLeft-w.clientWidth/2);break}
  case 'lektie':{if(!c)break;const l=c.lektier.find(x=>x.id===b.dataset.id);if(!l)break;const r=await lektieDlg(c,l);if(!r)break;
   if(r.a==='slet'){const m=Object.keys(c.data[l.id]||{}).length,K2=l.t==='k';if(!await krConfirm(K2?'Slet karakterkolonnen?':'Slet lektien?',(K2?'Karakterkolonnen “'+esc(l.navn||'Karakter')+'” fra '+esc(fmtL(l.dato))+(m?' med alle karakterer og noter':''):'Lektien '+esc(fmtL(l.dato))+(m?' med alle flueben og noter':''))+' slettes. Det kan ikke fortrydes.',K2?'Slet kolonnen':'Slet lektien'))break;c.lektier=c.lektier.filter(x=>x.id!==l.id);delete c.data[l.id];sv();render(true);break}
-  if(r.dato)l.dato=r.dato;l.ud=!!r.ud;if(l.t==='k')l.navn=r.navn;
+  if(r.dato)l.dato=r.dato;l.ud=!!r.ud;if(r.navn)l.navn=r.navn;else delete l.navn;
   if(r.a==='alle')k.elever.forEach(n=>setV(c,l.id,n,o=>{o.l=1}));
   if(r.a==='ingen')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.l}));
   if(r.a==='ingenk')k.elever.forEach(n=>setV(c,l.id,n,o=>{delete o.g}));
@@ -1786,7 +1787,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-19-7';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-20-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
