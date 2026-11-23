@@ -1684,7 +1684,7 @@ $('#tvFsb').onclick=()=>app.classList.toggle('tools');
 $('#tvFsx').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();root.classList.remove('fsx');setFs();};
 document.addEventListener('fullscreenchange',setFs);
 document.addEventListener('keydown',e=>{if(KR.tool==='tavle'&&e.key==='Escape'&&root.classList.contains('fsx')){root.classList.remove('fsx');setFs();}});
-const wrap=board.parentNode;function fit(){const W=screen.width||1366,H=screen.height||768;board.style.width=W+'px';board.style.height=H+'px';const ww=wrap.clientWidth,wh=wrap.clientHeight;if(!ww||!wh)return;const s=Math.min(ww/W,wh/H);board.style.transform='translate('+((ww-W*s)/2)+'px,'+((wh-H*s)/2)+'px) scale('+s+')'}
+const wrap=board.parentNode;function fit(){/* fast logisk højde: tavlen har skærmens form, men skaleres efter skærmens størrelse, så alt bliver større på store skærme */const SW=screen.width||1366,SH=screen.height||768,H=820,W=Math.round(H*SW/SH);board.style.width=W+'px';board.style.height=H+'px';const ww=wrap.clientWidth,wh=wrap.clientHeight;if(!ww||!wh)return;const s=Math.min(ww/W,wh/H);board.style.transform='translate('+((ww-W*s)/2)+'px,'+((wh-H*s)/2)+'px) scale('+s+')'}
 if(window.ResizeObserver)new ResizeObserver(fit).observe(wrap);window.addEventListener('resize',fit);wrap.addEventListener('pointerdown',e=>{if(e.target===wrap)select(null)});
 /* klassevisning: ren fuldskærm uden redigering, med store knapper */
 var kvMode='',kvDimT=null,kvBarEl=$('#tvKvbar'),kvPop=$('#tvKvp');const kvOn=()=>app.classList.contains('kv');
@@ -1996,7 +1996,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-23-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-23-2';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
