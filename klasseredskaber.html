@@ -396,7 +396,7 @@ body{font-variant-numeric:tabular-nums}
 /* Tavle: klassevisning */
 #tavle .kv .wh,#tavle .kv .wr,#tavle .kv .tv-fsbar,#tavle .kv .wpr-f{display:none!important}
 #tavle .kv .wb{top:0}#tavle .kv .wd.sel{outline:none}#tavle .kv .wt{cursor:default}
-#tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.pa{box-shadow:0 0 0 4px #2563eb,0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
+#tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.pa{box-shadow:0 0 0 2px #2563eb,0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
 #tavle .tv-kv{position:fixed;left:12px;right:12px;bottom:16px;margin:0 auto;width:fit-content;z-index:97;display:flex;align-items:center;gap:8px;padding:8px;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.94);border:1px solid #d3dfee;border-radius:22px;box-shadow:0 14px 40px rgba(15,31,56,.18);font-family:'Space Grotesk',system-ui,'Segoe UI',sans-serif;transition:opacity .4s}
 #tavle .tv-kv.dim{opacity:.28}#tavle .tv-kv.dim:hover{opacity:1}
 #tavle .tv-kv.kr-hide{display:none}
@@ -1508,9 +1508,10 @@ function poll(el,w,body){const d=w.d;
  /* flere dagsprogrammer: rækkefølge efter placering (oppefra og ned, så venstre mod højre), ét er aktivt */
  const progs=()=>cur().w.filter(x=>x.t==='program'&&x.d&&Array.isArray(x.d.p)&&x.d.p.length).sort((a,b)=>Math.abs(a.y-b.y)>.03?a.y-b.y:a.x-b.x);
  const apW=()=>{const L=progs(),b=cur();return L.find(x=>x.id===b.ap)||L[0]||null;};
- function markAp(){const L=progs(),a=apW();board.querySelectorAll('.wd').forEach(e=>e.classList.toggle('pa',L.length>1&&!!a&&e.dataset.id===a.id));}
- function setAp(id){const b=cur();if(b.ap!==id){b.ap=id;sv();}markAp();}
- function apStep(dir){const L=progs(),w=apW();if(!w)return;const I=inst.get(w.id);if(!I||!I.st)return;const s=I.st(),k=L.indexOf(w);unlock();
+ var paVis=false;/* ringen vises kun, efter man har trykket i/styret et program, og forsvinder ved tryk andre steder */
+ function markAp(){const L=progs(),a=apW();board.querySelectorAll('.wd').forEach(e=>e.classList.toggle('pa',paVis&&L.length>1&&!!a&&e.dataset.id===a.id));}
+ function setAp(id){paVis=true;const b=cur();if(b.ap!==id){b.ap=id;sv();}markAp();}
+ function apStep(dir){paVis=true;const L=progs(),w=apW();if(!w)return;const I=inst.get(w.id);if(!I||!I.st)return;const s=I.st(),k=L.indexOf(w);unlock();
   if(dir>0){if(s.a>=s.n-1&&k<L.length-1){if(s.a<s.n)I.go(s.n);const nw=L[k+1],J=inst.get(nw.id);setAp(nw.id);if(J&&J.st().a<0)J.go(0);}
    else if(s.a>=s.n&&kvOn())return;else I.next();}
   else{if(s.a<=0&&k>0){I.go(-1);const pw2=L[k-1],J=inst.get(pw2.id);setAp(pw2.id);if(J){const t=J.st();J.go(t.n-1);}}else I.prev();}
@@ -1553,6 +1554,7 @@ function remove(w){const i=inst.get(w.id);if(i&&i.destroy)i.destroy();inst.delet
 function addW(t){const df=DEF[t],b=cur(),n=b.w.length,w={id:uid(),t,x:cl(.06+(n%6)*.035,0,1-df.w),y:cl(.08+(n%6)*.04,0,1-df.h),w:df.w,h:df.h,z:++zm,d:df.d()};b.w.push(w);mount(w);markAp();select(board.querySelector(`[data-id="${w.id}"]`));sv();const nt=board.querySelector(`[data-id="${w.id}"] .wt`);if(nt)editAt(nt);}
 const select=el=>{board.querySelectorAll('.wd.sel').forEach(x=>x.classList.remove('sel'));if(el)el.classList.add('sel');tbarUpd();};
 let drag=null;
+board.addEventListener('pointerdown',e=>{const pe=e.target.closest('.wd');if(paVis&&!(pe&&pe.classList.contains('prw'))){paVis=false;markAp();}});
 board.addEventListener('pointerdown',e=>{if(app.classList.contains('kv'))return;const el=e.target.closest('.wd');select(el);if(!el||e.button>0)return;const w=find(el.dataset.id);if(!w)return;w.z=++zm;el.style.zIndex=w.z;
  const rs=e.target.closest('.wr'),tw=e.target.closest('.wt'),tx=tw&&tw.contentEditable!=='true'&&el.classList.contains('txtw')?tw:null,mv=(e.target.closest('.wh')&&!e.target.closest('button'))||tx;if(!rs&&!mv)return;if(tx)e.preventDefault();
  drag={tx,m:rs?'r':'m',dir:rs?rs.dataset.dir:'',id:e.pointerId,x0:e.clientX,y0:e.clientY,o:{x:w.x,y:w.y,w:w.w,h:w.h},w,el};try{el.setPointerCapture(e.pointerId);}catch(x){}});
@@ -2010,7 +2012,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-23-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-23-5';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
