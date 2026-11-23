@@ -435,6 +435,20 @@ body{font-variant-numeric:tabular-nums}
 #tavle .kvp-g{background:#f5f9fe;border:1px solid #e4edf8;border-radius:16px;padding:14px 18px;font-size:clamp(17px,1.7vw,24px);line-height:1.35}
 #tavle .kvp-g b{display:block;color:#0d9488;font-size:.8em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 @media(max-width:760px){#tavle .tv-kvb{min-height:46px;min-width:46px;padding:0 12px;font-size:.95rem}#tavle .tv-kvb .kv-l{display:none}#tavle .kvp{padding:22px 18px}}
+
+/* Dagsprogram-editor: skalerer med widgettens bredde, ingen sidelæns rulning */
+#tavle .wpr-ed{font-size:clamp(9px,3.3cqw,15px);overflow-x:hidden;padding:34px .75em .75em;gap:.6em}
+#tavle .wpr-ed .wbt,#tavle .wpr-sk select,#tavle .wpr-ed input,#tavle .wpr-ed textarea.wpr-et{font-size:1em}
+#tavle .wpr-ed .wset-l,#tavle .wpr-sum,#tavle .wpr-tg,#tavle .wpr-ec>span{font-size:.88em}
+#tavle .wpr-ed input,#tavle .wpr-ed textarea.wpr-et,#tavle .wpr-sk select{padding:.35em .55em;min-height:0}
+#tavle .wpr-ed .wbt.sm{padding:.2em .5em;min-width:1.9em}
+#tavle .wpr-er{padding:.5em .55em .6em}
+#tavle .wpr-ec{flex-wrap:wrap;gap:.35em;row-gap:.3em}
+#tavle .wpr-en{min-width:1.7em;height:1.7em;font-size:.85em}
+#tavle .wpr-em{width:4.8em;min-width:0}
+#tavle .wpr-el{display:flex!important;flex-wrap:wrap;gap:.4em}
+#tavle .wpr-eh{min-width:8em}
+#tavle .wpr-eb{gap:.4em}
 </style></head><body>
 <div id="home"><div class="kr-h"><div class="kr-top"><h1>Klasse<span>redskaber</span></h1><div class="kr-topb"><button class="kr-btn kr-inst kr-hide" id="krInst" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>Installér som app</button><button class="kr-btn kr-set" id="krSet" type="button" aria-haspopup="dialog"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Data og backup</button></div></div><p>Vælg det værktøj, du vil arbejde med</p>
 <div class="kr-cards">
@@ -1996,7 +2010,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-23-3';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-23-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
