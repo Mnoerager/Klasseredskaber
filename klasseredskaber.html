@@ -458,6 +458,7 @@ body{font-variant-numeric:tabular-nums}
 #tavle .kvp-nm{font:800 clamp(52px,9vw,140px)/1.05 'Space Grotesk',system-ui,sans-serif;margin:24px 0 10px;overflow-wrap:anywhere;min-height:1.1em}
 #tavle .kvp-i{color:#4b5f7a;font-size:1.05rem}
 #tavle .kvp-e{color:#4b5f7a;font-size:1.15rem;margin:30px 0}
+#tavle .kvp-gw{position:relative;container-type:size;height:min(64vh,640px);text-align:left}#tavle .kvp-gw .wg3{padding:0}
 #tavle .kvp-gc{display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap}
 #tavle .kvp-gn{font:700 1.3rem 'Inter',system-ui,sans-serif;min-width:2ch}
 #tavle .kvp-gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:22px;text-align:left}
@@ -1832,16 +1833,12 @@ function knView(c){const k=kvK();if(KN.k!==(k&&k.id)){KN.k=k&&k.id;KN.used=[];KN
  if(!all.length){nm.remove();c.querySelector('.kvp-b').remove();inf.outerHTML='<p class="kvp-e">Der er ingen elever i klassen. Vælg klassen øverst på tavlen, før du starter klassevisning.</p>';return;}
  let busy=false;c.querySelector('[data-n=go]').onclick=()=>{if(busy)return;let p=pool();if(!p.length){KN.used=[];p=pool();}busy=true;const f=p[Math.floor(Math.random()*p.length)];let i=0;
   const iv=setInterval(()=>{nm.textContent=p[Math.floor(Math.random()*p.length)];if(++i>=14){clearInterval(iv);KN.cur=f;KN.used.push(f);busy=false;up();}},70);};up();}
-/* grupper */
-const KG={k:'',sz:3,res:[]};
-function kgView(c){const k=kvK();if(KG.k!==(k&&k.id)){KG.k=k&&k.id;KG.res=[];}
- c.innerHTML=kvHead('grupper','Grupper',k?k.navn:'')+'<div class="kvp-gc"><span>Elever pr. gruppe</span><button class="tv-kvb" data-g="mn" aria-label="Færre pr. gruppe">−</button><span class="kvp-gn"></span><button class="tv-kvb" data-g="pl" aria-label="Flere pr. gruppe">+</button><button class="tv-kvb pri" data-g="go">Træk grupper</button></div><div class="kvp-gg"></div>';
- const all=kvPool(),gg=c.querySelector('.kvp-gg'),gn=c.querySelector('.kvp-gn');
- if(!all.length){c.querySelector('.kvp-gc').remove();gg.outerHTML='<p class="kvp-e">Der er ingen elever i klassen. Vælg klassen øverst på tavlen, før du starter klassevisning.</p>';return;}
- const show=()=>{gn.textContent=KG.sz;gg.innerHTML=KG.res.map((r,i)=>`<div class="kvp-g"><b>Gruppe ${i+1}</b>${r.map(esc).join('<br>')}</div>`).join('');};
- c.addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(!b)return;const a=b.dataset.g;
-  if(a==='mn')KG.sz=Math.max(2,KG.sz-1);else if(a==='pl')KG.sz=Math.min(8,KG.sz+1);
-  else{const p=all.slice();for(let x=p.length-1;x>0;x--){const y=Math.floor(Math.random()*(x+1));[p[x],p[y]]=[p[y],p[x]];}const n=Math.max(1,Math.round(p.length/KG.sz));KG.res=Array.from({length:n},()=>[]);p.forEach((s,x)=>KG.res[x%n].push(s));}show();});show();}
+/* grupper: samme Gruppemaker som widgetten (grp), med egne data, der ikke gemmes */
+const KG={k:'',d:null};
+function kgView(c){const k=kvK(),id=k&&k.id;if(!KG.d||KG.k!==id){KG.k=id;KG.d={k:bk(),ex:kvEx().slice(),n:KG.d?KG.d.n:4,res:[]};}
+ c.innerHTML=kvHead('grupper','Grupper',k?k.navn:'')+'<div class="kvp-gw"></div>';
+ if(!k||!k.elever.length){c.querySelector('.kvp-gw').outerHTML='<p class="kvp-e">Der er ingen elever i klassen. Vælg klassen øverst på tavlen, før du starter klassevisning.</p>';return;}
+ const box=c.querySelector('.kvp-gw');grp(box,{t:'grupper',d:KG.d},box);}
 window.TV={render(){renderBoard();placeTools();fit();},leave(){if(typeof kvEnd==='function')kvEnd();if(tools.parentNode!==app)app.insertBefore(tools,board.parentNode);$('#tvPop').classList.add('kr-hide');},clear(){inst.forEach(i=>{if(i.destroy)i.destroy();});inst.clear();for(const k in mem)delete mem[k];H={};trash={};clearTimeout(hqT);board.innerHTML='';}};
 })();
 </script>
@@ -2093,7 +2090,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-24-2';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-24-3';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
