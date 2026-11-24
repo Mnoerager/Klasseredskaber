@@ -209,7 +209,8 @@ body{padding-bottom:calc(61px + env(safe-area-inset-bottom))}
 #tavle .wd.post .wt{font-size:calc(var(--fs,8)*2.3px)}
 #tavle .wd.txtw>.wh{display:none}#tavle .wd.txtw>.wb{top:0}
 #tavle .wd.txtw .wt{padding:max(12px,1.4cqw) max(14px,1.8cqw);cursor:move}#tavle .wd.post .wt{padding:12px 14px}
-#tavle .wd.txtw .wt[contenteditable=true]{cursor:text}#tavle .wd.post .wt:empty::before{content:none}
+#tavle .wd.txtw .wt[contenteditable=true]{cursor:text}
+#tavle .wtp{display:none;position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:3;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;max-width:calc(100% - 12px);padding:3px;border:1px solid #d3dfee;border-radius:12px;background:rgba(255,255,255,.94);box-shadow:0 2px 8px rgba(15,31,56,.08)}#tavle .wd.pg.sel .wtp,#tavle .wd.pg.many .wtp{display:flex}#tavle .wd.pg.sel .wt,#tavle .wd.pg.many .wt{padding-bottom:48px}#tavle .wtp .wtp-n{font:600 12px Inter,system-ui,sans-serif;color:#4b5f7a;padding:0 6px;white-space:nowrap}#tavle .wtp .wbt{font-size:12px;min-height:26px}#tavle .wtp .wbt:disabled{opacity:.4;cursor:default}#tavle .wtp .wtp-x{color:#c81e1e}#tavle .kv .wd.pg:not(.many) .wtp,#tavle .kv .wtp .wtp-e{display:none}#tavle .kv .wd.pg:not(.many) .wt{padding-bottom:max(12px,1.4cqw)}#tavle .wd.post .wt:empty::before{content:none}
 #tavle .tv-tbar{flex:none;display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:6px 12px;border-bottom:1px solid #d3dfee;background:rgba(255,255,255,.96);position:relative;z-index:59}
 #tavle .tv-tbar .btn.sm{padding:5px 10px;font-size:.84rem;min-width:34px;justify-content:center}
 #tavle .tv-tbar .btn.on{border-color:#2563eb;background:rgba(37,99,235,.12);color:#2563eb}
@@ -398,11 +399,13 @@ body{font-variant-numeric:tabular-nums}
 #tavle .kv .wh,#tavle .kv .wr,#tavle .kv .wpr-f{display:none!important}
 #tavle .kv .wb{top:0}#tavle .kv .wd.sel{outline:none}#tavle .kv .wt{cursor:default}
 #tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.pa{box-shadow:0 0 0 2px #2563eb,0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
-#tavle .tv-kv{position:fixed;left:12px;right:12px;bottom:16px;margin:0 auto;width:fit-content;z-index:97;display:flex;align-items:center;gap:8px;padding:8px;flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.94);border:1px solid #d3dfee;border-radius:22px;box-shadow:0 14px 40px rgba(15,31,56,.18);font-family:'Space Grotesk',system-ui,'Segoe UI',sans-serif;transition:opacity .4s}
+#tavle .tv-kv{position:fixed;left:12px;right:12px;bottom:clamp(8px,1.5vh,16px);margin:0 auto;width:fit-content;z-index:97;display:flex;align-items:center;gap:clamp(4px,.75vh,8px);padding:clamp(4px,.75vh,8px);flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.94);border:1px solid #d3dfee;border-radius:clamp(12px,2vh,22px);box-shadow:0 14px 40px rgba(15,31,56,.18);font-family:'Space Grotesk',system-ui,'Segoe UI',sans-serif;transition:opacity .4s}
 #tavle .tv-kv.dim{opacity:.28}#tavle .tv-kv.dim:hover{opacity:1}
 #tavle .tv-kv.kr-hide{display:none}
-#tavle .tv-kvb{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:58px;min-width:58px;padding:0 20px;border-radius:15px;border:1px solid #d3dfee;background:#f5f9fe;color:#0f1f38;font:600 1.12rem 'Space Grotesk',system-ui,sans-serif;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#tavle .tv-kvb{display:inline-flex;align-items:center;justify-content:center;gap:clamp(5px,.85vh,9px);min-height:58px;min-width:58px;padding:0 20px;border-radius:15px;border:1px solid #d3dfee;background:#f5f9fe;color:#0f1f38;font:600 1.12rem 'Space Grotesk',system-ui,sans-serif;cursor:pointer;white-space:nowrap;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #tavle .tv-kvb svg{width:24px;height:24px}
+/* bjælken i klassevisning skalerer med skærmens højde: fuld størrelse fra ca. 1160 px, mindre på små skærme */
+#tavle .tv-kv .tv-kvb{min-height:clamp(32px,5vh,58px);min-width:clamp(32px,5vh,58px);padding:0 clamp(9px,1.75vh,20px);border-radius:clamp(9px,1.3vh,15px);font-size:clamp(.8rem,1.6vh,1.12rem)}#tavle .tv-kv .tv-kvb svg{width:clamp(15px,2.1vh,24px);height:clamp(15px,2.1vh,24px)}#tavle .tv-kv .tv-kvs{margin:clamp(3px,.55vh,6px) clamp(2px,.35vh,4px)}
 #tavle .tv-kvb:hover{border-color:#2563eb}#tavle .tv-kvb:active{transform:scale(.97)}
 #tavle .tv-kvb.pri{background:#2563eb;border-color:#2563eb;color:#fff}
 #tavle .tv-kvb.on{border-color:#2563eb;background:rgba(37,99,235,.12);color:#2563eb}
@@ -410,7 +413,7 @@ body{font-variant-numeric:tabular-nums}
 #tavle .tv-kvb .kv-tt{font-family:var(--mono);font-weight:700}#tavle .tv-kvb .kv-tt:empty{display:none}
 #tavle .tv-kvb:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
 #tavle .tv-kvs{width:1px;align-self:stretch;margin:6px 4px;background:#d3dfee}
-#tavle .tv-kvp{position:fixed;inset:0;z-index:95;display:grid;place-items:center;background:rgba(15,31,56,.32);padding:20px 20px 110px}
+#tavle .tv-kvp{position:fixed;inset:0;z-index:95;display:grid;place-items:center;background:rgba(15,31,56,.32);padding:20px 20px clamp(64px,10vh,110px)}
 #tavle .tv-kvp.kr-hide{display:none}
 #tavle .kvp{position:relative;width:min(860px,92vw);max-height:calc(100vh - 140px);overflow:auto;background:#fff;border:1px solid #d3dfee;border-radius:26px;padding:28px 32px 32px;box-shadow:0 30px 80px rgba(15,31,56,.3);color:#0f1f38;text-align:center;font-family:'Space Grotesk',system-ui,sans-serif}
 #tavle .kvp.wide{width:min(1200px,94vw)}
@@ -435,7 +438,7 @@ body{font-variant-numeric:tabular-nums}
 #tavle .kvp-gg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:22px;text-align:left}
 #tavle .kvp-g{background:#f5f9fe;border:1px solid #e4edf8;border-radius:16px;padding:14px 18px;font-size:clamp(17px,1.7vw,24px);line-height:1.35}
 #tavle .kvp-g b{display:block;color:#0d9488;font-size:.8em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
-@media(max-width:760px){#tavle .tv-kvb{min-height:46px;min-width:46px;padding:0 12px;font-size:.95rem}#tavle .tv-kvb .kv-l{display:none}#tavle .kvp{padding:22px 18px}}
+@media(max-width:760px){#tavle .tv-kvb{min-height:46px;min-width:46px;padding:0 12px;font-size:.95rem}#tavle .tv-kv{gap:4px;padding:4px}#tavle .tv-kv .tv-kvb{min-width:38px;padding:0 9px}#tavle .tv-kv .tv-kvs{margin:4px 0}#tavle .tv-kvb .kv-l{display:none}#tavle .kvp{padding:22px 18px}}
 
 /* Dagsprogram-editor: skalerer med widgettens bredde, ingen sidelæns rulning */
 #tavle .wpr-ed{font-size:clamp(9px,3.3cqw,15px);overflow-x:hidden;padding:34px .75em .75em;gap:.6em}
@@ -1396,9 +1399,25 @@ function openSet(body,d,ex,done){const old=body.querySelector('.wset');if(old)ol
 /* widgets */
 function txt(el,w,body,strip){const d=w.d,post=w.t==='postit';el.classList.toggle('post',post);if(post)paint(el,d);el.style.setProperty('--fs',d.fs);
  const t=document.createElement('div');t.className='wt';t.contentEditable='false';el.classList.add('txtw');t.spellcheck=false;t.innerHTML=d.h!=null?krClean(d.h):esc(d.t||'').replace(/\n/g,'<br>');t.setAttribute('role','textbox');t.setAttribute('aria-label',post?'Post-it':'Tekstboks');
- t.addEventListener('input',()=>{d.h=t.innerHTML;d.t=t.innerText;sv();});
+ t.addEventListener('input',()=>{d.h=t.innerHTML;d.t=t.innerText;if(Array.isArray(d.sider)&&d.sider[d.s|0])d.sider[d.s|0]={h:d.h,t:d.t};sv();});
  t.addEventListener('paste',e=>{e.preventDefault();document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text'));});
  body.appendChild(t);
+ /* sider i tekstfeltet: d.sider=[{h,t}], d.s = aktuel side; d.h/d.t er altid den aktuelle side */
+ if(!post){el.classList.add('pg');const show=()=>{t.innerHTML=d.h!=null?krClean(d.h):esc(d.t||'').replace(/\n/g,'<br>');t.scrollTop=0;};
+  const P=()=>{if(!Array.isArray(d.sider)||!d.sider.length){d.sider=[{h:d.h,t:d.t}];d.s=0;}d.s=cl(d.s|0,0,d.sider.length-1);return d.sider;};
+  const many=()=>Array.isArray(d.sider)&&d.sider.length>1;
+  if(Array.isArray(d.sider)&&d.sider.length){d.s=cl(d.s|0,0,d.sider.length-1);d.sider[d.s]={h:d.h,t:d.t};}
+  const bar=document.createElement('div');bar.className='wtp';bar.innerHTML='<button class="wbt sm" data-p="prev" aria-label="Forrige side" title="Forrige side">◀</button><span class="wtp-n"></span><button class="wbt sm" data-p="next" aria-label="Næste side" title="Næste side">▶</button><button class="wbt sm wtp-e" data-p="add" title="Ny side efter denne">+ Ny side</button><button class="wbt sm wtp-e wtp-x" data-p="del" title="Slet denne side">Slet side</button>';
+  const upd=()=>{const n=many()?d.sider.length:1,i=many()?d.s:0;bar.querySelector('.wtp-n').textContent='Side '+(i+1)+' af '+n;bar.querySelector('[data-p=prev]').disabled=i<=0;bar.querySelector('[data-p=next]').disabled=i>=n-1;bar.querySelector('[data-p=del]').disabled=n<2;el.classList.toggle('many',n>1);};
+  const go=i=>{const S=P();S[d.s]={h:d.h,t:d.t};d.s=cl(i,0,S.length-1);d.h=S[d.s].h;d.t=S[d.s].t;show();sv();upd();};
+  bar.addEventListener('pointerdown',e=>e.stopPropagation());
+  bar.addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault();});
+  bar.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const a=b.dataset.p;
+   if(a==='prev')go(d.s-1);else if(a==='next')go(d.s+1);
+   else if(a==='add'){const S=P();S[d.s]={h:d.h,t:d.t};S.splice(d.s+1,0,{h:'',t:''});go(d.s+1);}
+   else if(a==='del'){const S=P();if(S.length<2)return;if((d.t||'').trim()&&!await krConfirm('Slet siden?','Side '+(d.s+1)+' og dens tekst slettes. Du kan fortryde med Ctrl+Z.','Slet siden'))return;
+    S.splice(d.s,1);d.s=Math.min(d.s,S.length-1);d.h=S[d.s].h;d.t=S[d.s].t;show();sv();upd();}});
+  body.appendChild(bar);upd();}
  return{};}
 function clk(el,w,body){const d=w.d,b=document.createElement('div');b.className='wc';b.title='Tryk for at vise eller skjule sekunder';b.innerHTML='<div class="wc-t"></div><div class="wc-d"></div>';body.appendChild(b);
  const A=b.firstChild,D=b.lastChild,up=()=>{const n=new Date();A.textContent=n.toLocaleTimeString('da-DK',d.sek?{hour:'2-digit',minute:'2-digit',second:'2-digit'}:{hour:'2-digit',minute:'2-digit'});D.textContent=n.toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'});};
@@ -2026,7 +2045,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-23-7';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-24-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
