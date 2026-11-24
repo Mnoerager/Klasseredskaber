@@ -253,7 +253,7 @@ body{padding-bottom:calc(61px + env(safe-area-inset-bottom))}
 .kr-ddm kbd{font-family:Inter,sans-serif;font-size:.75rem;color:#4b5f7a;background:#eef4fb;border:1px solid #d3dfee;border-radius:6px;padding:1px 6px}
 .kr-ddm hr{border:0;border-top:1px solid #d3dfee;margin:4px 2px}
 #noter .nt-body ul.dash>li,#noter .nt-body ul.dash ul>li,#tavle .wt ul.dash>li,#tavle .wt ul.dash ul>li{list-style-type:'–  '}
-#tavle .tv-tbar .tv-th{color:#4b5f7a;font-size:.85rem;margin-left:6px}
+#tavle .tv-tbar .tv-th{display:none}
 #tavle .tv-tbar .tb-dot{width:14px;height:14px;border-radius:50%;background:var(--pc,#fff3a3);border:1px solid rgba(0,0,0,.25);display:inline-block}
 #tavle .tv-tbar .tb-del{margin-left:auto;border-color:rgba(200,30,30,.45);color:#c81e1e}
 #tavle .tv-tbar .tb-un{margin-left:auto}#tavle .tv-tbar .tb-un~.tb-del{margin-left:0}#tavle .tv-tbar.off .btn.tb-ur{opacity:1;pointer-events:auto}#tavle .tv-tbar .btn.tb-ur:disabled{opacity:.4;pointer-events:none}#tavle .tv-tbar .tb-z1{margin-left:auto}#tavle .tv-tbar .tb-z1~.tb-un{margin-left:0}#tavle .tv-tbar.off .btn.tb-z{opacity:1;pointer-events:auto}#tavle .tv-tbar .btn.tb-z:disabled{opacity:.4;pointer-events:none}
@@ -2119,7 +2119,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-24-6';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-24-7';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
