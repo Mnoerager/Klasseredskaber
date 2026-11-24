@@ -92,15 +92,15 @@ body{margin:0;background:#eef4fb}.kr-hide{display:none!important}.kr-btn.kr-dang
 #tavle .wg3-ab:hover{border-color:#2563eb;color:#2563eb}
 #tavle .wg3-k{margin-left:auto;color:#64748b;font-size:max(11px,min(2.6cqw,4cqh))}
 #tavle .wg3-g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--gc,3),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:max(6px,1.6cqmin);overflow:auto}
-#tavle .wg3-c{display:flex;flex-direction:column;min-height:0;border-radius:12px;background:color-mix(in srgb,var(--c) 9%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#fff);overflow:hidden}
-#tavle .wg3-h{flex:none;background:var(--c);color:#fff;font-weight:700;padding:.3em .7em;font-size:max(11px,min(2.9cqw,4.4cqh))}#tavle .wg3-g:not(.tom) .wg3-h{font-size:clamp(11px,calc(var(--nf,16px)*1.05),24px)}
+#tavle .wg3-c{display:flex;flex-direction:column;min-height:0;border-radius:12px;background:#fff;border:2px solid var(--c);overflow:hidden}
+#tavle .wg3-h{flex:none;background:var(--c);color:#fff;font-weight:700;padding:.3em .7em;font-size:max(11px,min(2.9cqw,4.4cqh))}#tavle .wg3-g:not(.tom) .wg3-h{font-size:clamp(12px,calc(var(--nf,16px)*1.3),30px)}
 #tavle .wg3-l{flex:1;min-height:0;overflow:auto;padding:.3em .7em;column-count:var(--nc,1);column-gap:1em;line-height:1.22;font-size:var(--nf,max(11px,min(3cqw,4.6cqh)));color:#0f1f38;font-weight:500}
 #tavle .wg3-l>div{break-inside:avoid;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:.05em 0}
-#tavle .wg3-g.tom .wg3-l{background:repeating-linear-gradient(-45deg,transparent 0 8px,color-mix(in srgb,var(--c) 6%,transparent) 8px 16px)}
+
 #tavle .wg3-g.an .wg3-c{animation:wg3in .38s cubic-bezier(.2,.8,.3,1.2) both;animation-delay:calc(var(--i)*45ms)}
 @keyframes wg3in{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
 #tavle .wg3-f{flex:none;display:flex;justify-content:center;gap:8px}
-#tavle .wg3-go{font-size:max(13px,min(3.4cqw,5cqh));padding:.5em 1.6em;border-radius:12px;min-width:40%}
+#tavle .wg3-go{font-size:max(13px,min(3.4cqw,5cqh));padding:.5em 1.6em;border-radius:12px;min-width:40%}#tavle .wg3-add{min-width:0;background:#fff;border-color:#2563eb;color:#2563eb}#tavle .wg3-add.kr-hide{display:none}
 #tavle .wg3-a .wg3-f .wbt{font-size:max(12px,min(2.8cqw,4.2cqh));padding:.45em 1.2em;border-radius:10px}
 #tavle .wg3-a{position:absolute;inset:0;z-index:6;background:#fff;display:flex;flex-direction:column;gap:max(6px,1.6cqmin);padding:max(8px,2.2cqmin)}
 #tavle .wg3-at{display:flex;flex-direction:column;gap:2px;font-size:max(12px,min(3cqw,4.6cqh))}#tavle .wg3-at span{color:#64748b;font-size:.85em}
@@ -256,7 +256,7 @@ body{padding-bottom:calc(61px + env(safe-area-inset-bottom))}
 #tavle .tv-tbar .tv-th{color:#4b5f7a;font-size:.85rem;margin-left:6px}
 #tavle .tv-tbar .tb-dot{width:14px;height:14px;border-radius:50%;background:var(--pc,#fff3a3);border:1px solid rgba(0,0,0,.25);display:inline-block}
 #tavle .tv-tbar .tb-del{margin-left:auto;border-color:rgba(200,30,30,.45);color:#c81e1e}
-#tavle .tv-tbar .tb-un{margin-left:auto}#tavle .tv-tbar .tb-un~.tb-del{margin-left:0}#tavle .tv-tbar.off .btn.tb-ur{opacity:1;pointer-events:auto}#tavle .tv-tbar .btn.tb-ur:disabled{opacity:.4;pointer-events:none}
+#tavle .tv-tbar .tb-un{margin-left:auto}#tavle .tv-tbar .tb-un~.tb-del{margin-left:0}#tavle .tv-tbar.off .btn.tb-ur{opacity:1;pointer-events:auto}#tavle .tv-tbar .btn.tb-ur:disabled{opacity:.4;pointer-events:none}#tavle .tv-tbar .tb-z1{margin-left:auto}#tavle .tv-tbar .tb-z1~.tb-un{margin-left:0}#tavle .tv-tbar.off .btn.tb-z{opacity:1;pointer-events:auto}#tavle .tv-tbar .btn.tb-z:disabled{opacity:.4;pointer-events:none}
 #tavle .fs .tv-tbar{display:none}
 #tavle .tv-cpop{position:absolute;z-index:80;background:#ffffff;border:1px solid #d3dfee;border-radius:12px;padding:12px;box-shadow:0 18px 50px rgba(15,31,56,.14);width:232px}
 #tavle .tv-cl{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:#4b5f7a;margin:2px 0 6px}
@@ -566,7 +566,7 @@ body{font-variant-numeric:tabular-nums}
       <span class="tv-sep"></span><span class="tv-lab">Klasse</span><select id="tvKl" aria-label="Klasse til tilfældigt navn og gruppemaker"></select><span class="tv-sep"></span><div class="tv-right"><button class="btn sm" id="tvSnap" type="button" title="Widgets retter sig ind efter hinanden, når du flytter dem eller ændrer størrelse. Hold Alt nede for at flytte uden snap.">Snap: til</button><div class="tv-bgw"><button class="btn sm" id="tvBg">Baggrund</button><div class="tv-pop kr-hide" id="tvPop"><div class="tv-sw" id="tvSw"></div><button class="btn sm" id="tvImg">Vælg billede…</button><button class="btn sm ghost" id="tvNoImg">Fjern billede</button></div></div>
       <button class="btn sm" id="tvKv" title="Vis tavlen for klassen: fuldskærm uden redigering, med store knapper">Klassevisning</button></div></div>
   </div>
-  <div class="tv-tbar off" id="tvTbar" role="toolbar" aria-label="Tekst og post-it"><span class="tv-lab">Tekst</span><button class="btn sm" data-tb="fs-" title="Mindre tekst" aria-label="Mindre tekst">A−</button><button class="btn sm" data-tb="fs+" title="Større tekst" aria-label="Større tekst">A+</button><span class="tv-sep"></span><button class="btn sm" data-f="bold" title="Fed (Ctrl+B)" aria-label="Fed"><b>B</b></button><button class="btn sm" data-f="italic" title="Kursiv (Ctrl+I)" aria-label="Kursiv"><i>I</i></button><button class="btn sm" data-f="underline" title="Understreget (Ctrl+U)" aria-label="Understreget"><u>U</u></button><button class="btn sm" data-f="h3" title="Overskrift i teksten">Overskrift</button><span class="kr-dd"><button type="button" class="btn sm" data-dd aria-haspopup="menu" aria-expanded="false" title="Punkter og lister">Lister<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5l3 3 3-3"/></svg></button><div class="kr-ddm" role="menu" hidden><button type="button" role="menuitem" data-f="ul"><span>• Punkter</span></button><button type="button" role="menuitem" data-f="dash"><span>– Punkter med streg</span></button><button type="button" role="menuitem" data-f="ol"><span>1. Nummereret liste</span></button><hr><button type="button" role="menuitem" data-f="indent"><span>Ryk ind</span><kbd>Tab</kbd></button><button type="button" role="menuitem" data-f="outdent"><span>Ryk ud</span><kbd>Shift+Tab</kbd></button></div></span><span class="tv-sep"></span><button class="btn sm" data-f="justifyLeft" title="Venstrejustér" aria-label="Venstrejustér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M2 6.3H10"/><path d="M2 9.7H14"/><path d="M2 13H10"/></svg></button><button class="btn sm" data-f="justifyCenter" title="Centrér" aria-label="Centrér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M4 6.3H12"/><path d="M2 9.7H14"/><path d="M4 13H12"/></svg></button><button class="btn sm" data-f="justifyRight" title="Højrejustér" aria-label="Højrejustér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M6 6.3H14"/><path d="M2 9.7H14"/><path d="M6 13H14"/></svg></button><span class="tv-sep"></span><button class="btn sm kr-hide" data-tb="c" title="Skift farve på post-it"><span class="tb-dot"></span>&nbsp;Farve</button><span class="tv-th"></span><button class="btn sm tb-ur tb-un" data-tb="undo" title="Fortryd (Ctrl+Z)" aria-label="Fortryd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3L2.5 6.5 6 10"/><path d="M2.5 6.5H10a3.5 3.5 0 0 1 0 7H8"/></svg></button><button class="btn sm tb-ur" data-tb="redo" title="Gentag (Ctrl+Y)" aria-label="Gentag" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l3.5 3.5L10 10"/><path d="M13.5 6.5H6a3.5 3.5 0 0 0 0 7h2"/></svg></button><button class="btn sm tb-del" data-tb="del" title="Fjern widgetten">Fjern</button></div><div class="tv-wrap" id="tvWrap"><div class="tv-board" id="tvBoard"></div></div>
+  <div class="tv-tbar off" id="tvTbar" role="toolbar" aria-label="Tekst og post-it"><span class="tv-lab">Tekst</span><button class="btn sm" data-tb="fs-" title="Mindre tekst" aria-label="Mindre tekst">A−</button><button class="btn sm" data-tb="fs+" title="Større tekst" aria-label="Større tekst">A+</button><span class="tv-sep"></span><button class="btn sm" data-f="bold" title="Fed (Ctrl+B)" aria-label="Fed"><b>B</b></button><button class="btn sm" data-f="italic" title="Kursiv (Ctrl+I)" aria-label="Kursiv"><i>I</i></button><button class="btn sm" data-f="underline" title="Understreget (Ctrl+U)" aria-label="Understreget"><u>U</u></button><button class="btn sm" data-f="h3" title="Overskrift i teksten">Overskrift</button><span class="kr-dd"><button type="button" class="btn sm" data-dd aria-haspopup="menu" aria-expanded="false" title="Punkter og lister">Lister<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5l3 3 3-3"/></svg></button><div class="kr-ddm" role="menu" hidden><button type="button" role="menuitem" data-f="ul"><span>• Punkter</span></button><button type="button" role="menuitem" data-f="dash"><span>– Punkter med streg</span></button><button type="button" role="menuitem" data-f="ol"><span>1. Nummereret liste</span></button><hr><button type="button" role="menuitem" data-f="indent"><span>Ryk ind</span><kbd>Tab</kbd></button><button type="button" role="menuitem" data-f="outdent"><span>Ryk ud</span><kbd>Shift+Tab</kbd></button></div></span><span class="tv-sep"></span><button class="btn sm" data-f="justifyLeft" title="Venstrejustér" aria-label="Venstrejustér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M2 6.3H10"/><path d="M2 9.7H14"/><path d="M2 13H10"/></svg></button><button class="btn sm" data-f="justifyCenter" title="Centrér" aria-label="Centrér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M4 6.3H12"/><path d="M2 9.7H14"/><path d="M4 13H12"/></svg></button><button class="btn sm" data-f="justifyRight" title="Højrejustér" aria-label="Højrejustér"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3H14"/><path d="M6 6.3H14"/><path d="M2 9.7H14"/><path d="M6 13H14"/></svg></button><span class="tv-sep"></span><button class="btn sm kr-hide" data-tb="c" title="Skift farve på post-it"><span class="tb-dot"></span>&nbsp;Farve</button><span class="tv-th"></span><button class="btn sm tb-z tb-z1" data-tb="zup" title="Flyt den valgte widget et lag frem" disabled>Flyt frem</button><button class="btn sm tb-z" data-tb="zdn" title="Flyt den valgte widget et lag tilbage" disabled>Flyt tilbage</button><button class="btn sm tb-ur tb-un" data-tb="undo" title="Fortryd (Ctrl+Z)" aria-label="Fortryd" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3L2.5 6.5 6 10"/><path d="M2.5 6.5H10a3.5 3.5 0 0 1 0 7H8"/></svg></button><button class="btn sm tb-ur" data-tb="redo" title="Gentag (Ctrl+Y)" aria-label="Gentag" disabled><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l3.5 3.5L10 10"/><path d="M13.5 6.5H6a3.5 3.5 0 0 0 0 7h2"/></svg></button><button class="btn sm tb-del" data-tb="del" title="Fjern widgetten">Fjern</button></div><div class="tv-wrap" id="tvWrap"><div class="tv-board" id="tvBoard"></div></div>
   <div class="tv-dock" id="tvDock"><div class="tv-add" id="tvAdd"></div></div>
   <div class="tv-kv kr-hide" id="tvKvbar" role="toolbar" aria-label="Klassevisning"></div><div class="tv-kvp kr-hide" id="tvKvp"></div><div class="tv-msg kr-hide" id="tvMsg" role="status"></div>
   <input type="file" id="tvFile" accept="image/*" hidden>
@@ -1492,9 +1492,23 @@ function nav(el,w,body){const d=w.d;syncK(d);body.innerHTML='<div class="wn"><di
  let busy=false;btn.onclick=()=>{if(busy)return;if(!all().length){msg('Ingen elever i klassen');return;}let p=pool();if(!p.length){d.used=[];p=pool();}
   busy=true;const fnl=p[Math.floor(Math.random()*p.length)];let i=0;const iv=setInterval(()=>{nm.textContent=p[Math.floor(Math.random()*p.length)];if(++i>=12){clearInterval(iv);d.cur=fnl;d.used.push(fnl);busy=false;sv();upd();}},75);};
  upd();return{set(){openSet(body,d,[{k:'norep',l:'Undgå gentagelser',t:'c'},{t:'b',l:'Nulstil brugte navne',f:()=>{d.used=[];d.cur='';}}],upd);}};}
+/* billede af grupperne til tavlen (canvas → jpeg) */
+async function grpImg(L,kn,GC){try{const F="'Space Grotesk',system-ui,sans-serif";try{await Promise.race([Promise.all([document.fonts.load("700 40px 'Space Grotesk'"),document.fonts.load("500 30px 'Space Grotesk'")]),new Promise(r=>setTimeout(r,800))]);}catch(e){}
+ const n=L.length,c=n<=3?n:n===4?2:n<=9?3:4,r=Math.ceil(n/c),W=1600,P=40,G=24,cw=(W-2*P-G*(c-1))/c,x0=document.createElement('canvas').getContext('2d');
+ const mx=Math.max(1,...L.map(g=>g.length));let fN=32;x0.font='500 100px '+F;const lw=Math.max(...L.flat().map(t=>x0.measureText(t).width/100),1);fN=Math.max(16,Math.min(fN,(cw-44)/lw));
+ const fH=Math.round(fN*1.3),hH=Math.round(fH*1.75),lh=Math.round(fN*1.38),cH=hH+18+mx*lh+16,tH=kn?64:0,H=P*2+tH+r*cH+(r-1)*G;
+ const cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,W,H);
+ if(kn){x.fillStyle='#4b5f7a';x.font='600 30px '+F;x.textBaseline='top';x.fillText(kn+' · '+new Date().toLocaleDateString('da-DK',{day:'numeric',month:'long'}),P,P);}
+ L.forEach((g,i)=>{const col=GC[i%GC.length],cx=P+(i%c)*(cw+G),cy=P+tH+Math.floor(i/c)*(cH+G),rr=16;
+  x.fillStyle='#fff';x.beginPath();x.roundRect(cx,cy,cw,cH,rr);x.fill();
+  x.fillStyle=col;x.beginPath();x.roundRect(cx,cy,cw,hH,[rr,rr,0,0]);x.fill();
+  x.strokeStyle=col;x.lineWidth=3;x.beginPath();x.roundRect(cx+1.5,cy+1.5,cw-3,cH-3,rr);x.stroke();
+  x.fillStyle='#fff';x.font='700 '+fH+'px '+F;x.textBaseline='middle';x.fillText('Gruppe '+(i+1),cx+20,cy+hH/2);
+  x.fillStyle='#0f1f38';x.font='500 '+fN+'px '+F;x.textBaseline='top';g.forEach((t,j)=>x.fillText(t,cx+22,cy+hH+18+j*lh,cw-44));});
+ const u=cv.toDataURL('image/jpeg',.92),bs=atob(u.split(',')[1]),a=new Uint8Array(bs.length);for(let i=0;i<bs.length;i++)a[i]=bs.charCodeAt(i);return new Blob([a],{type:'image/jpeg'});}catch(e){console.warn(e);return null;}}
 function grp(el,w,body){const d=w.d;syncK(d);if(!(d.n>0)){const k0=kl(d.k);d.n=d.res&&d.res.length?d.res.length:k0&&k0.elever.length&&d.sz?Math.max(2,Math.ceil(k0.elever.length/d.sz)):4;}
  const GC=['#2563eb','#0d9488','#d97706','#e11d48','#7c3aed','#16a34a','#0284c7','#ea580c','#db2777','#65a30d','#4f46e5','#0891b2'];
- body.innerHTML='<div class="wg3"><div class="wg3-top"><div class="wg3-n" role="group" aria-label="Antal grupper"><span>Grupper</span><button class="wg3-s" data-m="mn" aria-label="Færre grupper">−</button><b></b><button class="wg3-s" data-m="pl" aria-label="Flere grupper">+</button></div><button class="wg3-ab" data-m="abs"></button><span class="wg3-k"></span></div><div class="wg3-g"></div><div class="wg3-f"><button class="wbt pri wg3-go" data-m="go"></button></div></div>';
+ body.innerHTML='<div class="wg3"><div class="wg3-top"><div class="wg3-n" role="group" aria-label="Antal grupper"><span>Grupper</span><button class="wg3-s" data-m="mn" aria-label="Færre grupper">−</button><b></b><button class="wg3-s" data-m="pl" aria-label="Flere grupper">+</button></div><button class="wg3-ab" data-m="abs"></button><span class="wg3-k"></span></div><div class="wg3-g"></div><div class="wg3-f"><button class="wbt pri wg3-go" data-m="go"></button><button class="wbt wg3-go wg3-add" data-m="add" title="Sæt et billede af grupperne ind på tavlen">Tilføj til tavlen</button></div></div>';
  const g=body.querySelector('.wg3-g'),go=body.querySelector('[data-m=go]'),ab=body.querySelector('[data-m=abs]');
  const K=()=>kl(d.k)||DB.klasser[0],pres=()=>{const k=K();return k?k.elever.filter(n=>!d.ex.includes(n)):[];};
  const cols=n=>{const W=g.clientWidth||400,H=g.clientHeight||200;let best=1,bs=-1;for(let c=1;c<=n;c++){const r=Math.ceil(n/c),sc=Math.min(W/c,H/r*1.6)-(c*r-n)*2;if(sc>bs){bs=sc;best=c;}}return best;};
@@ -1506,7 +1520,7 @@ function grp(el,w,body){const d=w.d;syncK(d);if(!(d.n>0)){const k0=kl(d.k);d.n=d
   const L=has?d.res:Array.from({length:n},()=>[]);g.style.setProperty('--gc',cols(L.length));
   g.innerHTML=L.map((r,x)=>`<div class="wg3-c" style="--c:${GC[x%GC.length]};--i:${x}"><div class="wg3-h">Gruppe ${x+1}</div><div class="wg3-l">${r.map(m=>`<div>${esc(m)}</div>`).join('')}</div></div>`).join('');
   g.classList.toggle('tom',!has);fit();fit();if(anim){g.classList.remove('an');void g.offsetWidth;g.classList.add('an');}
-  go.textContent=has?'Shuffle':'Generér grupper';};
+  go.textContent=has?'Shuffle':'Generér grupper';body.querySelector('[data-m=add]').classList.toggle('kr-hide',!has);};
  const reset=()=>{d.res=[];sv();show();};
  go.onclick=()=>{const p=pres();if(!p.length){msg('Ingen elever i klassen');return;}for(let x=p.length-1;x>0;x--){const y=Math.floor(Math.random()*(x+1));[p[x],p[y]]=[p[y],p[x]];}
   const n=Math.min(d.n,p.length);d.res=Array.from({length:n},()=>[]);p.forEach((s,x)=>d.res[x%n].push(s));sv();show(true);};
@@ -1519,6 +1533,7 @@ function grp(el,w,body){const d=w.d;syncK(d);if(!(d.n>0)){const k0=kl(d.k);d.n=d
    else if(b.dataset.m==='ok')a.remove();});
   body.querySelector('.wg3').appendChild(a);};
  ab.onclick=absent;
+ body.querySelector('[data-m=add]').onclick=async()=>{if(!d.res.length)return;const k=K(),bl=await grpImg(d.res,k?k.navn:'',GC);if(!bl){msg('Billedet kunne ikke laves');return;}await imgFromBlob(bl,null,.46);if(w.after)w.after();};
  const ro=new ResizeObserver(()=>{const c=g.children.length;if(c){g.style.setProperty('--gc',cols(c));fit();}});ro.observe(g);
  show();return{set:absent,destroy(){ro.disconnect();}};}
 function pic(el,w,body,strip){const d=w.d;body.innerHTML='<div class="wi"><img alt="" class="kr-hide"><div class="wi-k"><button class="wbt pri wi-b">Vælg billede</button><button class="wbt wi-p">Indsæt fra udklipsholder</button><div class="wi-h">eller tryk Ctrl+V</div></div></div>';const im=body.querySelector('img'),k=body.querySelector('.wi-k'),b=body.querySelector('.wi-b');
@@ -1639,7 +1654,7 @@ function addW(t){const df=DEF[t],b=cur(),n=b.w.length,w={id:uid(),t,x:cl(.06+(n%
 const select=el=>{board.querySelectorAll('.wd.sel').forEach(x=>x.classList.remove('sel'));if(el)el.classList.add('sel');tbarUpd();};
 let drag=null;
 board.addEventListener('pointerdown',e=>{const pe=e.target.closest('.wd');if(paVis&&!(pe&&pe.classList.contains('prw'))){paVis=false;markAp();}});
-board.addEventListener('pointerdown',e=>{if(app.classList.contains('kv'))return;const el=e.target.closest('.wd');select(el);if(!el||e.button>0)return;const w=find(el.dataset.id);if(!w)return;w.z=++zm;el.style.zIndex=w.z;
+board.addEventListener('pointerdown',e=>{if(app.classList.contains('kv'))return;const el=e.target.closest('.wd');select(el);if(!el||e.button>0)return;const w=find(el.dataset.id);if(!w)return;
  const rs=e.target.closest('.wr'),tw=e.target.closest('.wt'),tx=tw&&tw.contentEditable!=='true'&&el.classList.contains('txtw')?tw:null,mv=(e.target.closest('.wh')&&!e.target.closest('button'))||tx;if(!rs&&!mv)return;if(tx)e.preventDefault();
  drag={tx,m:rs?'r':'m',dir:rs?rs.dataset.dir:'',id:e.pointerId,x0:e.clientX,y0:e.clientY,o:{x:w.x,y:w.y,w:w.w,h:w.h},w,el};try{el.setPointerCapture(e.pointerId);}catch(x){}});
 board.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;if(!drag.mv){if(Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<4)return;drag.mv=true}const r=board.getBoundingClientRect(),dx=(e.clientX-drag.x0)/r.width,dy=(e.clientY-drag.y0)/r.height,w=drag.w,o=drag.o;
@@ -1701,11 +1716,20 @@ function editAt(wt,x,y){wt.contentEditable='true';wt.focus();const s=getSelectio
  if(!r||!wt.contains(r.startContainer)){r=document.createRange();r.selectNodeContents(wt);r.collapse(false)}
  s.removeAllRanges();s.addRange(r);tbarUpd()}
 board.addEventListener('focusout',e=>{const t=e.target;if(t.classList&&t.classList.contains('wt'))setTimeout(()=>{if(document.activeElement!==t){t.contentEditable='false';tbarUpd()}},0)});
-function tbarUpd(){if(!tbar)return;const S=selW();tbar.classList.toggle('off',!S);const cb=tbar.querySelector('[data-tb=c]');cb.classList.toggle('kr-hide',!(S&&S.w.t==='postit'));if(S&&S.w.t==='postit')cb.style.setProperty('--pc',pcOf(S.w.d));if(!S||S.w.t!=='postit')cpopClose();
+/* lag: flyt den valgte widget forbi den nærmeste widget, den overlapper */
+const zSel=()=>{const el=board.querySelector('.wd.sel');return el&&find(el.dataset.id);};
+const zOv=(a,b)=>a.x<b.x+b.w&&b.x<a.x+a.w&&a.y<b.y+b.h&&b.y<a.y+a.h;
+const zR=x=>{const W=cur().w;return (x.z||1)*1e4+W.indexOf(x);};
+function zTarget(w,dir){const r=zR(w),L=cur().w.filter(x=>x!==w&&zOv(x,w)&&(dir>0?zR(x)>r:zR(x)<r));if(!L.length)return null;L.sort((a,b)=>dir>0?zR(a)-zR(b):zR(b)-zR(a));return L[0];}
+function zMove(dir){const w=zSel();if(!w)return;const t=zTarget(w,dir);if(!t){msg(dir>0?'Den ligger allerede forrest':'Den ligger allerede bagerst');return;}
+ const L=cur().w.slice().sort((a,b)=>zR(a)-zR(b)).filter(x=>x!==w),i=L.indexOf(t);L.splice(dir>0?i+1:i,0,w);
+ L.forEach((x,k)=>{x.z=k+1;const e=board.querySelector(`[data-id="${x.id}"]`);if(e)e.style.zIndex=x.z;});zm=L.length;sv();tbarUpd();}
+function zUpd(){if(!tbar)return;const w=zSel(),u=tbar.querySelector('[data-tb=zup]'),d=tbar.querySelector('[data-tb=zdn]');if(!u)return;u.disabled=!w||!zTarget(w,1);d.disabled=!w||!zTarget(w,-1);}
+function tbarUpd(){if(!tbar)return;zUpd();const S=selW();tbar.classList.toggle('off',!S);const cb=tbar.querySelector('[data-tb=c]');cb.classList.toggle('kr-hide',!(S&&S.w.t==='postit'));if(S&&S.w.t==='postit')cb.style.setProperty('--pc',pcOf(S.w.d));if(!S||S.w.t!=='postit')cpopClose();
  const ed=!!S&&document.activeElement===S.wt;tbar.querySelectorAll('[data-f]').forEach(b=>{let on=false;if(ed){const f=b.dataset.f;try{on=f==='h3'?/h3/i.test(document.queryCommandValue('formatBlock')):document.queryCommandState(fCmd(f))}catch(x){}}if(!b.closest('.kr-ddm'))b.classList.toggle('on',on)});if(ed)krDdSync(tbar);else tbar.querySelectorAll('.kr-dd .on').forEach(x=>x.classList.remove('on'));
  tbar.querySelector('.tv-th').textContent=S?(ed?'':'Klik i teksten for at skrive. Træk for at flytte.'):'Vælg en tekst eller post-it for at bruge værktøjerne.'}
 tbar.addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault()});
-tbar.addEventListener('click',e=>{const b=e.target.closest('button'),S=selW();if(b&&(b.dataset.tb==='undo'||b.dataset.tb==='redo')){undo(b.dataset.tb==='undo'?-1:1);return}if(!b||!S)return;const{el,w,wt}=S,a=b.dataset.tb;
+tbar.addEventListener('click',e=>{const b=e.target.closest('button'),S=selW();if(b&&(b.dataset.tb==='undo'||b.dataset.tb==='redo')){undo(b.dataset.tb==='undo'?-1:1);return}if(b&&(b.dataset.tb==='zup'||b.dataset.tb==='zdn')){zMove(b.dataset.tb==='zup'?1:-1);return}if(!b||!S)return;const{el,w,wt}=S,a=b.dataset.tb;
  if(a==='fs-'||a==='fs+'){w.d.fs=cl(w.d.fs*(a==='fs+'?1.15:1/1.15),1.5,16);el.style.setProperty('--fs',w.d.fs);sv();return}
  if(a==='c'){cpopToggle(b,S);return}
  if(a==='del'){remove(w);tbarUpd();return}
@@ -1762,10 +1786,10 @@ document.getElementById('tvDub').onclick=async()=>{const t=T(),b=cur(),n=await k
  if(c.bg&&c.bg.k==='img'&&c.bg.id){const u=await getImg(c.bg.id);if(u){const id='i'+uid();await putImg(id,u);c.bg.id=id}else c.bg={k:'color',v:c.bg.v||'#ffffff'}}
  t.liste.splice(t.liste.indexOf(b)+1,0,c);t.aktiv=c.id;dbSave();renderBoard();msg('Tavlen er dubleret')};
 /* billeder fra udklipsholderen */
-async function imgFromBlob(blob,target){try{const u=await scaleImg(blob),id='i'+uid();await putImg(id,u);
+async function imgFromBlob(blob,target,ww0){try{const u=await scaleImg(blob),id='i'+uid();await putImg(id,u);
  if(target){if(target.d.img&&target.d.img!==id)delImg(target.d.img);target.d.img=id;sv();const i=inst.get(target.id);if(i&&i.load)i.load();return}
  const im=await new Promise(r=>{const x=new Image();x.onload=()=>r(x);x.onerror=()=>r(null);x.src=u});
- const b=cur(),W=board.offsetWidth||screen.width,H=board.offsetHeight||screen.height;let ww=.32,hh=im?ww*W*im.height/im.width/H:.36;if(hh>.7){ww=ww*.7/hh;hh=.7}
+ const b=cur(),W=board.offsetWidth||screen.width,H=board.offsetHeight||screen.height;let ww=ww0||.32,hh=im?ww*W*im.height/im.width/H:.36;if(hh>.7){ww=ww*.7/hh;hh=.7}
  const n=b.w.length,o={id:uid(),t:'billede',x:cl(.06+(n%6)*.035,0,1-ww),y:cl(.08+(n%6)*.04,0,1-hh),w:ww,h:hh,z:++zm,d:{img:id}};b.w.push(o);mount(o);select(board.querySelector(`[data-id="${o.id}"]`));sv();msg('Billedet er sat ind')}
  catch(e){msg('Billedet kunne ikke sættes ind')}}
 const emptyImgW=()=>{const el=board.querySelector('.wd.sel'),w=el&&find(el.dataset.id);return w&&w.t==='billede'&&!w.d.img?w:null};
@@ -1838,7 +1862,7 @@ const KG={k:'',d:null};
 function kgView(c){const k=kvK(),id=k&&k.id;if(!KG.d||KG.k!==id){KG.k=id;KG.d={k:bk(),ex:kvEx().slice(),n:KG.d?KG.d.n:4,res:[]};}
  c.innerHTML=kvHead('grupper','Grupper',k?k.navn:'')+'<div class="kvp-gw"></div>';
  if(!k||!k.elever.length){c.querySelector('.kvp-gw').outerHTML='<p class="kvp-e">Der er ingen elever i klassen. Vælg klassen øverst på tavlen, før du starter klassevisning.</p>';return;}
- const box=c.querySelector('.kvp-gw');grp(box,{t:'grupper',d:KG.d},box);}
+ const box=c.querySelector('.kvp-gw');grp(box,{t:'grupper',d:KG.d,after:()=>kvClose()},box);}
 window.TV={render(){renderBoard();placeTools();fit();},leave(){if(typeof kvEnd==='function')kvEnd();if(tools.parentNode!==app)app.insertBefore(tools,board.parentNode);$('#tvPop').classList.add('kr-hide');},clear(){inst.forEach(i=>{if(i.destroy)i.destroy();});inst.clear();for(const k in mem)delete mem[k];H={};trash={};clearTimeout(hqT);board.innerHTML='';}};
 })();
 </script>
@@ -2090,7 +2114,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-24-3';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-24-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
