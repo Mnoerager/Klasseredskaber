@@ -421,7 +421,7 @@ body{font-variant-numeric:tabular-nums}
 #tavle .wpr-eb{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
 #tavle .wpr-sum{color:#4b5f7a;font-size:12px}#tavle .wpr-eb [data-m2=no]{margin-left:auto}
 /* Tavle: klassevisning */
-#tavle .kv .wh,#tavle .kv .wr,#tavle .kv .wpr-f{display:none!important}
+#tavle .kv .wh,#tavle .kv .wr,#tavle .kv .wpr-f{display:none!important}#tavle .kv .wd.grpimg .wr{display:block!important}#tavle .kv .wd.grpimg{cursor:move}#tavle .kv .wd.grpimg img{-webkit-user-drag:none;user-select:none;pointer-events:none}
 #tavle .kv .wb{top:0}#tavle .kv .wd.sel{outline:none}#tavle .kv .wt{cursor:default}
 #tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.pa{box-shadow:0 0 0 2px #2563eb,0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
 #tavle .tv-kv{position:fixed;left:12px;right:12px;bottom:clamp(8px,1.5vh,16px);margin:0 auto;width:fit-content;z-index:97;display:flex;align-items:center;gap:clamp(4px,.75vh,8px);padding:clamp(4px,.75vh,8px);flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.94);border:1px solid #d3dfee;border-radius:clamp(12px,2vh,22px);box-shadow:0 14px 40px rgba(15,31,56,.18);font-family:'Space Grotesk',system-ui,'Segoe UI',sans-serif;transition:opacity .4s}
@@ -1533,10 +1533,10 @@ function grp(el,w,body){const d=w.d;syncK(d);if(!(d.n>0)){const k0=kl(d.k);d.n=d
    else if(b.dataset.m==='ok')a.remove();});
   body.querySelector('.wg3').appendChild(a);};
  ab.onclick=absent;
- body.querySelector('[data-m=add]').onclick=async()=>{if(!d.res.length)return;const k=K(),bl=await grpImg(d.res,k?k.navn:'',GC);if(!bl){msg('Billedet kunne ikke laves');return;}await imgFromBlob(bl,null,.46);if(w.after)w.after();};
+ body.querySelector('[data-m=add]').onclick=async()=>{if(!d.res.length)return;const k=K(),bl=await grpImg(d.res,k?k.navn:'',GC);if(!bl){msg('Billedet kunne ikke laves');return;}await imgFromBlob(bl,null,.46,{grp:1});if(w.after)w.after();};
  const ro=new ResizeObserver(()=>{const c=g.children.length;if(c){g.style.setProperty('--gc',cols(c));fit();}});ro.observe(g);
  show();return{set:absent,destroy(){ro.disconnect();}};}
-function pic(el,w,body,strip){const d=w.d;body.innerHTML='<div class="wi"><img alt="" class="kr-hide"><div class="wi-k"><button class="wbt pri wi-b">Vælg billede</button><button class="wbt wi-p">Indsæt fra udklipsholder</button><div class="wi-h">eller tryk Ctrl+V</div></div></div>';const im=body.querySelector('img'),k=body.querySelector('.wi-k'),b=body.querySelector('.wi-b');
+function pic(el,w,body,strip){const d=w.d;el.classList.toggle('grpimg',!!d.grp);body.innerHTML='<div class="wi"><img alt="" class="kr-hide"><div class="wi-k"><button class="wbt pri wi-b">Vælg billede</button><button class="wbt wi-p">Indsæt fra udklipsholder</button><div class="wi-h">eller tryk Ctrl+V</div></div></div>';const im=body.querySelector('img'),k=body.querySelector('.wi-k'),b=body.querySelector('.wi-b');
  const load=()=>{if(!d.img){im.classList.add('kr-hide');b.textContent='Vælg billede';k.classList.remove('kr-hide');return;}getImg(d.img).then(u=>{if(u){im.src=u;im.classList.remove('kr-hide');k.classList.add('kr-hide');}else{b.textContent='Billedet mangler. Vælg det igen';k.classList.remove('kr-hide');im.classList.add('kr-hide');}});};
  const pick=()=>pickFile(id=>{if(d.img&&d.img!==id)delImg(d.img);d.img=id;sv();load();});b.onclick=pick;body.querySelector('.wi-p').onclick=()=>pasteBtn(w);
  strip.querySelector('.wsp').insertAdjacentHTML('beforebegin','<button class="wb2" data-x="sk" aria-label="Skift billede">Skift</button>');strip.querySelector('[data-x=sk]').onclick=pick;load();return{load};}
@@ -1654,14 +1654,17 @@ function addW(t){const df=DEF[t],b=cur(),n=b.w.length,w={id:uid(),t,x:cl(.06+(n%
 const select=el=>{board.querySelectorAll('.wd.sel').forEach(x=>x.classList.remove('sel'));if(el)el.classList.add('sel');tbarUpd();};
 let drag=null;
 board.addEventListener('pointerdown',e=>{const pe=e.target.closest('.wd');if(paVis&&!(pe&&pe.classList.contains('prw'))){paVis=false;markAp();}});
-board.addEventListener('pointerdown',e=>{if(app.classList.contains('kv'))return;const el=e.target.closest('.wd');select(el);if(!el||e.button>0)return;const w=find(el.dataset.id);if(!w)return;
- const rs=e.target.closest('.wr'),tw=e.target.closest('.wt'),tx=tw&&tw.contentEditable!=='true'&&el.classList.contains('txtw')?tw:null,mv=(e.target.closest('.wh')&&!e.target.closest('button'))||tx;if(!rs&&!mv)return;if(tx)e.preventDefault();
+board.addEventListener('pointerdown',e=>{const kv=app.classList.contains('kv'),kg=kv&&e.target.closest('.wd.grpimg');if(kv&&!kg)return;const el=e.target.closest('.wd');select(el);if(!el||e.button>0)return;const w=find(el.dataset.id);if(!w)return;
+ /* i klassevisning kan kun billeder af grupper flyttes og ændres i størrelse (træk i billedet eller hjørnerne) */
+ const rs=e.target.closest('.wr'),tw=e.target.closest('.wt'),tx=tw&&tw.contentEditable!=='true'&&el.classList.contains('txtw')?tw:null,mv=(e.target.closest('.wh')&&!e.target.closest('button'))||tx||(kg&&!e.target.closest('button'));if(!rs&&!mv)return;if(tx||kg)e.preventDefault();
  drag={tx,m:rs?'r':'m',dir:rs?rs.dataset.dir:'',id:e.pointerId,x0:e.clientX,y0:e.clientY,o:{x:w.x,y:w.y,w:w.w,h:w.h},w,el};try{el.setPointerCapture(e.pointerId);}catch(x){}});
 board.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;if(!drag.mv){if(Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<4)return;drag.mv=true}const r=board.getBoundingClientRect(),dx=(e.clientX-drag.x0)/r.width,dy=(e.clientY-drag.y0)/r.height,w=drag.w,o=drag.o;
  if(drag.m==='m'){w.x=cl(o.x+dx,0,1-w.w);w.y=cl(o.y+dy,0,1-w.h);}else{const dd=drag.dir,mn=.06;let x=o.x,y=o.y,ww=o.w,hh=o.h;
   if(dd.includes('e'))ww=cl(o.w+dx,mn,1-o.x);if(dd.includes('s'))hh=cl(o.h+dy,mn,1-o.y);
   if(dd.includes('w')){x=cl(o.x+dx,0,o.x+o.w-mn);ww=o.w+(o.x-x);}if(dd.includes('n')){y=cl(o.y+dy,0,o.y+o.h-mn);hh=o.h+(o.y-y);}
-  w.x=x;w.y=y;w.w=ww;w.h=hh;}if(snapOn()&&!e.altKey)snapW(drag);else guides([]);place(drag.el,w);});
+  if(w.t==='billede'&&w.d&&w.d.grp){/* gruppebilleder beholder deres form */const k=o.h/o.w;if(dd.includes('e')||dd.includes('w'))hh=ww*k;else ww=hh/k;if(dd.includes('w'))x=o.x+o.w-ww;else x=o.x;if(dd.includes('n'))y=o.y+o.h-hh;else y=o.y;
+   if(x<0){x=0;ww=o.x+o.w;hh=ww*k;}if(x+ww>1){ww=1-x;hh=ww*k;}if(y<0){y=0;hh=o.y+o.h;ww=hh/k;}if(y+hh>1){hh=1-y;ww=hh/k;}if(dd.includes('w'))x=o.x+o.w-ww;if(dd.includes('n'))y=o.y+o.h-hh;}
+  w.x=x;w.y=y;w.w=ww;w.h=hh;}if(snapOn()&&!e.altKey&&!(w.t==='billede'&&w.d&&w.d.grp&&drag.m==='r'))snapW(drag);else guides([]);place(drag.el,w);});
 const endDrag=e=>{if(drag&&e.pointerId===drag.id){const d=drag;drag=null;guides([]);sv();if(d.tx&&!d.mv&&e.type==='pointerup')editAt(d.tx,e.clientX,e.clientY)}};board.addEventListener('pointerup',endDrag);board.addEventListener('pointercancel',endDrag);
 board.addEventListener('click',e=>{const b=e.target.closest('.wh [data-a]');if(!b){if(e.target===board)select(null);return;}const el=b.closest('.wd'),w=find(el.dataset.id),a=b.dataset.a;if(!w)return;
  if(a==='del')remove(w);
@@ -1786,11 +1789,11 @@ document.getElementById('tvDub').onclick=async()=>{const t=T(),b=cur(),n=await k
  if(c.bg&&c.bg.k==='img'&&c.bg.id){const u=await getImg(c.bg.id);if(u){const id='i'+uid();await putImg(id,u);c.bg.id=id}else c.bg={k:'color',v:c.bg.v||'#ffffff'}}
  t.liste.splice(t.liste.indexOf(b)+1,0,c);t.aktiv=c.id;dbSave();renderBoard();msg('Tavlen er dubleret')};
 /* billeder fra udklipsholderen */
-async function imgFromBlob(blob,target,ww0){try{const u=await scaleImg(blob),id='i'+uid();await putImg(id,u);
+async function imgFromBlob(blob,target,ww0,ex){try{const u=await scaleImg(blob),id='i'+uid();await putImg(id,u);
  if(target){if(target.d.img&&target.d.img!==id)delImg(target.d.img);target.d.img=id;sv();const i=inst.get(target.id);if(i&&i.load)i.load();return}
  const im=await new Promise(r=>{const x=new Image();x.onload=()=>r(x);x.onerror=()=>r(null);x.src=u});
  const b=cur(),W=board.offsetWidth||screen.width,H=board.offsetHeight||screen.height;let ww=ww0||.32,hh=im?ww*W*im.height/im.width/H:.36;if(hh>.7){ww=ww*.7/hh;hh=.7}
- const n=b.w.length,o={id:uid(),t:'billede',x:cl(.06+(n%6)*.035,0,1-ww),y:cl(.08+(n%6)*.04,0,1-hh),w:ww,h:hh,z:++zm,d:{img:id}};b.w.push(o);mount(o);select(board.querySelector(`[data-id="${o.id}"]`));sv();msg('Billedet er sat ind')}
+ const n=b.w.length,o={id:uid(),t:'billede',x:cl(.06+(n%6)*.035,0,1-ww),y:cl(.08+(n%6)*.04,0,1-hh),w:ww,h:hh,z:++zm,d:Object.assign({img:id},ex||{})};b.w.push(o);mount(o);select(board.querySelector(`[data-id="${o.id}"]`));sv();msg('Billedet er sat ind')}
  catch(e){msg('Billedet kunne ikke sættes ind')}}
 const emptyImgW=()=>{const el=board.querySelector('.wd.sel'),w=el&&find(el.dataset.id);return w&&w.t==='billede'&&!w.d.img?w:null};
 document.addEventListener('paste',e=>{if(KR.tool!=='tavle'||e.defaultPrevented||app.classList.contains('kv'))return;const t=e.target;if(t&&(t.isContentEditable||/INPUT|TEXTAREA|SELECT/.test(t.tagName)))return;
@@ -2114,7 +2117,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-24-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-24-5';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
