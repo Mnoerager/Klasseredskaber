@@ -425,7 +425,7 @@ body{font-variant-numeric:tabular-nums}
 /* Tavle: klassevisning */
 #tavle .kv .wh,#tavle .kv .wr,#tavle .kv .wpr-f{display:none!important}#tavle .kv .wd.grpimg .wr{display:block!important}#tavle .kv .wd.grpimg{cursor:move}#tavle .kv .wd.grpimg img{-webkit-user-drag:none;user-select:none;pointer-events:none}
 #tavle .kv .wb{top:0}#tavle .kv .wd.sel{outline:none}#tavle .kv .wt{cursor:default}
-#tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.pa{box-shadow:0 0 0 2px var(--pc,#2563eb),0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-sk .wbt:disabled{opacity:.4;cursor:default}#tavle .wpr-skt{color:#64748b;font-size:.9em}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
+#tavle .kv .wpr{padding-top:max(10px,2.2cqw)}#tavle .wd.prw.pg.sel .wpr,#tavle .wd.prw.pg.many .wpr{padding-bottom:42px}#tavle .kv .wd.prw.pg:not(.many) .wpr{padding-bottom:2.5cqw}#tavle .wd.prw:has(.wpr-ed) .wtp{display:none!important}#tavle .wd.pa{box-shadow:0 0 0 2px var(--pc,#2563eb),0 6px 22px rgba(15,23,42,.2)}#tavle .wpr-sk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid #e4edf8}#tavle .wpr-sk select,#tavle .wpr-hs0{font:inherit;font-size:13px;padding:5px 8px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f1f38;max-width:100%}#tavle .wpr-sk select{flex:1;min-width:0}#tavle .wpr-sk [data-m2=gem]{margin-left:auto}#tavle .wpr-sk .wbt:disabled{opacity:.4;cursor:default}#tavle .wpr-skt{color:#64748b;font-size:.9em}#tavle .wpr-hs0{font-size:max(12px,min(3.4cqw,5cqh))}#tavle .kv .wpr-i{cursor:pointer}
 #tavle .tv-kv{position:fixed;left:12px;right:12px;bottom:clamp(8px,1.5vh,16px);margin:0 auto;width:fit-content;z-index:97;display:flex;align-items:center;gap:clamp(4px,.75vh,8px);padding:clamp(4px,.75vh,8px);flex-wrap:wrap;justify-content:center;background:rgba(255,255,255,.94);border:1px solid #d3dfee;border-radius:clamp(12px,2vh,22px);box-shadow:0 14px 40px rgba(15,31,56,.18);font-family:'Space Grotesk',system-ui,'Segoe UI',sans-serif;transition:opacity .4s}
 #tavle .tv-kv.dim{opacity:.28}#tavle .tv-kv.dim:hover{opacity:1}
 #tavle .tv-kv.kr-hide{display:none}
@@ -1397,7 +1397,7 @@ function rec(){clearTimeout(hqT);hqT=null;if(!DB)return;const b=(hqB&&T().liste.
 function hq(){if(hqB&&DB&&hqB!==cur().id)rec();if(DB)hqB=cur().id;clearTimeout(hqT);hqT=setTimeout(rec,600);const u=document.querySelector('#tvTbar [data-tb=undo]');if(u)u.disabled=false;}
 function undoUpd(){const h=DB&&H[cur().id],u=document.querySelector('#tvTbar [data-tb=undo]'),r=document.querySelector('#tvTbar [data-tb=redo]');if(u)u.disabled=!(h&&h.u.length);if(r)r.disabled=!(h&&h.r.length);}
 function restore(s){const b=cur(),o=JSON.parse(s.full),now={},cap=b.ap;b.w.forEach(w=>{if(w.t==='program')now[w.id]=w.d;});
- (o.w||[]).forEach(w=>{const c=now[w.id];if(w.t==='program'&&c&&w.d)RT.forEach(k=>{if(k in c)w.d[k]=c[k];else delete w.d[k];});});
+ (o.w||[]).forEach(w=>{const c=now[w.id];if(w.t==='program'&&c&&w.d&&(w.d.pid||'')===(c.pid||''))RT.forEach(k=>{if(k in c)w.d[k]=c[k];else delete w.d[k];});});
  for(const k of Object.keys(b))if(k!=='id'&&k!=='navn')delete b[k];Object.assign(b,o);
  if(cap!==undefined)b.ap=cap;else delete b.ap;const ids=[];if(b.bg&&b.bg.id)ids.push(b.bg.id);(b.w||[]).forEach(w=>{if(w.t==='billede'&&w.d&&w.d.img)ids.push(w.d.img);});ids.forEach(id=>{if(!mem[id]&&trash[id])putImg(id,trash[id]);});
  select(null);renderBoard();dbSave();}
@@ -1613,6 +1613,23 @@ function poll(el,w,body){const d=w.d;
     else if(D.u!==undefined){const i=+D.u;[L[i-1],L[i]]=[L[i],L[i-1]];paint();}else if(D.dn!==undefined){const i=+D.dn;[L[i+1],L[i]]=[L[i],L[i+1]];paint();}
     else if(D.x!==undefined){L.splice(+D.x,1);if(!L.length)L.push({t:'',m:0,nt:false});paint();}});
    paint(d.p.length?null:0);body.appendChild(ed);if(!d.p.length){const x=ed.querySelector('.wpr-et');if(x)x.focus();}};
+  /* sider: flere dagsprogrammer i samme widget (fx ét pr. klasse). d.sider=[{titel,p,a,st,pa,off,bp,col}], d.s = aktuel side; felterne på d er altid den aktuelle side */
+  const PF=['pid','titel','p','a','st','pa','off','bp','col'];
+  const pick=()=>{const o={};PF.forEach(k=>{if(d[k]!==undefined&&d[k]!==null)o[k]=JSON.parse(JSON.stringify(d[k]));});return o;};
+  const pMany=()=>Array.isArray(d.sider)&&d.sider.length>1;
+  if(Array.isArray(d.sider)&&d.sider.length){d.s=cl(d.s|0,0,d.sider.length-1);if(!d.pid)d.pid=uid();d.sider[d.s]=pick();}
+  const PS=()=>{if(!Array.isArray(d.sider)||!d.sider.length){if(!d.pid)d.pid=uid();d.sider=[pick()];d.s=0;}d.s=cl(d.s|0,0,d.sider.length-1);return d.sider;};
+  el.classList.add('pg');const pb=document.createElement('div');pb.className='wtp';
+  pb.innerHTML='<button class="wbt sm" data-p="prev" aria-label="Forrige side" title="Forrige side">◀</button><span class="wtp-n"></span><button class="wbt sm" data-p="next" aria-label="Næste side" title="Næste side">▶</button><button class="wbt sm wtp-e" data-p="add" title="Nyt dagsprogram på en ny side efter denne">+ Ny side</button><button class="wbt sm wtp-e wtp-x" data-p="del" title="Slet denne side">Slet side</button>';
+  const pupd=()=>{const n=pMany()?d.sider.length:1,i=pMany()?d.s:0;pb.querySelector('.wtp-n').textContent='Side '+(i+1)+' af '+n;pb.querySelector('[data-p=prev]').disabled=i<=0;pb.querySelector('[data-p=next]').disabled=i>=n-1;pb.querySelector('[data-p=del]').disabled=n<2;el.classList.toggle('many',n>1);};
+  const pload=i=>{const S=PS();d.s=cl(i,0,S.length-1);PF.forEach(k=>delete d[k]);Object.assign(d,JSON.parse(JSON.stringify(S[d.s])));if(!Array.isArray(d.p))d.p=[];if(typeof d.a!=='number')d.a=-1;setCol(d.col);draw();sv();pupd();kvBar();};
+  pb.addEventListener('pointerdown',e=>e.stopPropagation());
+  pb.addEventListener('mousedown',e=>{if(e.target.closest('button'))e.preventDefault();});
+  pb.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b||b.disabled||ed)return;const a=b.dataset.p,S=PS();
+   if(a==='prev'||a==='next'){S[d.s]=pick();pload(d.s+(a==='next'?1:-1));}
+   else if(a==='add'){S[d.s]=pick();S.splice(d.s+1,0,{pid:uid(),p:[],a:-1});pload(d.s+1);}
+   else if(a==='del'){if(S.length<2)return;if(d.p.length&&!await krConfirm('Slet siden?','Side '+(d.s+1)+' og dens dagsprogram slettes. Du kan fortryde med Ctrl+Z.','Slet siden'))return;S.splice(d.s,1);pload(Math.min(d.s,S.length-1));}});
+  el.appendChild(pb);pupd();
   draw();const iv=setInterval(tick,250);
   return{destroy(){clearInterval(iv);},set:edit,go,next,prev,has:()=>N()>0,st:()=>({a:d.a,n:N()})};}
  /* flere dagsprogrammer: rækkefølge efter placering (oppefra og ned, så venstre mod højre), ét er aktivt */
@@ -2130,7 +2147,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-24-11';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-26-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
