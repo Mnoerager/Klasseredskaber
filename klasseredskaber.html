@@ -452,14 +452,17 @@ body{font-variant-numeric:tabular-nums}
 #tavle .kvp-x:hover{border-color:#2563eb}
 #tavle .kvp-b{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
 #tavle .kvp-tn{font:700 clamp(64px,min(15vw,21vh),190px)/1 'Inter',system-ui,sans-serif;letter-spacing:-.02em;margin:6px 0 14px;font-variant-numeric:tabular-nums}
-#tavle .kvp-tn.done{color:#c81e1e}#tavle .kvp-ts{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-#tavle .kvp-seg{display:inline-flex;padding:3px;border:1px solid #d3dfee;border-radius:12px;background:#f5f9fe}#tavle .kvp-seg button{border:0;background:transparent;padding:8px 16px;border-radius:9px;font:600 1rem 'Space Grotesk',system-ui,sans-serif;color:#4b5f7a;cursor:pointer}#tavle .kvp-seg button.on{background:#fff;color:#0f1f38;box-shadow:0 1px 4px rgba(15,31,56,.12)}
-#tavle .kvp-tal{display:inline-flex;align-items:center;gap:6px;font:600 1rem 'Space Grotesk',system-ui,sans-serif;color:#0f1f38;cursor:pointer}#tavle .kvp-tal input{width:18px;height:18px;accent-color:#2563eb}
-#tavle .kvp-tx{flex:1;min-width:200px;max-width:360px;font:500 1rem 'Space Grotesk',system-ui,sans-serif;padding:9px 12px;border:1px solid #d3dfee;border-radius:12px;color:#0f1f38;background:#fff}#tavle .kvp-tx:focus{outline:none;border-color:#2563eb}
-#tavle .kvp-tl{font:700 clamp(26px,3.6vw,46px)/1.15 'Space Grotesk',system-ui,sans-serif;color:#0f1f38;margin:10px 0 4px;overflow-wrap:anywhere}
-#tavle .kvp-ana{display:none}#tavle .kvp.ana .kvp-ana{display:block}#tavle .kvp.ana .kvp-dig{display:none}
-#tavle .kvp-aw{position:relative;width:min(28vh,400px);aspect-ratio:1;margin:2px auto 0}#tavle .kvp-aw svg{width:100%;height:100%;display:block;cursor:pointer;touch-action:none}
-#tavle .kvp-an{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:700 clamp(22px,4.2vh,40px)/1 'Inter',system-ui,sans-serif;background:#fff;padding:4px 10px;border-radius:10px;border:1px solid #e4edf8;font-variant-numeric:tabular-nums;pointer-events:none}#tavle .kvp-an.done{color:#c81e1e}
+#tavle .kvp-tn.done{color:#c81e1e}#tavle .kvp-ts{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;margin:0 0 6px}
+#tavle .kvp-ti{flex:1;min-width:220px;max-width:520px;text-align:center;font:700 clamp(1.3rem,2.6vw,2rem)/1.2 'Space Grotesk',system-ui,sans-serif;background:transparent;border:0;border-bottom:2px dashed #d3dfee;color:#0f1f38;padding:4px 8px}#tavle .kvp-ti:focus{outline:none;border-bottom-color:#2563eb}#tavle .kvp-ti::placeholder{color:#94a3b8;font-weight:500}
+#tavle .kvp-seg{display:inline-flex;padding:3px;border:1px solid #d3dfee;border-radius:12px;background:#f5f9fe}#tavle .kvp-seg button{border:0;background:transparent;padding:7px 14px;border-radius:9px;font:600 .95rem 'Space Grotesk',system-ui,sans-serif;color:#4b5f7a;cursor:pointer}#tavle .kvp-seg button.on{background:#fff;color:#0f1f38;box-shadow:0 1px 4px rgba(15,31,56,.12)}
+#tavle .kvp-ana,#tavle .kvp.ana .kvp-dig{display:none}#tavle .kvp.ana .kvp-ana{display:block}
+#tavle .kvp-aw{--d:min(40vh,460px);position:relative;width:var(--d);aspect-ratio:1;margin:6px auto 0;user-select:none}#tavle .kvp-aw svg{width:100%;height:100%;display:block;cursor:pointer;touch-action:none}#tavle .kvp-aw svg *{pointer-events:none}#tavle .kvp-aw svg text{font-family:'Inter',system-ui,sans-serif;font-weight:500}#tavle .kvp.run .kvp-aw svg{cursor:default}
+#tavle .kvp-an{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:700 calc(var(--d)*.14)/1 'Inter',system-ui,sans-serif;background:rgba(255,255,255,.88);border:1px solid #d3dfee;border-radius:16px;padding:6px 16px;font-variant-numeric:tabular-nums;cursor:text;white-space:nowrap}
+#tavle .kvp.notal .kvp-an,#tavle .kvp.notal .kvp-num{display:none}
+#tavle .kvp-tn{cursor:text}#tavle .kvp.run .kvp-tn,#tavle .kvp.run .kvp-an{cursor:default}#tavle .kvp.done .kvp-tn,#tavle .kvp.done .kvp-an{color:#c81e1e}
+#tavle .kvp-tn input,#tavle .kvp-an input{font:inherit;color:inherit;width:5ch;text-align:center;border:0;border-bottom:3px solid #2563eb;background:transparent;padding:0;outline:none;font-variant-numeric:tabular-nums}
+#tavle .kvp-msg{min-height:1.4em;font-weight:700;color:#c81e1e;font-size:1.15rem;margin-top:6px}
+#tavle .kvp-msg+.kvp-b{margin-top:8px}
 #tavle .kvp-pg{height:14px;border-radius:9px;background:#e4edf8;overflow:hidden;margin:0 auto;max-width:640px}
 #tavle .kvp-pg i{display:block;height:100%;background:#2563eb;border-radius:9px;transition:width .25s linear}
 #tavle .kvp-pg.done i{background:#c81e1e}
@@ -1875,31 +1878,36 @@ function kvClose(){kvMode='';kvPop.classList.add('kr-hide');kvPop.innerHTML='';k
 const kvHead=(t,n,sub)=>{const ks=DB.klasser,k=kvK(),sel=(t==='navn'||t==='grupper')&&ks.length>1?`<select class="kvp-kl" aria-label="Klasse">${ks.map(c=>`<option value="${c.id}"${k&&c.id===k.id?' selected':''}>${esc(c.navn)}</option>`).join('')}</select>`:(sub?`<small>${esc(sub)}</small>`:'');return `<button class="kvp-x" aria-label="Luk">×</button><div class="kvp-h">${ic(t)}<h3>${n}</h3>${sel}</div>`;};
 function kvOpen(m){kvMode=m;kvPop.classList.remove('kr-hide');const c=document.createElement('div');c.className='kvp'+(m==='grupper'?' wide':'');c.setAttribute('role','dialog');kvPop.innerHTML='';kvPop.appendChild(c);
  if(m==='timer')ktView(c);else if(m==='navn')knView(c);else if(m==='grupper')kgView(c);kvBar();}
-/* timer: digital eller analog (urskive 0–60 min), valgfri tekst; intet gemmes */
-const KT={total:300,rem:300,run:false,end:0,done:false,iv:null,mode:'dig',tekst:'',tal:true};
+/* timer: ligner Timer-værktøjet. Analog urskive (0–60 min, klik/træk eller skriv) eller digital (skriv tiden); titel; intet gemmes */
+const KT={total:300,rem:300,run:false,end:0,done:false,iv:null,mode:'ana',tekst:'',tal:true};
 function ktTick(){if(!KT.run)return;KT.rem=(KT.end-performance.now())/1000;if(KT.rem<=0){KT.rem=0;KT.run=false;KT.done=true;clearInterval(KT.iv);beep(3);if(kvOn()&&kvMode!=='timer')kvOpen('timer');}ktDraw();}
 const ktP=(r,a)=>{a=a*Math.PI/180;return [110+r*Math.sin(a),110-r*Math.cos(a)];};
-function ktDial(){const f=Math.min(1,KT.rem/3600),th=f*360,col=KT.done?'#ef4444':'#f59e0b';let g='';
+let ktTk='';for(let i=0;i<60;i++){const mj=i%5===0,[x1,y1]=ktP(mj?97:100,i*6),[x2,y2]=ktP(106,i*6);ktTk+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${mj?'#4b5f7a':'#8395ad'}" stroke-width="${mj?2.2:1.2}"/>`;if(mj){const [tx,ty]=ktP(88,i*6);ktTk+=`<text class="kvp-num" x="${tx.toFixed(1)}" y="${(ty+4).toFixed(1)}" text-anchor="middle" font-size="12" fill="#4b5f7a">${i===0?60:i}</text>`;}}
+function ktDial(){const f=Math.min(1,KT.rem/3600),th=f*360,col=KT.done?'#c81e1e':'#2563eb';let g='';
  if(f>=1)g=`<circle cx="110" cy="110" r="78" fill="${col}"/>`;else if(f>0){const [x,y]=ktP(78,th);g=`<path d="M110 110 L110 32 A78 78 0 ${th>180?1:0} 1 ${x.toFixed(2)} ${y.toFixed(2)} Z" fill="${col}"/>`;}
- let tk='';for(let i=0;i<60;i++){const mj=i%5===0,[x1,y1]=ktP(mj?97:100,i*6),[x2,y2]=ktP(106,i*6);tk+=`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${mj?'#64748b':'#b6c0cc'}" stroke-width="${mj?2.4:1.2}"/>`;if(mj&&KT.tal){const [tx,ty]=ktP(88,i*6);tk+=`<text x="${tx.toFixed(1)}" y="${(ty+4).toFixed(1)}" text-anchor="middle" font-size="13" fill="#64748b" font-family="Inter,system-ui,sans-serif">${i===0?60:i}</text>`;}}
- return '<circle cx="110" cy="110" r="108" fill="#f3f5f8" stroke="#d5dbe3" stroke-width="2"/><circle cx="110" cy="110" r="78" fill="#fff"/>'+g+tk;}
+ return '<circle cx="110" cy="110" r="108" fill="#ffffff" stroke="#d3dfee" stroke-width="2"/><circle cx="110" cy="110" r="78" fill="#eef4fb"/>'+g+ktTk+'<circle cx="110" cy="110" r="4" fill="#eef4fb"/>';}
 function ktDraw(){const b=kvBarEl.querySelector('[data-kv=timer]');if(b){const act=KT.run||(KT.rem<KT.total&&KT.rem>0);b.querySelector('.kv-tt').textContent=act||KT.done?mmss(KT.rem):'';b.classList.toggle('alarm',KT.done);}
- const c=kvMode==='timer'&&kvPop.querySelector('.kvp');if(!c)return;const ana=KT.mode==='ana';c.classList.toggle('ana',ana);
- const n=c.querySelector('.kvp-tn'),g=c.querySelector('.kvp-pg'),go=c.querySelector('[data-t=go]'),an=c.querySelector('.kvp-an'),tl=c.querySelector('.kvp-tl');
- n.textContent=mmss(KT.rem);n.classList.toggle('done',KT.done);g.classList.toggle('done',KT.done);g.firstChild.style.width=(KT.total?KT.rem/KT.total*100:0)+'%';go.textContent=KT.run?'Stop':'Start';
- if(ana){c.querySelector('.kvp-ana svg').innerHTML=ktDial();an.textContent=mmss(KT.rem);an.classList.toggle('done',KT.done);an.classList.toggle('kr-hide',!KT.tal);}
- tl.textContent=KT.tekst;tl.classList.toggle('kr-hide',!KT.tekst.trim());
- c.querySelectorAll('[data-md]').forEach(x=>x.classList.toggle('on',x.dataset.md===KT.mode));const ck=c.querySelector('[data-tal]');ck.checked=KT.tal;ck.closest('label').classList.toggle('kr-hide',!ana);
- c.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',+x.dataset.p*60===KT.total));}
-function ktView(c){c.innerHTML=kvHead('timer','Timer')+'<div class="kvp-ts"><div class="kvp-seg" role="group" aria-label="Visning"><button data-md="dig">Digital</button><button data-md="ana">Analog</button></div><label class="kvp-tal"><input type="checkbox" data-tal> Vis tal</label><input class="kvp-tx" maxlength="60" placeholder="Tekst (valgfri), fx Læs side 12" aria-label="Tekst til timeren"></div><div class="kvp-tl kr-hide"></div><div class="kvp-dig"><div class="kvp-tn"></div><div class="kvp-pg"><i></i></div></div><div class="kvp-ana"><div class="kvp-aw"><svg viewBox="0 0 220 220" aria-label="Urskive. Træk for at indstille tiden"></svg><div class="kvp-an"></div></div></div><div class="kvp-ps">'+[1,2,3,5,10,15,20].map(m=>`<button class="tv-kvb" data-p="${m}">${m} min</button>`).join('')+'</div><div class="kvp-b"><button class="tv-kvb pri" data-t="go">Start</button><button class="tv-kvb" data-t="re">Start forfra</button></div>';
- const tx=c.querySelector('.kvp-tx');tx.value=KT.tekst;tx.addEventListener('input',()=>{KT.tekst=tx.value;ktDraw();});
- c.querySelector('[data-tal]').addEventListener('change',e=>{KT.tal=e.target.checked;ktDraw();});
+ const c=kvMode==='timer'&&kvPop.querySelector('.kvp');if(!c)return;const ana=KT.mode==='ana';
+ c.classList.toggle('ana',ana);c.classList.toggle('run',KT.run);c.classList.toggle('done',KT.done);c.classList.toggle('notal',ana&&!KT.tal);
+ c.querySelector('.kvp-ana svg').innerHTML=ktDial();
+ c.querySelectorAll('.kvp-tn,.kvp-an').forEach(n=>{if(!n.querySelector('input'))n.textContent=mmss(KT.rem);});
+ c.querySelector('[data-t=go]').textContent=KT.run?'Stop':'Start';const ey=c.querySelector('[data-t=eye]');ey.textContent=KT.tal?'Skjul tal':'Vis tal';ey.classList.toggle('kr-hide',!ana);
+ c.querySelector('.kvp-msg').textContent=KT.done?'Tiden er gået!':'';
+ c.querySelectorAll('[data-md]').forEach(x=>x.classList.toggle('on',x.dataset.md===KT.mode));}
+function ktView(c){c.innerHTML=kvHead('timer','Timer')+'<div class="kvp-ts"><input class="kvp-ti" maxlength="40" placeholder="Titel (fx Stillelæsning)" aria-label="Titel på uret"><div class="kvp-seg" role="group" aria-label="Visning"><button data-md="ana">Analog</button><button data-md="dig">Digital</button></div></div><div class="kvp-ana"><div class="kvp-aw"><svg viewBox="0 0 220 220" role="img" aria-label="Urskive. Klik eller træk for at sætte tiden"></svg><div class="kvp-an" role="button" tabindex="0" title="Tryk for at skrive tiden"></div></div></div><div class="kvp-dig"><div class="kvp-tn" role="button" tabindex="0" title="Tryk for at skrive tiden"></div></div><div class="kvp-msg" role="status"></div><div class="kvp-b"><button class="tv-kvb pri" data-t="go">Start</button><button class="tv-kvb" data-t="re">Start forfra</button><button class="tv-kvb" data-t="eye">Skjul tal</button></div>';
+ const ti=c.querySelector('.kvp-ti');ti.value=KT.tekst;ti.addEventListener('input',()=>{KT.tekst=ti.value;});
+ const set=s=>{clearInterval(KT.iv);KT.run=false;KT.done=false;KT.total=KT.rem=s;ktDraw();};
+ const parse=v=>{v=v.trim().replace(',','.');let s;if(v.includes(':')){const q=v.split(':');s=(parseInt(q[0])||0)*60+(parseInt(q[1])||0);}else s=Math.round(parseFloat(v)*60);return isFinite(s)&&s>=0?s:null;};
+ const edit=n=>{if(KT.run||n.querySelector('input'))return;const i=document.createElement('input');i.value=mmss(KT.total);i.setAttribute('aria-label','Tid');i.setAttribute('inputmode','numeric');n.textContent='';n.appendChild(i);i.focus();i.select();let fn=false;
+  const dn=ok=>{if(fn||!i.parentNode)return;fn=true;const v=i.value;i.remove();if(ok){const p=parse(v);if(p!==null)set(Math.min(KT.mode==='ana'?3600:5940,p));}ktDraw();};
+  i.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();dn(true);}else if(e.key==='Escape'){e.preventDefault();dn(false);}e.stopPropagation();};i.onblur=()=>dn(true);};
+ c.querySelectorAll('.kvp-tn,.kvp-an').forEach(n=>{n.onclick=()=>edit(n);n.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();edit(n);}};});
  const svg=c.querySelector('.kvp-ana svg');let dr=null;
- const setF=e=>{const r=svg.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);let a=Math.atan2(dx,-dy)*180/Math.PI;if(a<0)a+=360;let s=Math.round(a/360*3600/30)*30;if(dr.l!==null&&Math.abs(s-dr.l)>1800)s=dr.l>1800?3600:0;dr.l=s;KT.total=KT.rem=s;KT.done=false;ktDraw();};
+ const setF=e=>{const r=svg.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);let a=Math.atan2(dx,-dy)*180/Math.PI;if(a<0)a+=360;let s=Math.round(a/360*3600/30)*30;if(dr.l!==null&&Math.abs(s-dr.l)>1800)s=dr.l>1800?3600:0;dr.l=s;set(s);};
  svg.addEventListener('pointerdown',e=>{if(KT.run)return;e.preventDefault();try{svg.setPointerCapture(e.pointerId);}catch(x){}dr={l:null};setF(e);});svg.addEventListener('pointermove',e=>{if(dr)setF(e);});svg.addEventListener('pointerup',()=>{dr=null;});svg.addEventListener('pointercancel',()=>{dr=null;});
  c.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;unlock();
-  if(b.dataset.md){KT.mode=b.dataset.md;}
-  else if(b.dataset.p){clearInterval(KT.iv);KT.run=false;KT.done=false;KT.total=KT.rem=+b.dataset.p*60;}
+  if(b.dataset.md){KT.mode=b.dataset.md;if(KT.mode==='ana'&&KT.total>3600&&!KT.run)set(3600);}
+  else if(b.dataset.t==='eye'){KT.tal=!KT.tal;}
   else if(b.dataset.t==='go'){if(KT.run){KT.rem=Math.max(0,(KT.end-performance.now())/1000);KT.run=false;clearInterval(KT.iv);}else{if(KT.rem<=0)KT.rem=KT.total;if(KT.rem<=0)return;KT.done=false;KT.run=true;KT.end=performance.now()+KT.rem*1000;clearInterval(KT.iv);KT.iv=setInterval(ktTick,200);}}
   else if(b.dataset.t==='re'){clearInterval(KT.iv);KT.run=false;KT.done=false;KT.rem=KT.total;}ktDraw();});ktDraw();}
 /* tilfældigt navn */
@@ -2169,7 +2177,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-26-3';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-26-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
