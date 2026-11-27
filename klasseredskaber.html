@@ -1987,15 +1987,22 @@ function pjSync(){if(!pjOn()){pjStop();return;}const d=PJ.w.document,dst=d.getEl
  PJ.pop=false;}
 function pjStop(){if(PJ.mo){PJ.mo.disconnect();PJ.mo=null;}clearInterval(PJ.iv);PJ.iv=0;try{if(PJ.w&&!PJ.w.closed)PJ.w.close();}catch(e){}PJ.w=null;PJ.nodes=new WeakMap();PJ.bs=null;PJ.ph=null;pjBtn();}
 async function pjOpen(){if(pjOn()){pjStop();return;}
- let f='popup,width=1280,height=720',sc=null;
- try{if('getScreenDetails' in window){const sd=await window.getScreenDetails();sc=sd.screens.find(x=>x!==sd.currentScreen)||null;if(sc)f=`popup,left=${sc.availLeft},top=${sc.availTop},width=${sc.availWidth},height=${sc.availHeight}`;}}catch(e){}
- const w=window.open('','krProjektor',f);if(!w){msg('Browseren blokerede projektorvinduet. Tryk på Projektor igen, eller tillad pop op-vinduer for siden.');return;}
+ /* placering på den anden skærm: kræver tilladelsen til at styre vinduer (window-management). Første gang spørger Chrome; så kan vinduet blive blokeret, og man trykker igen */
+ let sc=null,perm='',one=false;
+ try{const q=await navigator.permissions.query({name:'window-management'});perm=q.state;}catch(e){}
+ if(perm==='denied'){msg('Chrome må ikke styre vinduer på dine skærme. Tillad det ved hængelåsen i adresselinjen (webstedsindstillinger), og tryk Projektor igen.');}
+ try{if('getScreenDetails' in window&&perm!=='denied'){const sd=await window.getScreenDetails();const L=sd.screens||[];one=L.length<2;sc=L.find(x=>x!==sd.currentScreen&&!(x.left===sd.currentScreen.left&&x.top===sd.currentScreen.top))||null;}}catch(e){}
+ let f;if(sc)f=`popup,left=${sc.left},top=${sc.top},width=${sc.width},height=${sc.height},fullscreen`;
+ else{const gx=(window.screenLeft||0)+(screen.width||1366);f=`popup,left=${gx},top=0,width=${screen.width||1280},height=${screen.height||720}`;}
+ const w=window.open('','krProjektor',f);if(!w){msg(perm==='prompt'||!perm?'Tilladelsen er registreret. Tryk på Projektor igen for at åbne vinduet på projektoren.':'Browseren blokerede projektorvinduet. Tryk på Projektor igen, eller tillad pop op-vinduer for siden.');return;}
+ if(sc){try{w.moveTo(sc.left,sc.top);w.resizeTo(sc.width,sc.height);}catch(e){}}
  PJ.w=w;const css=[...document.querySelectorAll('style')].map(x=>x.textContent).join('\n');
- w.document.open();w.document.write('<!DOCTYPE html><html lang="da"><head><meta charset="utf-8"><title>Klasseredskaber – projektor</title><style>'+css.replace(/<\/style/gi,'<\\/style')+'</style><style>html,body{margin:0;height:100%;overflow:hidden;background:#000}#tavle,#tvapp{position:fixed;inset:0;display:block;margin:0;padding:0;background:#000}#tavle .tv-board{position:absolute;left:0;top:0;transform-origin:0 0;box-shadow:none}#tavle *{pointer-events:none!important}#tavle .wd{outline:none!important}#tavle .wtp{display:none!important}.pj-fs{position:fixed;right:14px;bottom:14px;z-index:300;font:600 15px system-ui,sans-serif;padding:10px 16px;border-radius:12px;border:1px solid #d3dfee;background:#fff;color:#0f1f38;cursor:pointer;opacity:.9;transition:opacity .3s}.pj-fs.hid{opacity:0;pointer-events:none}</style></head><body><div id="tavle"><div id="tvapp" class="kv fs"><div class="tv-board" id="tvBoard"></div><div class="tv-kvp kr-hide" id="tvKvp"></div></div></div><button class="pj-fs" id="pjFs">Fuldskærm</button></body></html>');w.document.close();
- const d=w.document,fb=d.getElementById('pjFs');let ht=null;
- const shw=()=>{fb.classList.toggle('kr-hide',!!d.fullscreenElement);fb.classList.remove('hid');clearTimeout(ht);ht=setTimeout(()=>fb.classList.add('hid'),3000);};
- fb.onclick=()=>{try{d.documentElement.requestFullscreen();}catch(e){}};d.addEventListener('dblclick',()=>{if(d.fullscreenElement)d.exitFullscreen();else d.documentElement.requestFullscreen().catch(()=>{});});
- d.addEventListener('fullscreenchange',()=>{shw();setTimeout(pjFit,50);});d.addEventListener('mousemove',shw);shw();
+ w.document.open();w.document.write('<!DOCTYPE html><html lang="da"><head><meta charset="utf-8"><title>Klasseredskaber – projektor</title><style>'+css.replace(/<\/style/gi,'<\\/style')+'</style><style>html,body{margin:0;height:100%;overflow:hidden;background:#000}#tavle,#tvapp{position:fixed;inset:0;display:block;margin:0;padding:0;background:#000}#tavle .tv-board{position:absolute;left:0;top:0;transform-origin:0 0;box-shadow:none}#tavle *{pointer-events:none!important}#tavle .wd{outline:none!important}#tavle .wtp{display:none!important}.pj-fs{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:rgba(15,31,56,.35);cursor:pointer;border:0;padding:0;font:inherit}.pj-fs span{font:700 22px system-ui,sans-serif;padding:16px 26px;border-radius:16px;background:#fff;color:#0f1f38;box-shadow:0 10px 30px rgba(0,0,0,.25)}.pj-fs.kr-hide{display:none}</style></head><body><div id="tavle"><div id="tvapp" class="kv fs"><div class="tv-board" id="tvBoard"></div><div class="tv-kvp kr-hide" id="tvKvp"></div></div></div><button class="pj-fs" id="pjFs"><span>Klik et vilkårligt sted for fuldskærm</span></button></body></html>');w.document.close();
+ const d=w.document,fb=d.getElementById('pjFs');
+ const fsOn=()=>{const r=d.documentElement.requestFullscreen&&d.documentElement.requestFullscreen();if(r&&r.catch)r.catch(()=>{});};
+ const shw=()=>{fb.classList.toggle('kr-hide',!!d.fullscreenElement);};
+ fb.onclick=fsOn;d.addEventListener('dblclick',()=>{if(d.fullscreenElement)d.exitFullscreen();else fsOn();});
+ d.addEventListener('fullscreenchange',()=>{shw();setTimeout(pjFit,50);});setTimeout(shw,300);
  /* taster i projektorvinduet styrer hovedvinduet (fx næste punkt i klassevisning) */
  d.addEventListener('keydown',e=>{if(e.key==='F11')return;document.dispatchEvent(new KeyboardEvent('keydown',{key:e.key,code:e.code,ctrlKey:e.ctrlKey,shiftKey:e.shiftKey,altKey:e.altKey,metaKey:e.metaKey,bubbles:true}));e.preventDefault();});
  w.addEventListener('resize',pjFit);w.addEventListener('pagehide',()=>setTimeout(()=>{if(PJ.w===w&&w.closed)pjStop();},100));
@@ -2003,7 +2010,7 @@ async function pjOpen(){if(pjOn()){pjStop();return;}
  PJ.mo=new MutationObserver(pjMark);PJ.mo.observe(board,{subtree:true,childList:true,attributes:true,characterData:true});PJ.mo.observe(kvPop,{subtree:true,childList:true,attributes:true,characterData:true});
  PJ.iv=setInterval(()=>{if(!pjOn()){pjStop();return;}if(kvOn()&&!kvPop.classList.contains('kr-hide'))pjSync();},400);
  pjSync();pjFit();pjBtn();try{window.focus();}catch(e){}
- msg(sc?'Projektorvinduet er åbnet på den anden skærm. Tryk Fuldskærm i vinduet, hvis det ikke fylder hele skærmen.':'Projektorvinduet er åbnet. Træk det over på projektoren, og tryk Fuldskærm.');}
+ if(perm!=='denied')msg(sc?'Projektorvinduet er åbnet på projektoren. Klik én gang derovre for fuldskærm, hvis det ikke allerede er i fuldskærm.':one?'Der er kun fundet én skærm. Sæt skærmen til Udvid, og tryk Projektor igen.':'Projektorvinduet er åbnet. Ligger det ikke på projektoren, så træk det derover og klik i det for fuldskærm.');}
 document.getElementById('tvPj').onclick=pjOpen;
 window.addEventListener('pagehide',()=>{if(pjOn())try{PJ.w.close();}catch(e){}});
 window.TV={render(){renderBoard();placeTools();fit();},leave(){if(typeof kvEnd==='function')kvEnd();if(tools.parentNode!==app)app.insertBefore(tools,board.parentNode);$('#tvPop').classList.add('kr-hide');},clear(){inst.forEach(i=>{if(i.destroy)i.destroy();});inst.clear();for(const k in mem)delete mem[k];H={};trash={};clearTimeout(hqT);board.innerHTML='';}};
@@ -2257,7 +2264,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-27-2';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-27-3';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
