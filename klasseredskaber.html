@@ -368,6 +368,7 @@ body{font-variant-numeric:tabular-nums}
 .kr-dl .lk-dlb button{font:inherit;font-size:.9rem;color:#0f1f38;background:#f5f9fe;border:1px solid #d3dfee;border-radius:10px;padding:8px 12px;cursor:pointer}
 .kr-dl .lk-dlb button:hover{border-color:#8395ad}
 .kr-dl .lk-dlb button.d{border-color:#c81e1e;color:#c81e1e;background:transparent;margin-left:auto}
+.tsk-dl{width:min(600px,94vw)}.tsk-dl .tsk-g{font:inherit;font-weight:600;width:100%;padding:11px 14px;border-radius:10px;border:0;background:#2563eb;color:#fff;cursor:pointer;margin:0 0 14px}.tsk-l{max-height:min(46vh,420px);overflow:auto;display:flex;flex-direction:column;gap:8px;margin:0 0 14px}.tsk-r{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #d3dfee;border-radius:12px;background:#f5f9fe}.tsk-n{flex:1;min-width:0;display:flex;flex-direction:column}.tsk-n b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tsk-n small{color:#64748b;font-size:.8rem}.tsk-r button{font:inherit;font-size:.9rem;padding:7px 12px;border-radius:9px;border:1px solid #d3dfee;background:#fff;color:#0f1f38;cursor:pointer}.tsk-r button.gold{background:#2563eb;border-color:#2563eb;color:#fff}.tsk-r button.d{color:#c81e1e;border-color:rgba(200,30,30,.45)}.tsk-e{color:#64748b;margin:0}
 .kr-dl label.lk-dl{display:block;font-size:.85rem;font-weight:600;color:#0f1f38;margin:0 0 6px}
 @media(max-width:760px){#lektier .top{flex-wrap:wrap}#lektier .lk-bar{justify-content:flex-start}#lektier .lk-right{margin-left:0}#lektier .lk-wrap{max-height:calc(100vh - 230px)}#lektier .lk-t .lk-n{min-width:110px;max-width:140px}}
 @media(min-width:861px){.kr-h{max-width:1180px}.kr-cards{grid-template-columns:repeat(4,minmax(0,1fr))}.kr-cards>:nth-child(1){grid-area:1/1/3/2}.kr-cards>:nth-child(2){grid-area:1/2}.kr-cards>:nth-child(3){grid-area:1/3}.kr-cards>:nth-child(7){grid-area:1/4}.kr-cards>:nth-child(4){grid-area:2/2}.kr-cards>:nth-child(5){grid-area:2/3}.kr-cards>:nth-child(6){grid-area:2/4}}
@@ -575,7 +576,7 @@ body{font-variant-numeric:tabular-nums}
 <div id="tvapp">
   <div class="tv-tools" id="tvTools">
     <div class="tv-row"><span class="tv-lab">Mine tavler</span><select id="tvSel" aria-label="Vælg tavle"></select>
-      <button class="btn sm" id="tvNy">Ny</button><button class="btn sm" id="tvDub" title="Lav en kopi af tavlen">Dublér</button><button class="btn sm" id="tvNavn">Omdøb</button><button class="btn sm ghost" id="tvSlet">Slet</button>
+      <button class="btn sm" id="tvNy">Ny</button><button class="btn sm" id="tvDub" title="Lav en kopi af tavlen">Dublér</button><button class="btn sm" id="tvNavn">Omdøb</button><button class="btn sm ghost" id="tvSlet">Slet</button><button class="btn sm" id="tvTsk" title="Gem tavlen som skabelon, eller hent en skabelon som en ny tavle">Skabeloner</button>
       <span class="tv-sep"></span><span class="tv-lab">Klasse</span><select id="tvKl" aria-label="Klasse til tilfældigt navn og gruppemaker"></select><span class="tv-sep"></span><div class="tv-right"><button class="btn sm" id="tvSnap" type="button" title="Widgets retter sig ind efter hinanden, når du flytter dem eller ændrer størrelse. Hold Alt nede for at flytte uden snap.">Snap: til</button><div class="tv-bgw"><button class="btn sm" id="tvBg">Baggrund</button><div class="tv-pop kr-hide" id="tvPop"><div class="tv-sw" id="tvSw"></div><button class="btn sm" id="tvImg">Vælg billede…</button><button class="btn sm ghost" id="tvNoImg">Fjern billede</button></div></div>
       <button class="btn sm" id="tvKv" title="Vis tavlen for klassen: fuldskærm uden redigering, med store knapper">Klassevisning</button></div></div>
   </div>
@@ -645,7 +646,7 @@ function applyLektier(t,bk,mode){const nm={};bk.forEach(k=>{nm[k.id]=k.navn});co
  const L=DB.lektier&&Array.isArray(DB.lektier.lister)?DB.lektier:(DB.lektier={klasse:'',aktiv:{},visNoter:true,lister:[]});const nye=[];
  t.lister.forEach(x=>{const k=kid(x.klasse);if(k)nye.push(Object.assign(JSON.parse(JSON.stringify(x)),{klasse:k}))});
  if(mode==='erstat'){L.lister=nye;L.aktiv={}}else{const h=new Set(L.lister.map(x=>x.id));nye.forEach(x=>{if(!h.has(x.id))L.lister.push(x)})}}
-function applyTavler(t,mode){DB.tavler=DB.tavler||{aktiv:'',liste:[]};const L=DB.tavler.liste;if(Array.isArray(t.skab)){const S=Array.isArray(DB.tavler.skab)?DB.tavler.skab:[];if(mode==='erstat')DB.tavler.skab=JSON.parse(JSON.stringify(t.skab));else{const h=new Set(S.map(x=>x.id));t.skab.forEach(x=>{if(!h.has(x.id))S.push(JSON.parse(JSON.stringify(x)))});DB.tavler.skab=S}}
+function applyTavler(t,mode){DB.tavler=DB.tavler||{aktiv:'',liste:[]};const L=DB.tavler.liste;if(Array.isArray(t.tsk)){const S=Array.isArray(DB.tavler.tsk)?DB.tavler.tsk:[];if(mode==='erstat')DB.tavler.tsk=JSON.parse(JSON.stringify(t.tsk));else{const h=new Set(S.map(x=>x.id));t.tsk.forEach(x=>{if(!h.has(x.id))S.push(JSON.parse(JSON.stringify(x)))});DB.tavler.tsk=S}}if(Array.isArray(t.skab)){const S=Array.isArray(DB.tavler.skab)?DB.tavler.skab:[];if(mode==='erstat')DB.tavler.skab=JSON.parse(JSON.stringify(t.skab));else{const h=new Set(S.map(x=>x.id));t.skab.forEach(x=>{if(!h.has(x.id))S.push(JSON.parse(JSON.stringify(x)))});DB.tavler.skab=S}}
  if(mode==='erstat')DB.tavler.liste=t.liste.map(b=>JSON.parse(JSON.stringify(b)));
  else{const h=new Set(L.map(b=>b.id));t.liste.forEach(b=>{if(!h.has(b.id))L.push(JSON.parse(JSON.stringify(b)))})}
  if(!DB.tavler.liste.some(b=>b.id===DB.tavler.aktiv))DB.tavler.aktiv=(DB.tavler.liste[0]||{}).id||''}
@@ -1826,6 +1827,42 @@ document.getElementById('tvDub').onclick=async()=>{const t=T(),b=cur(),n=await k
  for(const w of c.w){w.id=uid();if(w.t==='billede'&&w.d.img){const u=await getImg(w.d.img);if(u){const id='i'+uid();await putImg(id,u);w.d.img=id}else w.d.img=''}}
  if(c.bg&&c.bg.k==='img'&&c.bg.id){const u=await getImg(c.bg.id);if(u){const id='i'+uid();await putImg(id,u);c.bg.id=id}else c.bg={k:'color',v:c.bg.v||'#ffffff'}}
  t.liste.splice(t.liste.indexOf(b)+1,0,c);t.aktiv=c.id;dbSave();renderBoard();msg('Tavlen er dubleret')};
+/* tavleskabeloner: DB.tavler.tsk=[{id,navn,gemt,b:{bg,w,ap?}}]. Skabeloner har egne kopier af billederne (billeder/i<uid>.jpg), så sletning af tavler, skabeloner og widgets aldrig rammer hinanden */
+const TSK=()=>{const t=T();if(!Array.isArray(t.tsk))t.tsk=[];if(t.tsk.some(x=>!x||!x.navn||!x.b||!Array.isArray(x.b.w)))t.tsk=t.tsk.filter(x=>x&&x.navn&&x.b&&Array.isArray(x.b.w));return t.tsk;};
+const tskSort=()=>TSK().sort((a,b)=>String(a.navn).localeCompare(String(b.navn),'da'));
+/* dyb kopi af en tavles indhold med nye id'er og nye billedfiler */
+async function tvCopy(src,reset){const c=JSON.parse(JSON.stringify({bg:src.bg||{k:'color',v:'#ffffff'},w:src.w||[],ap:src.ap}));const map={};
+ for(const w of c.w){const o=w.id;w.id=uid();map[o]=w.id;
+  if(w.t==='billede'&&w.d&&w.d.img){const u=await getImg(w.d.img);if(u){const id='i'+uid();putImg(id,u);w.d.img=id;}else w.d.img='';}
+  if(w.t==='program'&&w.d){const np=uid();if(w.d.pid)w.d.pid=np;if(Array.isArray(w.d.sider)){w.d.sider.forEach(p=>{p.pid=uid();});const cs=w.d.sider[w.d.s|0];if(cs){cs.pid=np;w.d.pid=np;}}
+   if(reset){const z=o=>{o.a=-1;['st','pa','off','bp'].forEach(k=>delete o[k]);};z(w.d);if(Array.isArray(w.d.sider))w.d.sider.forEach(z);}}}
+ if(c.ap)c.ap=map[c.ap]||undefined;if(!c.ap)delete c.ap;
+ if(c.bg&&c.bg.k==='img'&&c.bg.id){const u=await getImg(c.bg.id);if(u){const id='i'+uid();putImg(id,u);c.bg.id=id;}else c.bg={k:'color',v:c.bg.v||'#ffffff'};}
+ return c;}
+function tvImgs(c){const L=[];(c.w||[]).forEach(w=>{if(w.t==='billede'&&w.d&&w.d.img)L.push(w.d.img);});if(c.bg&&c.bg.k==='img'&&c.bg.id)L.push(c.bg.id);return L;}
+let tskBusy=false;
+async function tskSave(){if(tskBusy)return;const b=cur(),S=TSK();let n=await krPrompt('Gem tavlen som skabelon','Navn på skabelonen. Hele tavlen gemmes, som den står nu.',b.navn,'Gem');if(!n||!n.trim())return;n=n.trim().slice(0,40);
+ const old=S.find(x=>nk(x.navn)===nk(n));if(old&&!await krConfirm('Erstat skabelonen?','Der findes allerede en skabelon, der hedder “'+esc(old.navn)+'”. Vil du erstatte den med denne tavle?','Erstat'))return;
+ tskBusy=true;try{rec();const c=await tvCopy(b,false);const T2=TSK(),o2=T2.find(x=>nk(x.navn)===nk(n));
+  if(o2){const gl=tvImgs(o2.b);o2.navn=n;o2.b=c;o2.gemt=Date.now();gl.forEach(delImg);}else T2.push({id:uid(),navn:n,gemt:Date.now(),b:c});
+  tskSort();dbSave();msg('Tavlen er gemt som skabelonen “'+n+'”');}finally{tskBusy=false;}tskList();}
+async function tskHent(id){if(tskBusy)return;const x=TSK().find(k=>k.id===id);if(!x)return;tskBusy=true;try{rec();const t=T(),k=bk(),c=await tvCopy(x.b,true);
+  const nb={id:uid(),navn:x.navn,bg:c.bg,w:c.w,k};if(c.ap)nb.ap=c.ap;nb.w.forEach(w=>{if((w.t==='navn'||w.t==='grupper')&&w.d&&w.d.k!==k){w.d.k=k;w.d.ex=[];if(w.d.used)w.d.used=[];if('cur' in w.d)w.d.cur='';if(w.d.res)w.d.res=[];}});
+  t.liste.splice(t.liste.indexOf(cur())+1,0,nb);t.aktiv=nb.id;dbSave();renderBoard();msg('Skabelonen “'+x.navn+'” er hentet som en ny tavle');}finally{tskBusy=false;}tskClose();}
+async function tskNavn(id){const S=TSK(),x=S.find(k=>k.id===id);if(!x)return;const n=await krPrompt('Omdøb skabelonen','Skabelonens nye navn.',x.navn,'Gem');if(!n||!n.trim())return;const nv=n.trim().slice(0,40);
+ if(S.some(k=>k!==x&&nk(k.navn)===nk(nv))){msg('Der findes allerede en skabelon, der hedder “'+nv+'”');return;}x.navn=nv;tskSort();dbSave();tskList();}
+async function tskSlet(id){const S=TSK(),x=S.find(k=>k.id===id);if(!x)return;if(!await krConfirm('Slet skabelonen?','“'+esc(x.navn)+'” slettes. Dine tavler påvirkes ikke. Det kan ikke fortrydes.','Slet'))return;
+ const T2=TSK(),i=T2.findIndex(k=>k.id===id);if(i<0)return;const [y]=T2.splice(i,1);tvImgs(y.b).forEach(delImg);dbSave();tskList();msg('Skabelonen er slettet');}
+let tskOv=null;
+function tskClose(){if(tskOv){tskOv.remove();tskOv=null;}}
+function tskList(){if(!tskOv)return;const S=TSK(),L=tskOv.querySelector('.tsk-l');
+ L.innerHTML=S.length?S.map(x=>`<div class="tsk-r"><div class="tsk-n"><b>${esc(x.navn)}</b><small>${x.b.w.length} widget${x.b.w.length===1?'':'s'}${x.gemt?' · gemt '+new Date(x.gemt).toLocaleDateString('da-DK',{day:'numeric',month:'short'}):''}</small></div><button data-a="hent" data-id="${x.id}" class="gold">Hent</button><button data-a="navn" data-id="${x.id}">Omdøb</button><button data-a="slet" data-id="${x.id}" class="d">Slet</button></div>`).join(''):'<p class="tsk-e">Du har ingen tavleskabeloner endnu. Gem den tavle, du står på, for at lave den første.</p>';}
+function tskOpen(){tskClose();const o=document.createElement('div');o.className='kr-ov';o.innerHTML='<div class="kr-dl tsk-dl" role="dialog" aria-label="Tavleskabeloner"><h3>Tavleskabeloner</h3><p>Gem tavlen, som den står, og hent den senere som en ny tavle. En hentet tavle får den klasse, der er valgt nu.</p><button data-a="gem" class="gold tsk-g">Gem denne tavle som skabelon</button><div class="tsk-l"></div><div class="kr-ac"><button data-a="luk">Luk</button></div></div>';
+ o.addEventListener('click',e=>{if(e.target===o){tskClose();return;}const b=e.target.closest('button');if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+  if(a==='luk')tskClose();else if(a==='gem')tskSave();else if(a==='hent')tskHent(id);else if(a==='navn')tskNavn(id);else if(a==='slet')tskSlet(id);});
+ o.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.querySelector('.kr-ov:not(.tsk-ov) input')){e.stopPropagation();tskClose();}});
+ o.classList.add('tsk-ov');document.body.appendChild(o);tskOv=o;tskList();o.querySelector('.tsk-g').focus();}
+document.getElementById('tvTsk').onclick=tskOpen;
 /* billeder fra udklipsholderen */
 async function imgFromBlob(blob,target,ww0,ex){try{const u=await scaleImg(blob),id='i'+uid();await putImg(id,u);
  if(target){if(target.d.img&&target.d.img!==id)delImg(target.d.img);target.d.img=id;sv();const i=inst.get(target.id);if(i&&i.load)i.load();return}
@@ -2177,7 +2214,7 @@ window.addEventListener('hashchange',KR.route);KR.route();
 <script>
 /* ===== datamappe: ALLE data ligger kun i en fil i en mappe, man selv vælger. Browseren husker kun, hvilken mappe det er. ===== */
 (()=>{
-window.KR_VER='2026-11-26-4';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
+window.KR_VER='2026-11-27-1';const FILE='klasseredskaber-data.json',PREV=FILE.replace('.json','-forrige.json'),IDBN='klasseredskaber-mappe';
 const ok=typeof window.showDirectoryPicker==='function';
 let dir=null,perm='',timer=null,prevDone=false,err='',savedAt=0,busy=false,mode='gate',stamp0=null;
 const $k=id=>document.getElementById(id);
